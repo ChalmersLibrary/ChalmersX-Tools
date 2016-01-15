@@ -201,7 +201,6 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="connections.config" />
     <None Include="Properties\PublishProfiles\chalmersxtoolstest.pubxml" />
     <Content Include="Views\PresentationTool\Index.cshtml" />
     <Content Include="Views\StdErrorView.cshtml" />
