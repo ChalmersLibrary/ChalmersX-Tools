@@ -1,0 +1,151 @@
+﻿@model ChalmersxTools.Models.PresentationToolModel
+@using System.Reflection
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PresentationToolView</title>
+    <link href="css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <span id="wrong-location"></span>
+        <form id="student-presentation" method="post">
+            <div>
+                <label class="default-label" for="sp-name">Name</label>
+                <input type="text" id="sp-name" name="name" value="@(Model.CurrentStudentPresentation == null ? "" : Model.CurrentStudentPresentation.Name)">
+            </div>
+            <div>
+                <label class="default-label" for="sp-location">Location</label>
+                <input type="text" id="sp-location" name="location" value="@(Model.CurrentStudentPresentation == null ? "" : Model.CurrentStudentPresentation.LocationName)">
+                <input type="hidden" id="sp-latitude" name="latitude" value="">
+                <input type="hidden" id="sp-longitude" name="longitude" value="">
+            </div>
+            <div>
+                <label class="default-label" for="sp-presentation">Presentation</label>
+                <textarea style="width: 100%; height: 200px;" id="sp-presentation" name="presentation">@(Model.CurrentStudentPresentation == null ? "" : Model.CurrentStudentPresentation.Presentation)</textarea>
+            </div>
+            <div style="padding-top: 10px;">
+                <input type="button" value="Save" onclick="codeAddress();">
+            </div>
+            <input type="hidden" name="action" value="@(Model.CurrentStudentPresentation == null ? "create" : "edit")">
+            <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
+        </form>
+        <br>
+        <hr>
+        <br>
+        <div>
+            <span id="ttc-map-error"></span>
+            <div id="ttc-map" style="height: 500px;"></div>
+        </div>
+        @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
+        {
+            <br>
+            <hr>
+            <br>
+            <div>
+                <p>This information is not visible for students.</p>
+                <button>Download data</button>
+            </div>
+        }
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer_compiled.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        var geocoder;
+        var map;
+        var presentations = [
+            @for (int i = 0; i < Model.Presentations.Count; i++)
+            {
+                var presentation = Model.Presentations[i];
+                <text>{ 
+                    title:"@presentation.Title", 
+                    text:"@presentation.Text", 
+                    coordinate:{ 
+                        latitude:@presentation.Coordinate.Latitude, 
+                        longitude:@presentation.Coordinate.Longitude
+                    } 
+                }
+                </text>
+                if (i < Model.Presentations.Count - 1)
+                {
+                    <text>,</text>
+                }
+            }
+        ];
+        var markers = [];
+        var markerClusterer;
+
+        window.onload = function initialize() {
+            geocoder = new google.maps.Geocoder();
+
+            var myLatlng = new google.maps.LatLng(20.0, 15.0);
+            var mapOptions = {
+                zoom: 2,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("ttc-map"), mapOptions);
+            markerClusterer = new MarkerClusterer(map);
+
+            populateMapWithMarkers();
+        }
+
+        function codeAddress() {
+            document.getElementById("wrong-location").innerHTML = "";
+            var address = document.getElementById("sp-location").value;
+            geocoder.geocode({ "address": address }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    document.getElementById("sp-latitude").value = results[0].geometry.location.lat();
+                    document.getElementById("sp-longitude").value = results[0].geometry.location.lng();
+                    document.forms["student-presentation"].submit();
+                } else {
+                    document.getElementById("wrong-location").innerHTML = "<p><b>Location not found</b>, please provide a more specific description of your location.</p>";
+                }
+            });
+        }
+
+        function removeAllMarkersFromMap() {
+            for (var i = 0; i < markers.length; i++) {
+                markerClusterer.removeMarker(markers[i]);
+                markers[i].setMap(null);
+                markers[i] = null;
+            }
+            markers.length = 0;
+        }
+
+        function populateMapWithMarkers() {
+            for (var i = 0; i < presentations.length; i++) {
+                markers.push(createMarker(map,
+                    presentations[i].title,
+                    presentations[i].text,
+                    presentations[i].coordinate.latitude,
+                    presentations[i].coordinate.longitude));
+            }
+        }
+
+        function createMarker(map, title, text, latitude, longitude) {
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(latitude, longitude),
+                map: map,
+                title: title
+            });
+            var contentString = "<h3>" + title + "</h3><p>" + text + "</p>";
+            var infoWindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+            marker.addListener("click", function () {
+                infoWindow.open(map, marker);
+            });
+            markerClusterer.addMarker(marker);
+            return marker;
+        }
+    </script>
+</body>
+</html>
