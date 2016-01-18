@@ -11,10 +11,10 @@ namespace ChalmersxTools.App_Start
     {
         public static void EnableCodeFirstMigrations()
         {
-            if (bool.Parse(ConfigurationManager.AppSettings["updateDatabaseToLatestVersion"]))
+            var configuration = new Migrations.Configuration();
+            var migrator = new DbMigrator(configuration);
+            if (migrator.GetPendingMigrations().Count() > 0)
             {
-                var configuration = new Migrations.Configuration();
-                var migrator = new DbMigrator(configuration);
                 migrator.Update();
             }
         }
