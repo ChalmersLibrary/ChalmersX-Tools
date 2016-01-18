@@ -156,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SqlClientConfig.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\PresentationToolController.cs" />
     <Compile Include="Database\LearningToolServerDbContext.cs" />
@@ -264,7 +265,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>Update-Database</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
