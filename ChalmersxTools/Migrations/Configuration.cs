@@ -9,7 +9,7 @@ namespace ChalmersxTools.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(ChalmersxTools.Database.LearningToolServerDbContext context)
