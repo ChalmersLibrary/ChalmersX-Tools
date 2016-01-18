@@ -6,27 +6,27 @@ using ChalmersxTools.Database;
 
 namespace ChalmersxTools
 {
-  public static class Bootstrapper
-  {
-    public static IUnityContainer Initialise()
+    public static class Bootstrapper
     {
-        var container = BuildUnityContainer();
-        DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-        return container;
-    }
+        public static IUnityContainer Initialise()
+        {
+            var container = BuildUnityContainer();
+            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            return container;
+        }
 
-    private static IUnityContainer BuildUnityContainer()
-    {
-        var container = new UnityContainer();
-        RegisterTypes(container);
-        return container;
-    }
+        private static IUnityContainer BuildUnityContainer()
+        {
+            var container = new UnityContainer();
+            RegisterTypes(container);
+            return container;
+        }
 
-    public static void RegisterTypes(IUnityContainer container)
-    {
-        container.RegisterInstance<IUnityContainer>(container);
-        container.RegisterType<ISessionManager, SessionManager>();
-        container.RegisterType<LearningToolServerDbContext>();
+        public static void RegisterTypes(IUnityContainer container)
+        {
+            container.RegisterInstance<IUnityContainer>(container);
+            container.RegisterType<ISessionManager, SessionManager>();
+            container.RegisterType<LearningToolServerDbContext>();
+        }
     }
-  }
 }
