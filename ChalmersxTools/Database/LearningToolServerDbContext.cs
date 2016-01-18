@@ -10,7 +10,7 @@ namespace ChalmersxTools.Database
 {
     public class LearningToolServerDbContext : DbContext
     {
-        public LearningToolServerDbContext() : base(ConfigurationManager.ConnectionStrings["chalmersxToolsConnectionString"].ToString()) {}
+        public LearningToolServerDbContext() : base("name=chalmersxToolsConnectionString") {}
 
         public DbSet<LtiSession> LtiSessions { get; set; }
         public DbSet<StudentPresentation> StudentPresentations { get; set; }
