@@ -11,11 +11,14 @@ namespace ChalmersxTools.App_Start
     {
         public static void EnableCodeFirstMigrations()
         {
-            var configuration = new Migrations.Configuration();
-            var migrator = new DbMigrator(configuration);
-            if (migrator.GetPendingMigrations().Count() > 0)
+            if (bool.Parse(ConfigurationManager.AppSettings["checkForPendingDatabaseMigrations"]))
             {
-                migrator.Update();
+                var configuration = new Migrations.Configuration();
+                var migrator = new DbMigrator(configuration);
+                if (migrator.GetPendingMigrations().Count() > 0)
+                {
+                    migrator.Update();
+                }
             }
         }
     }
