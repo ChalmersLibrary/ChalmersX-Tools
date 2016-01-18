@@ -10,23 +10,23 @@ namespace ChalmersxTools
   {
     public static IUnityContainer Initialise()
     {
-      var container = BuildUnityContainer();
-      DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-      return container;
+        var container = BuildUnityContainer();
+        DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+        return container;
     }
 
     private static IUnityContainer BuildUnityContainer()
     {
-      var container = new UnityContainer();
-      RegisterTypes(container);
-      return container;
+        var container = new UnityContainer();
+        RegisterTypes(container);
+        return container;
     }
 
     public static void RegisterTypes(IUnityContainer container)
     {
         container.RegisterInstance<IUnityContainer>(container);
         container.RegisterType<ISessionManager, SessionManager>();
-        container.RegisterType<LearningToolServerDbContext, LearningToolServerDbContext>();
+        container.RegisterType<LearningToolServerDbContext>();
     }
   }
 }
