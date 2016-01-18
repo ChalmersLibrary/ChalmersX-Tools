@@ -26,7 +26,7 @@ namespace ChalmersxTools
     {
         container.RegisterInstance<IUnityContainer>(container);
         container.RegisterType<ISessionManager, SessionManager>();
-        container.RegisterType<LearningToolServerDbContext>();
+        container.RegisterType<LearningToolServerDbContext, LearningToolServerDbContext>();
     }
   }
 }
