@@ -47,7 +47,7 @@ namespace ChalmersxTools.Sessions
 
             if (request.Form["ltiSessionId"] != null && request.Form["ltiSessionId"].ToString() != "")
             {
-                res = GetSession(Guid.Parse(request.Form["ltiSessionId"].ToString());
+                res = GetSession(Guid.Parse(request.Form["ltiSessionId"].ToString()));
             }
 
             return res;
