@@ -126,7 +126,7 @@ namespace ChalmersxTools.Controllers
                                 presentation.Presentation.Replace('"', '\'') + "\",\"" +
                                 presentation.LocationName.Replace('"', '\'') + "\",\"" +
                                 presentation.LocationLat.ToString() + "\",\"" +
-                                presentation.LocationLong.ToString() + "\n";
+                                presentation.LocationLong.ToString() + "\"\n";
                         }
 
                         res = File(new System.Text.UTF8Encoding().GetBytes(data), "text/csv", courseOrg + "-" + courseId + "-" + courseRun + "-presentations.csv");
