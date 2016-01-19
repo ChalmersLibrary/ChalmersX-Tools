@@ -47,13 +47,13 @@ namespace ChalmersxTools.Sessions
 
             if (request.Form["ltiSessionId"] != null && request.Form["ltiSessionId"].ToString() != "")
             {
-                res = GetSession(Guid.Parse(request.Form["ltiSessionId"].ToString()));
+                res = GetAndRefreshSession(Guid.Parse(request.Form["ltiSessionId"].ToString()));
             }
 
             return res;
         }
 
-        public LtiSession GetSession(Guid ltiSessionId)
+        public LtiSession GetAndRefreshSession(Guid ltiSessionId)
         {
             LtiSession res = new LtiSession();
 
@@ -75,6 +75,7 @@ namespace ChalmersxTools.Sessions
                     }
                     else
                     {
+                        RefreshSession(existingLtiSession);
                         res = existingLtiSession;
                         res.Valid = true;
                         res.DeserializeLtiRequest();

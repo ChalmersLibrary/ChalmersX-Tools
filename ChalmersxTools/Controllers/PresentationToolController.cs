@@ -107,7 +107,7 @@ namespace ChalmersxTools.Controllers
 
                 using (var sessionManager = _unityContainer.Resolve<ISessionManager>())
                 {
-                    session = sessionManager.GetSession(Guid.Parse(ltiSessionId));
+                    session = sessionManager.GetAndRefreshSession(Guid.Parse(ltiSessionId));
 
                     if (!session.Valid)
                     {
