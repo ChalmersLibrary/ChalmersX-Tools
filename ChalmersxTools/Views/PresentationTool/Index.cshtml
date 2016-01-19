@@ -65,8 +65,8 @@
             {
                 var presentation = Model.Presentations[i];
                 <text>{ 
-                    title:"@presentation.Title", 
-                    text:"@presentation.Text", 
+                    title:"@Server.HtmlEncode(presentation.Title)", 
+                    text:"@Server.HtmlEncode(presentation.Text)", 
                     coordinate:{ 
                         latitude:@presentation.Coordinate.Latitude, 
                         longitude:@presentation.Coordinate.Longitude
