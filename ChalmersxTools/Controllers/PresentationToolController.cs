@@ -180,11 +180,11 @@ namespace ChalmersxTools.Controllers
                     CourseOrg = session.CourseOrg,
                     CourseId = session.CourseId,
                     CourseRun = session.CourseRun,
-                    Name = Request.Form["name"].ToString(),
-                    LocationName = Request.Form["location"].ToString(),
+                    Name = Server.UrlEncode(Request.Form["name"].ToString()),
+                    LocationName = Server.UrlEncode(Request.Form["location"].ToString()),
                     LocationLat = Double.Parse(Request.Form["latitude"].ToString(), CultureInfo.InvariantCulture),
                     LocationLong = Double.Parse(Request.Form["longitude"].ToString(), CultureInfo.InvariantCulture),
-                    Presentation = Request.Form["presentation"].ToString()
+                    Presentation = Server.UrlEncode(Request.Form["presentation"].ToString())
                 });
 
                 dbContext.SaveChanges();
@@ -214,11 +214,11 @@ namespace ChalmersxTools.Controllers
                      sp.CourseRun == session.CourseRun
                      select sp).SingleOrDefault();
 
-                existingStudentPresentation.Name = Request.Form["name"].ToString();
-                existingStudentPresentation.LocationName = Request.Form["location"].ToString();
+                existingStudentPresentation.Name = Server.UrlEncode(Request.Form["name"].ToString());
+                existingStudentPresentation.LocationName = Server.UrlEncode(Request.Form["location"].ToString());
                 existingStudentPresentation.LocationLat = Double.Parse(Request.Form["latitude"].ToString(), CultureInfo.InvariantCulture);
                 existingStudentPresentation.LocationLong = Double.Parse(Request.Form["longitude"].ToString(), CultureInfo.InvariantCulture);
-                existingStudentPresentation.Presentation = Request.Form["presentation"].ToString();
+                existingStudentPresentation.Presentation = Server.UrlEncode(Request.Form["presentation"].ToString());
 
                 dbContext.SaveChanges();
             }
