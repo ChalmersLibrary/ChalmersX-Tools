@@ -67,7 +67,7 @@ namespace ChalmersxTools.Sessions
 
                 if (existingLtiSession != null)
                 {
-                    if (existingLtiSession.Timestamp < DateTime.Now.AddDays(-1))
+                    if (existingLtiSession.Timestamp < DateTime.Now.AddMinutes(-1))
                     {
                         // Remove the session if it is older than a day.
                         _dbContext.LtiSessions.Remove(existingLtiSession);
@@ -104,7 +104,7 @@ namespace ChalmersxTools.Sessions
             {
                 res.DeserializeLtiRequest();
 
-                if (res.Timestamp < DateTime.Now.AddDays(-1))
+                if (res.Timestamp < DateTime.Now.AddMinutes(-1))
                 {
                     // Remove the session if it is older than a day.
                     _dbContext.LtiSessions.Remove(res);
