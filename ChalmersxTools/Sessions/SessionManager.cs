@@ -111,11 +111,11 @@ namespace ChalmersxTools.Sessions
                     _dbContext.LtiSessions.Remove(res);
                     res = new LtiSession()
                     {
-                        ConsumerKey = session.ConsumerKey,
+                        ConsumerKey = session.LtiRequest.ConsumerKey,
                         CourseOrg = session.CourseOrg,
                         CourseId = session.CourseId,
                         CourseRun = session.CourseRun,
-                        UserId = session.UserId,
+                        UserId = session.LtiRequest.UserId,
                         Timestamp = DateTime.Now,
                         LtiRequest = session.LtiRequest
                     };

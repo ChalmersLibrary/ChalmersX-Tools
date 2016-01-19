@@ -148,23 +148,20 @@ namespace ChalmersxTools.Controllers
             LtiRequest res = null;
 
             // Try to get the LTI request from Request.
-            if (res == null)
+            Request.CheckForRequiredLtiParameters();
+
+            res = new LtiRequest(null);
+            res.ParseRequest(Request);
+
+            if (!res.ConsumerKey.Equals("12345"))
             {
-                Request.CheckForRequiredLtiParameters();
+                throw new Exception("Invalid consumer key.");
+            }
 
-                res = new LtiRequest(null);
-                res.ParseRequest(Request);
-
-                if (!res.ConsumerKey.Equals("12345"))
-                {
-                    throw new Exception("Invalid consumer key.");
-                }
-
-                var oauthSignature = Request.GenerateOAuthSignature(SECRET_KEY);
-                if (!oauthSignature.Equals(res.Signature))
-                {
-                    throw new Exception("Invalid signature.");
-                }
+            var oauthSignature = Request.GenerateOAuthSignature(SECRET_KEY);
+            if (!oauthSignature.Equals(res.Signature))
+            {
+                throw new Exception("Invalid signature.");
             }
 
             return res;
