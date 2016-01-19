@@ -94,6 +94,53 @@ namespace ChalmersxTools.Controllers
             return resultingView;
         }
 
+        [HttpGet]
+        public ActionResult GetData()
+        {
+            ActionResult res = new HttpNotFoundResult("Failed to download data: unknown error");
+
+            string data = "", courseOrg = "", courseId = "", courseRun = "";
+
+            try
+            {
+                LtiSession session = null;
+
+                using (var sessionManager = _unityContainer.Resolve<ISessionManager>())
+                {
+                    session = sessionManager.TryToExtractSessionFromRequest(Request);
+
+                    if (!session.Valid)
+                    {
+                        throw new Exception("Unauthorized.");
+                    }
+                    else
+                    {
+                        courseOrg = session.CourseOrg;
+                        courseId = session.CourseId;
+                        courseRun = session.CourseRun;
+                        var presentations = GetAllStudentPresentationsForCourseRun(sessionManager.DbContext, session);
+                        data += "name,presentation,location,latitude,longitude\n";
+                        foreach (var presentation in presentations)
+                        {
+                            data += "\"" + presentation.Name.Replace('"', '\'') + "\",\"" +
+                                presentation.Presentation.Replace('"', '\'') + "\",\"" +
+                                presentation.LocationName.Replace('"', '\'') + "\",\"" +
+                                presentation.LocationLat.ToString() + "\",\"" +
+                                presentation.LocationLong.ToString() + "\n";
+                        }
+
+                        res = File(new System.Text.UTF8Encoding().GetBytes(data), "text/csv", courseOrg + "-" + courseId + "-" + courseRun + "-presentations.csv");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                res = new HttpNotFoundResult("Failed to download data: " + e.Message);
+            }
+
+            return res;
+        }
+
         #region Private methods
 
         private LtiRequest GetLtiRequestFromHttpRequest()
@@ -236,6 +283,26 @@ namespace ChalmersxTools.Controllers
             catch (Exception e)
             {
                 throw new Exception("Failed to fetch all student presentations for course run.", e);
+            }
+
+            return res;
+        }
+
+        private List<StudentPresentation> GetAllStudentPresentationsForCourseRun(LearningToolServerDbContext dbContext, LtiSession session)
+        {
+            var res = new List<StudentPresentation>();
+
+            try
+            {
+                res = (from sp in dbContext.StudentPresentations where
+                            sp.CourseOrg == session.CourseOrg &&
+                            sp.CourseId == session.CourseId &&
+                            sp.CourseRun == session.CourseRun
+                            select sp).ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failed to get all student presentations for course run.", e);
             }
 
             return res;
