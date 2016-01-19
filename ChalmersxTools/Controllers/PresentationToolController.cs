@@ -122,9 +122,9 @@ namespace ChalmersxTools.Controllers
                         data += "name,presentation,location,latitude,longitude\n";
                         foreach (var presentation in presentations)
                         {
-                            data += "\"" + presentation.Name.Replace('"', '\'') + "\",\"" +
-                                presentation.Presentation.Replace('"', '\'') + "\",\"" +
-                                presentation.LocationName.Replace('"', '\'') + "\",\"" +
+                            data += "\"" + presentation.Name.Replace('"', '\'').Replace("\r", @"\r").Replace("\n", @"\n") + "\",\"" +
+                                presentation.Presentation.Replace('"', '\'').Replace("\r", @"\r").Replace("\n", @"\n") + "\",\"" +
+                                presentation.LocationName.Replace('"', '\'').Replace("\r", @"\r").Replace("\n", @"\n") + "\",\"" +
                                 presentation.LocationLat.ToString() + "\",\"" +
                                 presentation.LocationLong.ToString() + "\"\n";
                         }
