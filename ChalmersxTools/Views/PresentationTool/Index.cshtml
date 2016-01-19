@@ -136,7 +136,7 @@
                 map: map,
                 title: title
             });
-            var contentString = "<h3>" + title + "</h3><p>" + text + "</p>";
+            var contentString = "<h3>" + decodeURI(title) + "</h3><p>" + decodeURI(text) + "</p>";
             var infoWindow = new google.maps.InfoWindow({
                 content: contentString
             });
