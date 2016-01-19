@@ -95,7 +95,7 @@ namespace ChalmersxTools.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetData()
+        public ActionResult GetData(string ltiSessionId)
         {
             ActionResult res = new HttpNotFoundResult("Failed to download data: unknown error");
 
@@ -107,7 +107,7 @@ namespace ChalmersxTools.Controllers
 
                 using (var sessionManager = _unityContainer.Resolve<ISessionManager>())
                 {
-                    session = sessionManager.TryToExtractSessionFromRequest(Request);
+                    session = sessionManager.GetSession(Guid.Parse(ltiSessionId));
 
                     if (!session.Valid)
                     {

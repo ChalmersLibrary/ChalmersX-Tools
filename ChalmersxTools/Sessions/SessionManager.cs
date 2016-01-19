@@ -47,36 +47,43 @@ namespace ChalmersxTools.Sessions
 
             if (request.Form["ltiSessionId"] != null && request.Form["ltiSessionId"].ToString() != "")
             {
-                var ltiSessionId = Guid.Parse(request.Form["ltiSessionId"].ToString());
+                res = GetSession(Guid.Parse(request.Form["ltiSessionId"].ToString());
+            }
 
-                try
+            return res;
+        }
+
+        public LtiSession GetSession(Guid ltiSessionId)
+        {
+            LtiSession res = new LtiSession();
+
+            try
+            {
+                LtiSession existingLtiSession = null;
+
+                existingLtiSession = (from s in _dbContext.LtiSessions
+                                      where s.Id == ltiSessionId
+                                      select s).SingleOrDefault();
+
+                if (existingLtiSession != null)
                 {
-                    LtiSession existingLtiSession = null;
-
-                    existingLtiSession = (from s in _dbContext.LtiSessions
-                         where s.Id == ltiSessionId
-                         select s).SingleOrDefault();
-
-                    if (existingLtiSession != null)
+                    if (existingLtiSession.Timestamp < DateTime.Now.AddDays(-1))
                     {
-                        if (existingLtiSession.Timestamp < DateTime.Now.AddDays(-1))
-                        {
-                            // Remove the session if it is older than a day.
-                            _dbContext.LtiSessions.Remove(existingLtiSession);
-                            _dbContext.SaveChanges();
-                        }
-                        else
-                        {
-                            res = existingLtiSession;
-                            res.Valid = true;
-                            res.DeserializeLtiRequest();
-                        }
+                        // Remove the session if it is older than a day.
+                        _dbContext.LtiSessions.Remove(existingLtiSession);
+                        _dbContext.SaveChanges();
+                    }
+                    else
+                    {
+                        res = existingLtiSession;
+                        res.Valid = true;
+                        res.DeserializeLtiRequest();
                     }
                 }
-                catch (Exception e)
-                {
-                    throw new Exception("Failed to check for valid session ID.", e);
-                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failed to get session.", e);
             }
 
             return res;
