@@ -1,5 +1,6 @@
 ﻿using ChalmersxTools.Database;
 using ChalmersxTools.Models;
+using ChalmersxTools.Models.View;
 using ChalmersxTools.Sessions;
 using LtiLibrary.Core.Outcomes.v1;
 using System;

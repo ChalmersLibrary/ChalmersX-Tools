@@ -30,6 +30,7 @@ namespace ChalmersxTools
             container.RegisterType<LearningToolServerDbContext>();
 
             container.RegisterType<ITool, PresentationTool>(PresentationTool.CONSUMER_KEY);
+            container.RegisterType<ITool, EarthSpheresImageTool>(EarthSpheresImageTool.CONSUMER_KEY);
         }
     }
 }
