@@ -33,7 +33,7 @@ namespace ChalmersxTools.Tools
             }
 
             return new ViewIdentifierAndModel("~/Views/PresentationToolView.cshtml",
-                new PresentationToolModel()
+                new PresentationToolViewModel()
                 {
                     CurrentStudentPresentation = GetCurrentStudentPresentation(),
                     Presentations = GetTitleTextAndCoordinateList(),

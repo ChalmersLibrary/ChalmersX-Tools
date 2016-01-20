@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ChalmersxTools.Models.View
 {
-    public class PresentationToolModel : LtiViewModelBase
+    public class PresentationToolViewModel : LtiViewModelBase
     {
         public StudentPresentation CurrentStudentPresentation { get; set; }
         public List<TitleTextAndCoordinate> Presentations { get; set; }
