@@ -3,6 +3,7 @@ using Microsoft.Practices.Unity;
 using Unity.Mvc4;
 using ChalmersxTools.Sessions;
 using ChalmersxTools.Database;
+using ChalmersxTools.Tools;
 
 namespace ChalmersxTools
 {
@@ -27,6 +28,8 @@ namespace ChalmersxTools
             container.RegisterInstance<IUnityContainer>(container);
             container.RegisterType<ISessionManager, SessionManager>();
             container.RegisterType<LearningToolServerDbContext>();
+
+            container.RegisterType<ITool, PresentationTool>(PresentationTool.CONSUMER_KEY);
         }
     }
 }

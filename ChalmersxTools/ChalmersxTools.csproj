@@ -162,7 +162,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SqlClientConfig.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Controllers\PresentationToolController.cs" />
+    <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Database\LearningToolServerDbContext.cs" />
     <Compile Include="EventHandlers\OwinStartup.cs" />
     <Compile Include="Global.asax.cs">
@@ -194,20 +194,25 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Coordinate.cs" />
+    <Compile Include="Models\CsvFileData.cs" />
     <Compile Include="Models\LtiSession.cs" />
     <Compile Include="Models\PresentationToolModel.cs" />
     <Compile Include="Models\StdError.cs" />
     <Compile Include="Models\StudentPresentation.cs" />
     <Compile Include="Models\TitleTextAndCoordinate.cs" />
+    <Compile Include="Models\ViewIdentifierAndModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sessions\ISessionManager.cs" />
     <Compile Include="Sessions\SessionManager.cs" />
+    <Compile Include="Tools\ITool.cs" />
+    <Compile Include="Tools\PresentationTool.cs" />
+    <Compile Include="Tools\ToolBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\chalmersxtoolstest.pubxml" />
-    <Content Include="Views\PresentationTool\Index.cshtml" />
+    <Content Include="Views\PresentationToolView.cshtml" />
     <Content Include="Views\StdErrorView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
