@@ -3,7 +3,7 @@
     color: #3c3c3c;
 }
 
-input[type="text"], textarea {
+input[type="text"], input[type="url"], textarea {
 	background: #fff;
 	border: 1px solid #b2b2b2;
 	border-radius: 0px;
