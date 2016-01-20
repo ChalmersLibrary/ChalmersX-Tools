@@ -19,7 +19,7 @@
             <div>
                 <label for="sphere1Url">Image 1</label>
                 <input id="sphere1Url" name="sphere1Url" type="url" style="width: 74%;" />
-                <select name="sphere1Name" style="width: 24%;">
+                <select id="sphere1Name" name="sphere1Name" style="width: 24%;">
                     <option value="">Select sphere</option>
                     <option value="geosphere">Geosphere</option>
                     <option value="atmosphere">Atmosphere</option>
@@ -31,7 +31,7 @@
             <div>
                 <label for="sphere2Url">Image 2</label>
                 <input id="sphere2Url" name="sphere2Url" type="url" style="width: 74%;" />
-                <select name="sphere2Name" style="width: 24%;">
+                <select id="sphere2Name" name="sphere2Name" style="width: 24%;">
                     <option value="">Select sphere</option>
                     <option value="geosphere">Geosphere</option>
                     <option value="atmosphere">Atmosphere</option>
@@ -54,9 +54,9 @@
 
             if ($("#sphere1Url").val() == "" && $("#sphere2Url").val() == "") {
                 $("#message-box").html("<span style='color: red;'>You have to enter a valid URL that links to your image.</span>");
-            } else if ($("#sphere1Url").val() != "" && $("#sphere1Name").find(":selected").val() != "") {
+            } else if ($("#sphere1Url").val() != "" && $("#sphere1Name").find(":selected").val() == "") {
                 $("#message-box").html("<span style='color: red;'>You have to select a sphere for your image.</span>");
-            } else if ($("#sphere2Url").val() != "" && $("#sphere2Name").find(":selected").val() != "") {
+            } else if ($("#sphere2Url").val() != "" && $("#sphere2Name").find(":selected").val() == "") {
                 $("#message-box").html("<span style='color: red;'>You have to select a sphere for your image.</span>");
             } else {
                 document.forms["earth-spheres-images"].submit();
