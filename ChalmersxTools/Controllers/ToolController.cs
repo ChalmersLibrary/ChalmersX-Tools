@@ -75,7 +75,7 @@ namespace ChalmersxTools.Controllers
                         session = sessionManager.CreateValidSession(session);
                     }
 
-                    if (tool != null)
+                    if (tool == null)
                     {
                         tool = _unityContainer.Resolve<ITool>(session.ConsumerKey);
                     }
