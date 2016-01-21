@@ -13,7 +13,7 @@
 <body>
     <div>
         <div id="message-box">@Html.Raw(Model.ResponseMessage)</div>
-        <form>
+        <form id="temperature-measurements" method="post">
             <label for="lat">Latitude</label>
             <input type="number" name="lat" value="@Model.Submission.Position.Latitude"/>
             <label for="long">Longitude</label>
@@ -22,6 +22,9 @@
             <input type="number" name="measurement1" value="@Model.Submission.Measurement1"/>
             <label for="measurement2">Temperature day 2</label>
             <input type="number" name="measurement2" value="@Model.Submission.Measurement2"/>
+            <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
+            <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
+            <input type="submit" value="Save" />
         </form>
         @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
         {
