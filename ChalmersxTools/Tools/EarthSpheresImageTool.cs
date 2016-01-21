@@ -32,7 +32,8 @@ namespace ChalmersxTools.Tools
                 new EarthSpheresImageToolViewModel()
                 {
                     Submission = GetSubmissionForCurrentStudent(),
-                    LtiSessionId = _session.Id.ToString()
+                    LtiSessionId = _session.Id.ToString(),
+                    Roles = _session.LtiRequest.Roles
                 });
         }
 

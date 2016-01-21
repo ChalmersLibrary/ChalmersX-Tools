@@ -8,5 +8,6 @@ namespace ChalmersxTools.Models.View
     public abstract class LtiViewModelBase
     {
         public string LtiSessionId { get; set; }
+        public string Roles { get; set; }
     }
 }

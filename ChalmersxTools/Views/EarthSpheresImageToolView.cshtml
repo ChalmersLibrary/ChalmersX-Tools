@@ -46,6 +46,16 @@
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
             <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
         </form>
+        @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
+        {
+            <br>
+            <hr>
+            <br>
+            <div>
+                <p>This information is not visible for students.</p>
+                <a href="/Tool/GetData?ltiSessionId=@Model.LtiSessionId">Download data</a>
+            </div>
+        }
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script>
