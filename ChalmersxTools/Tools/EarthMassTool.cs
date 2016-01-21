@@ -1,6 +1,7 @@
 ﻿using ChalmersxTools.Models;
 using ChalmersxTools.Models.Database;
 using ChalmersxTools.Models.View;
+using LtiLibrary.Core.Outcomes.v1;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -35,7 +36,32 @@ namespace ChalmersxTools.Tools
 
             try
             {
-                throw new Exception("Not implemented!");
+                double meanGravityAcceleration = 0, earthMass = 0;
+
+                if (!Double.TryParse(request.Form["meanGravityAcceleration"].ToString(), out meanGravityAcceleration))
+                {
+                    res = "<span style='color: red;'>Failed to parse mean gravity acceleration.</span>";
+                }
+                else if (!Double.TryParse(request.Form["earthMass"].ToString(), out earthMass))
+                {
+                    res = "<span style='color: red;'>Failed to parse earth mass.</span>";
+                }
+                else
+                {
+                    var newSubmission = _sessionManager.DbContext.EarthMassSubmissions.Add(new EarthMassSubmission()
+                    {
+                        UserId = _session.UserId,
+                        CourseOrg = _session.CourseOrg,
+                        CourseId = _session.CourseId,
+                        CourseRun = _session.CourseRun,
+                        MeanGravityAcceleration = meanGravityAcceleration,
+                        TotalEarthMass = earthMass
+                    });
+
+                    _sessionManager.DbContext.SaveChanges();
+
+                    res = SubmitScore(newSubmission);
+                }
             }
             catch (Exception e)
             {
@@ -51,7 +77,33 @@ namespace ChalmersxTools.Tools
 
             try
             {
-                throw new Exception("Not implemented!");
+                double meanGravityAcceleration = 0, earthMass = 0;
+
+                if (!Double.TryParse(request.Form["meanGravityAcceleration"].ToString(), out meanGravityAcceleration))
+                {
+                    res = "<span style='color: red;'>Failed to parse mean gravity acceleration.</span>";
+                }
+                else if (!Double.TryParse(request.Form["earthMass"].ToString(), out earthMass))
+                {
+                    res = "<span style='color: red;'>Failed to parse earth mass.</span>";
+                }
+                else
+                {
+                    EarthMassSubmission existing =
+                        (from o in _sessionManager.DbContext.EarthMassSubmissions
+                         where o.UserId == _session.UserId &&
+                         o.CourseOrg == _session.CourseOrg &&
+                         o.CourseId == _session.CourseId &&
+                         o.CourseRun == _session.CourseRun
+                         select o).SingleOrDefault();
+
+                    existing.MeanGravityAcceleration = meanGravityAcceleration;
+                    existing.TotalEarthMass = earthMass;
+
+                    _sessionManager.DbContext.SaveChanges();
+
+                    res = SubmitScore(existing);
+                }
             }
             catch (Exception e)
             {
@@ -113,6 +165,22 @@ namespace ChalmersxTools.Tools
             {
                 throw new Exception("Failed to fetch earth mass submission for current student.", e);
             }
+
+            return res;
+        }
+
+        private string SubmitScore(EarthMassSubmission submission)
+        {
+            var res = "";
+
+            OutcomesClient.PostScore(
+                _session.LtiRequest.LisOutcomeServiceUrl,
+                _session.LtiRequest.ConsumerKey,
+                ConsumerSecret,
+                _session.LtiRequest.LisResultSourcedId,
+                1.0);
+
+            res = "<span style='color: green;'>Successfully saved data.</span>";
 
             return res;
         }
