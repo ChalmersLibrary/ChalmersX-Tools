@@ -1,5 +1,6 @@
 ﻿using ChalmersxTools.Database;
 using ChalmersxTools.Models;
+using ChalmersxTools.Models.Database;
 using LtiLibrary.Core.Lti1;
 using System;
 using System.Collections.Generic;

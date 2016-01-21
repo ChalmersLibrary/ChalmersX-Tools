@@ -1,4 +1,5 @@
 ﻿using ChalmersxTools.Models;
+using ChalmersxTools.Models.Database;
 using ChalmersxTools.Sessions;
 using System;
 using System.Collections.Generic;

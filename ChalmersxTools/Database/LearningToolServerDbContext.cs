@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.Entity;
 using ChalmersxTools.Models;
 using System.Configuration;
+using ChalmersxTools.Models.Database;
 
 namespace ChalmersxTools.Database
 {

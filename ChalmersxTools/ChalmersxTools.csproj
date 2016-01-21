@@ -197,19 +197,23 @@
     <Compile Include="Migrations\201601201555210_AddEarthSpheres.Designer.cs">
       <DependentUpon>201601201555210_AddEarthSpheres.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601211255087_AddMassTemp.cs" />
+    <Compile Include="Migrations\201601211255087_AddMassTemp.Designer.cs">
+      <DependentUpon>201601211255087_AddMassTemp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\CsvFileData.cs" />
-    <Compile Include="Models\EarthMassSubmission.cs" />
-    <Compile Include="Models\EarthSpheresImagesSubmission.cs" />
-    <Compile Include="Models\LtiSession.cs" />
+    <Compile Include="Models\Database\EarthMassSubmission.cs" />
+    <Compile Include="Models\Database\EarthSpheresImagesSubmission.cs" />
+    <Compile Include="Models\Database\LtiSession.cs" />
     <Compile Include="Models\View\EarthMassToolViewModel.cs" />
-    <Compile Include="Models\TemperatureMeasurementSubmission.cs" />
+    <Compile Include="Models\Database\TemperatureMeasurementSubmission.cs" />
     <Compile Include="Models\View\EarthSpheresImageToolViewModel.cs" />
     <Compile Include="Models\View\LtiViewModelBase.cs" />
     <Compile Include="Models\View\PresentationToolViewModel.cs" />
     <Compile Include="Models\StdError.cs" />
-    <Compile Include="Models\StudentPresentation.cs" />
+    <Compile Include="Models\Database\StudentPresentation.cs" />
     <Compile Include="Models\TitleTextAndCoordinate.cs" />
     <Compile Include="Models\ViewIdentifierAndModel.cs" />
     <Compile Include="Models\View\TemperatureMeasurementToolViewModel.cs" />
@@ -268,6 +272,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601201555210_AddEarthSpheres.resx">
       <DependentUpon>201601201555210_AddEarthSpheres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601211255087_AddMassTemp.resx">
+      <DependentUpon>201601211255087_AddMassTemp.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -18,6 +18,7 @@ using ChalmersxTools.Sessions;
 using Microsoft.Practices.Unity;
 using System.Configuration;
 using ChalmersxTools.Tools;
+using ChalmersxTools.Models.Database;
 
 namespace ChalmersxTools.Controllers
 {
