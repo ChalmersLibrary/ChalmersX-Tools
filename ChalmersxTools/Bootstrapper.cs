@@ -32,6 +32,7 @@ namespace ChalmersxTools
             container.RegisterType<ISessionManager, SessionManager>();
             container.RegisterType<ITool, PresentationTool>(PresentationTool.CONSUMER_KEY);
             container.RegisterType<ITool, EarthSpheresImageTool>(EarthSpheresImageTool.CONSUMER_KEY);
+            container.RegisterType<ITool, EarthMassTool>(EarthMassTool.CONSUMER_KEY);
         }
     }
 }

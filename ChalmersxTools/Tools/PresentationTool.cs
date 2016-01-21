@@ -13,42 +13,16 @@ using System.Web.Mvc;
 
 namespace ChalmersxTools.Tools
 {
-    public class PresentationTool : ToolBase
+    public class PresentationTool : SimpleDataStorageToolBase
     {
         public static readonly string CONSUMER_KEY = "ChalmersxPresentationTool";
 
         public override string ConsumerKey { get { return CONSUMER_KEY; } }
         override protected string ConsumerSecret { get { return ConfigurationManager.AppSettings["ltiConsumerSecret"]; } }
 
-        public override ViewIdentifierAndModel HandleRequest(HttpRequestBase request)
-        {
-            if (request.Form["action"] == "create")
-            {
-                CreateStudentPresentation(request);
-            }
-
-            if (request.Form["action"] == "edit")
-            {
-                EditStudentPresentation(request);
-            }
-
-            return new ViewIdentifierAndModel("~/Views/PresentationToolView.cshtml",
-                new PresentationToolViewModel()
-                {
-                    CurrentStudentPresentation = GetCurrentStudentPresentation(),
-                    Presentations = GetTitleTextAndCoordinateList(),
-                    Roles = _session.LtiRequest.Roles,
-                    LtiSessionId = _session.Id.ToString()
-                });
-        }
-
         public override CsvFileData HandleDataRequest()
         {
-            string data = "", courseOrg = "", courseId = "", courseRun = "";
-
-            courseOrg = _session.CourseOrg;
-            courseId = _session.CourseId;
-            courseRun = _session.CourseRun;
+            string data = "";
             var presentations = GetAllStudentPresentationsForCourseRun();
             data += "name,presentation,location,latitude,longitude\n";
             foreach (var presentation in presentations)
@@ -59,15 +33,13 @@ namespace ChalmersxTools.Tools
                     presentation.LocationLat.ToString() + "\",\"" +
                     presentation.LocationLong.ToString() + "\"\n";
             }
-
-            return new CsvFileData(courseOrg + "-" + courseId + "-" + courseRun + "-presentations.csv",
+            return new CsvFileData(_session.CourseOrg + "-" + _session.CourseId + "-" + _session.CourseRun + "-presentations.csv",
                 new System.Text.UTF8Encoding().GetBytes(data));
         }
 
-        #region Private methods
-
-        private void CreateStudentPresentation(HttpRequestBase request)
+        protected override string Create(HttpRequestBase request)
         {
+            var res = "";
             try
             {
                 _sessionManager.DbContext.StudentPresentations.Add(new StudentPresentation()
@@ -96,10 +68,13 @@ namespace ChalmersxTools.Tools
             {
                 throw new Exception("Failed to create student presentation.", e);
             }
+            return res;
         }
 
-        private void EditStudentPresentation(HttpRequestBase request)
+        protected override string Edit(HttpRequestBase request)
         {
+            var res = "";
+
             try
             {
                 StudentPresentation existingStudentPresentation =
@@ -122,7 +97,24 @@ namespace ChalmersxTools.Tools
             {
                 throw new Exception("Failed to edit existing student presentation.", e);
             }
+
+            return res;
         }
+
+        protected override ViewIdentifierAndModel GetViewIdentifierAndModel(string message)
+        {
+            return new ViewIdentifierAndModel("~/Views/PresentationToolView.cshtml",
+                new PresentationToolViewModel()
+                {
+                    CurrentStudentPresentation = GetCurrentStudentPresentation(),
+                    Presentations = GetTitleTextAndCoordinateList(),
+                    Roles = _session.LtiRequest.Roles,
+                    LtiSessionId = _session.Id.ToString(),
+                    ResponseMessage = message
+                });
+        }
+
+        #region Private methods
 
         private StudentPresentation GetCurrentStudentPresentation()
         {

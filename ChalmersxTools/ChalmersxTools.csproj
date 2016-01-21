@@ -199,8 +199,10 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\CsvFileData.cs" />
+    <Compile Include="Models\EarthMassSubmission.cs" />
     <Compile Include="Models\EarthSpheresImagesSubmission.cs" />
     <Compile Include="Models\LtiSession.cs" />
+    <Compile Include="Models\View\EarthMassToolViewModel.cs" />
     <Compile Include="Models\View\EarthSpheresImageToolViewModel.cs" />
     <Compile Include="Models\View\LtiViewModelBase.cs" />
     <Compile Include="Models\View\PresentationToolViewModel.cs" />
@@ -211,9 +213,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sessions\ISessionManager.cs" />
     <Compile Include="Sessions\SessionManager.cs" />
+    <Compile Include="Tools\EarthMassTool.cs" />
     <Compile Include="Tools\EarthSpheresImageTool.cs" />
     <Compile Include="Tools\ITool.cs" />
     <Compile Include="Tools\PresentationTool.cs" />
+    <Compile Include="Tools\SimpleDataStorageToolBase.cs" />
     <Compile Include="Tools\ToolBase.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +227,7 @@
     <Content Include="Views\PresentationToolView.cshtml" />
     <Content Include="Views\StdErrorView.cshtml" />
     <Content Include="Views\EarthSpheresImageToolView.cshtml" />
+    <Content Include="Views\EarthMassToolView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

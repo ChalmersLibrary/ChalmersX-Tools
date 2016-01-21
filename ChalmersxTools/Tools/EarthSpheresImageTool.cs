@@ -10,61 +10,29 @@ using System.Web;
 
 namespace ChalmersxTools.Tools
 {
-    public class EarthSpheresImageTool : ToolBase
+    public class EarthSpheresImageTool : SimpleDataStorageToolBase
     {
         public static readonly string CONSUMER_KEY = "ChalmersxEarthSpheresImageTool";
 
         public override string ConsumerKey { get { return CONSUMER_KEY; } }
-        override protected string ConsumerSecret { get { return ConfigurationManager.AppSettings["ltiConsumerSecret"]; } }
-
-        public override ViewIdentifierAndModel HandleRequest(HttpRequestBase request)
-        {
-            var res = "";
-
-            if (request.Form["action"] == "create")
-            {
-                res = CreateSubmission(request);
-            }
-
-            if (request.Form["action"] == "edit")
-            {
-                res = EditSubmission(request);
-            }
-
-            return new ViewIdentifierAndModel("~/Views/EarthSpheresImageToolView.cshtml",
-                new EarthSpheresImageToolViewModel()
-                {
-                    Submission = GetSubmissionForCurrentStudent(),
-                    LtiSessionId = _session.Id.ToString(),
-                    Roles = _session.LtiRequest.Roles, 
-                    ResponseMessage = res
-                });
-        }
+        protected override string ConsumerSecret { get { return ConfigurationManager.AppSettings["ltiConsumerSecret"]; } }
 
         public override CsvFileData HandleDataRequest()
         {
-            string data = "", courseOrg = "", courseId = "", courseRun = "";
-
-            courseOrg = _session.CourseOrg;
-            courseId = _session.CourseId;
-            courseRun = _session.CourseRun;
-            var submissions = GetAllSubmissionsForCourseRun();
+            string data = "";
             data += "sphere1Name,sphere1Url,sphere2Name,sphere2Url\n";
-            foreach (var submission in submissions)
+            foreach (var submission in GetAllSubmissionsForCourseRun())
             {
                 data += "\"" + submission.Sphere1Name.Replace('"', '\'').Replace("\r", @"\r").Replace("\n", @"\n") + "\",\"" +
                     submission.Sphere1Url.Replace('"', '\'').Replace("\r", @"\r").Replace("\n", @"\n") + "\",\"" +
                     submission.Sphere2Name.Replace('"', '\'').Replace("\r", @"\r").Replace("\n", @"\n") + "\",\"" +
                     submission.Sphere2Url.Replace('"', '\'').Replace("\r", @"\r").Replace("\n", @"\n") + "\"\n";
             }
-
-            return new CsvFileData(courseOrg + "-" + courseId + "-" + courseRun + "-earth-spheres-images.csv",
+            return new CsvFileData(_session.CourseOrg + "-" + _session.CourseId + "-" + _session.CourseRun + "-earth-spheres-images.csv",
                 new System.Text.UTF8Encoding().GetBytes(data));
         }
 
-        #region Private methods
-
-        private string CreateSubmission(HttpRequestBase request)
+        protected override string Create(HttpRequestBase request)
         {
             var res = "";
 
@@ -99,7 +67,7 @@ namespace ChalmersxTools.Tools
             return res;
         }
 
-        private string EditSubmission(HttpRequestBase request)
+        protected override string Edit(HttpRequestBase request)
         {
             var res = "";
 
@@ -134,6 +102,20 @@ namespace ChalmersxTools.Tools
 
             return res;
         }
+
+        protected override ViewIdentifierAndModel GetViewIdentifierAndModel(string message)
+        {
+            return new ViewIdentifierAndModel("~/Views/EarthSpheresImageToolView.cshtml",
+                new EarthSpheresImageToolViewModel()
+                {
+                    Submission = GetSubmissionForCurrentStudent(),
+                    LtiSessionId = _session.Id.ToString(),
+                    Roles = _session.LtiRequest.Roles,
+                    ResponseMessage = message
+                });
+        }
+
+        #region Private methods
 
         private EarthSpheresImagesSubmission GetSubmissionForCurrentStudent()
         {
