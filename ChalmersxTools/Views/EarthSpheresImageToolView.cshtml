@@ -21,11 +21,11 @@
                 <input id="sphere1Url" name="sphere1Url" type="url" style="width: 74%;" value="@Model.Submission.Sphere1Url" />
                 <select id="sphere1Name" name="sphere1Name" style="width: 24%;">
                     <option value="">Select sphere</option>
-                    <option value="geosphere" @(Model.Submission.Sphere1Name == "geosphere" ? "selected" : "")>Geosphere</option>
-                    <option value="atmosphere" @(Model.Submission.Sphere1Name == "atmosphere" ? "selected" : "")>Atmosphere</option>
-                    <option value="biosphere" @(Model.Submission.Sphere1Name == "biosphere" ? "selected" : "")>Biosphere</option>
-                    <option value="hydrosphere" @(Model.Submission.Sphere1Name == "hydrosphere" ? "selected" : "")>Hydrosphere</option>
-                    <option value="cryosphere" @(Model.Submission.Sphere1Name == "cryosphere" ? "selected" : "")>Cryosphere</option>
+                    <option value="geosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "geosphere" ? "selected" : ""))> Geosphere</option>
+                    <option value="atmosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "atmosphere" ? "selected" : ""))> Atmosphere</option>
+                    <option value="biosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "biosphere" ? "selected" : ""))> Biosphere</option>
+                    <option value="hydrosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "hydrosphere" ? "selected" : ""))> Hydrosphere</option>
+                    <option value="cryosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "cryosphere" ? "selected" : ""))> Cryosphere</option>
                 </select>
             </div>
             <div>
@@ -33,11 +33,11 @@
                 <input id="sphere2Url" name="sphere2Url" type="url" style="width: 74%;" value="@Model.Submission.Sphere2Url" />
                 <select id="sphere2Name" name="sphere2Name" style="width: 24%;">
                     <option value="">Select sphere</option>
-                    <option value="geosphere" @(Model.Submission.Sphere2Name == "geosphere" ? "selected" : "")>Geosphere</option>
-                    <option value="atmosphere" @(Model.Submission.Sphere2Name == "atmosphere" ? "selected" : "")>Atmosphere</option>
-                    <option value="biosphere" @(Model.Submission.Sphere2Name == "biosphere" ? "selected" : "")>Biosphere</option>
-                    <option value="hydrosphere" @(Model.Submission.Sphere2Name == "hydrosphere" ? "selected" : "")>Hydrosphere</option>
-                    <option value="cryosphere" @(Model.Submission.Sphere2Name == "cryosphere" ? "selected" : "")>Cryosphere</option>
+                    <option value="geosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere2Name == "geosphere" ? "selected" : ""))>Geosphere</option>
+                    <option value="atmosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere2Name == "atmosphere" ? "selected" : ""))> Atmosphere</option>
+                    <option value="biosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere2Name == "biosphere" ? "selected" : ""))> Biosphere</option>
+                    <option value="hydrosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere2Name == "hydrosphere" ? "selected" : ""))> Hydrosphere</option>
+                    <option value="cryosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere2Name == "cryosphere" ? "selected" : ""))> Cryosphere</option>
                 </select>
             </div>
             <div style="padding-top: 10px;">
