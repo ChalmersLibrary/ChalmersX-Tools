@@ -25,7 +25,7 @@ namespace ChalmersxTools.Tools
                     Submission = GetSubmissionForCurrentStudent(),
                     LtiSessionId = _session.Id.ToString(),
                     Roles = _session.LtiRequest.Roles,
-                    ResponseMessage = message
+                    ResponseMessage = "Foo bar"
                 });
         }
 
@@ -46,7 +46,7 @@ namespace ChalmersxTools.Tools
                     submission.Measurement2 + "\"\n";
             }
 
-            return new CsvFileData(courseOrg + "-" + courseId + "-" + courseRun + "-earth-spheres-images.csv",
+            return new CsvFileData(courseOrg + "-" + courseId + "-" + courseRun + "-temperature-measurements.csv",
                 new System.Text.UTF8Encoding().GetBytes(data));
         }
 
@@ -110,9 +110,8 @@ namespace ChalmersxTools.Tools
 
             return res;
         }
+
         #region Private methods
-
-
 
         private string SubmitScore(TemperatureMeasurementSubmission submission)
         {
