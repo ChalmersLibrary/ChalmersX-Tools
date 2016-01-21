@@ -1,0 +1,38 @@
+﻿@model ChalmersxTools.Models.View.TemperatureMeasurementToolViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TemperatureMeasurementToolView</title>
+</head>
+<body>
+    <div>
+        <div id="message-box">@Html.Raw(Model.ResponseMessage)</div>
+        <form>
+            <label for="lat">Latitude</label>
+            <input type="number" name="lat" value="@Model.Submission.Position.Latitude"/>
+            <label for="long">Longitude</label>
+            <input type="number" name="long" value="@Model.Submission.Position.Longitude" />
+            <label for="measurement1">Temperature day 1</label>
+            <input type="number" name="measurement1" value="@Model.Submission.Measurement1"/>
+            <label for="measurement2">Temperature day 2</label>
+            <input type="number" name="measurement2" value="@Model.Submission.Measurement2"/>
+        </form>
+        @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
+        {
+            <br>
+            <hr>
+            <br>
+            <div>
+                <p>This information is not visible for students.</p>
+                <a href="/Tool/GetData?ltiSessionId=@Model.LtiSessionId">Download data</a>
+            </div>
+        }
+    </div>
+</body>
+</html>

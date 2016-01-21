@@ -16,5 +16,6 @@ namespace ChalmersxTools.Database
         public DbSet<StudentPresentation> StudentPresentations { get; set; }
         public DbSet<EarthSpheresImagesSubmission> EarthSpheresImagesSubmissions { get; set; }
         public DbSet<EarthMassSubmission> EarthMassSubmissions { get; set; }
+        public DbSet<TemperatureMeasurementSubmission> TemperatureMeasurementSubmissions { get; set; }
     }
 }
