@@ -15,13 +15,13 @@
         <div id="message-box">@Html.Raw(Model.ResponseMessage)</div>
         <form id="temperature-measurements" method="post">
             <label for="lat">Latitude</label>
-            <input type="number" name="lat" value="@Model.Submission.Position.Latitude"/>
+            <input type="number" name="lat" value="@(Model.Submission == null ? "" : Model.Submission.Position.Latitude.ToString())"/>
             <label for="long">Longitude</label>
-            <input type="number" name="long" value="@Model.Submission.Position.Longitude" />
+            <input type="number" name="long" value="@(Model.Submission == null ? "" : @Model.Submission.Position.Longitude.ToString())" />
             <label for="measurement1">Temperature day 1</label>
-            <input type="number" name="measurement1" value="@Model.Submission.Measurement1"/>
+            <input type="number" name="measurement1" value="@(Model.Submission == null ? "" : Model.Submission.Measurement1.ToString())"/>
             <label for="measurement2">Temperature day 2</label>
-            <input type="number" name="measurement2" value="@Model.Submission.Measurement2"/>
+            <input type="number" name="measurement2" value="@(Model.Submission == null ? "" : Model.Submission.Measurement2.ToString())"/>
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
             <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
             <input type="submit" value="Save" />

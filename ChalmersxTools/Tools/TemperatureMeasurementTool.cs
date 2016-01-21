@@ -25,7 +25,7 @@ namespace ChalmersxTools.Tools
                     Submission = GetSubmissionForCurrentStudent(),
                     LtiSessionId = _session.Id.ToString(),
                     Roles = _session.LtiRequest.Roles,
-                    ResponseMessage = "Foo bar"
+                    ResponseMessage = message
                 });
         }
 
