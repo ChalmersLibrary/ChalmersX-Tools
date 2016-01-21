@@ -223,7 +223,7 @@ namespace ChalmersxTools.Tools
                     0.5);
             }
 
-            if (!canAccessImage1 && !canAccessImage2)
+            if (!canAccessImage1 && !url1IsEmpty && !canAccessImage2 && !url2IsEmpty)
             {
                 res = "<span style='color: red;'>Couldn't access any of the submitted images.</span>";
             }

@@ -159,5 +159,11 @@ namespace ChalmersxTools.Sessions
             session.Timestamp = DateTime.Now;
             _dbContext.SaveChanges();
         }
+
+        public void UpdateLtiRequest(LtiSession session, LtiRequest ltiRequest)
+        {
+            session.LtiRequest = ltiRequest;
+            _dbContext.SaveChanges();
+        }
     }
 }
