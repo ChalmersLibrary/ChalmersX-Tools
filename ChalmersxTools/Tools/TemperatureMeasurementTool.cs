@@ -10,34 +10,22 @@ using ChalmersxTools.Models.Database;
 
 namespace ChalmersxTools.Tools
 {
-    public class TemperatureMeasurementTool : ToolBase
+    public class TemperatureMeasurementTool : SimpleDataStorageToolBase
     {
         public static readonly string CONSUMER_KEY = "ChalmersxTemperatureMeasurementTool";
 
         public override string ConsumerKey { get { return CONSUMER_KEY; } }
         override protected string ConsumerSecret { get { return ConfigurationManager.AppSettings["ltiConsumerSecret"]; } }
 
-        public override ViewIdentifierAndModel HandleRequest(HttpRequestBase request)
+        protected override ViewIdentifierAndModel GetViewIdentifierAndModel(string message)
         {
-            var res = "";
-
-            if (request.Form["action"] == "create")
-            {
-                res = CreateSubmission(request);
-            }
-
-            if (request.Form["action"] == "edit")
-            {
-                res = EditSubmission(request);
-            }
-
             return new ViewIdentifierAndModel("~/Views/TemperatureMeasurementToolView.cshtml",
                 new TemperatureMeasurementToolViewModel()
                 {
                     Submission = GetSubmissionForCurrentStudent(),
                     LtiSessionId = _session.Id.ToString(),
                     Roles = _session.LtiRequest.Roles,
-                    ResponseMessage = res
+                    ResponseMessage = message
                 });
         }
 
@@ -61,13 +49,13 @@ namespace ChalmersxTools.Tools
             return new CsvFileData(courseOrg + "-" + courseId + "-" + courseRun + "-earth-spheres-images.csv",
                 new System.Text.UTF8Encoding().GetBytes(data));
         }
-        #region Private methods
 
-        private string CreateSubmission(HttpRequestBase request)
+        protected override string Create(HttpRequestBase request)
         {
             var res = "";
 
-            try { 
+            try
+            {
                 var newSubmission = _sessionManager.DbContext.TemperatureMeasurementSubmissions.Add(new TemperatureMeasurementSubmission()
                 {
                     UserId = _session.UserId,
@@ -93,7 +81,7 @@ namespace ChalmersxTools.Tools
 
         }
 
-        private string EditSubmission(HttpRequestBase request)
+        protected override string Edit(HttpRequestBase request)
         {
             var res = "";
 
@@ -122,6 +110,9 @@ namespace ChalmersxTools.Tools
 
             return res;
         }
+        #region Private methods
+
+
 
         private string SubmitScore(TemperatureMeasurementSubmission submission)
         {
