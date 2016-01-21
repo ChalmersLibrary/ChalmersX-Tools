@@ -173,11 +173,10 @@ namespace ChalmersxTools.Tools
 
             if (res)
             {
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
-                request.Method = "HEAD";
-
                 try
                 {
+                    HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+                    request.Method = "HEAD";
                     res = request.GetResponse().ContentType.Contains("image");
                 }
                 catch
