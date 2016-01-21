@@ -18,7 +18,7 @@
         <form id="earth-spheres-images" method="post">
             <div>
                 <label for="sphere1Url">Image 1</label>
-                <input id="sphere1Url" name="sphere1Url" type="url" style="width: 74%;" value="@Model.Submission.Sphere1Url" />
+                <input id="sphere1Url" name="sphere1Url" type="url" style="width: 74%;" value="@(Model.Submission == null ? "" : Model.Submission.Sphere1Url)" />
                 <select id="sphere1Name" name="sphere1Name" style="width: 24%;">
                     <option value="">Select sphere</option>
                     <option value="geosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "geosphere" ? "selected" : ""))> Geosphere</option>
@@ -30,7 +30,7 @@
             </div>
             <div>
                 <label for="sphere2Url">Image 2</label>
-                <input id="sphere2Url" name="sphere2Url" type="url" style="width: 74%;" value="@Model.Submission.Sphere2Url" />
+                <input id="sphere2Url" name="sphere2Url" type="url" style="width: 74%;" value="@(Model.Submission == null ? "" : Model.Submission.Sphere2Url)" />
                 <select id="sphere2Name" name="sphere2Name" style="width: 24%;">
                     <option value="">Select sphere</option>
                     <option value="geosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere2Name == "geosphere" ? "selected" : ""))>Geosphere</option>
