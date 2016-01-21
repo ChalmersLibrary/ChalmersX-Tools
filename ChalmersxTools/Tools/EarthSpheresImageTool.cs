@@ -70,21 +70,24 @@ namespace ChalmersxTools.Tools
 
             try
             {
+                var url1IsValidImageUrl = CanAccessImageUrl(request.Form["sphere1Url"].ToString());
+                var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
+
                 var newSubmission = _sessionManager.DbContext.EarthSpheresImagesSubmissions.Add(new EarthSpheresImagesSubmission()
                 {
                     UserId = _session.UserId,
                     CourseOrg = _session.CourseOrg,
                     CourseId = _session.CourseId,
                     CourseRun = _session.CourseRun,
-                    Sphere1Name = request.Form["sphere1Name"].ToString(),
-                    Sphere1Url = request.Form["sphere1Url"].ToString(),
-                    Sphere2Name = request.Form["sphere2Name"].ToString(),
-                    Sphere2Url = request.Form["sphere2Url"].ToString()
+                    Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : ""),
+                    Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : ""),
+                    Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : ""),
+                    Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : "")
                 });
 
                 _sessionManager.DbContext.SaveChanges();
 
-                res = SubmitScore(newSubmission);
+                res = SubmitScore(newSubmission, url1IsValidImageUrl, url2IsValidImageUrl);
             }
             catch (Exception e)
             {
@@ -100,6 +103,9 @@ namespace ChalmersxTools.Tools
 
             try
             {
+                var url1IsValidImageUrl = CanAccessImageUrl(request.Form["sphere1Url"].ToString());
+                var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
+
                 EarthSpheresImagesSubmission existing =
                     (from o in _sessionManager.DbContext.EarthSpheresImagesSubmissions
                      where o.UserId == _session.UserId &&
@@ -108,14 +114,14 @@ namespace ChalmersxTools.Tools
                      o.CourseRun == _session.CourseRun
                      select o).SingleOrDefault();
 
-                existing.Sphere1Name = request.Form["sphere1Name"].ToString();
-                existing.Sphere1Url = request.Form["sphere1Url"].ToString();
-                existing.Sphere2Name = request.Form["sphere2Name"].ToString();
-                existing.Sphere2Url = request.Form["sphere2Url"].ToString();
+                existing.Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : "");
+                existing.Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : "");
+                existing.Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : "");
+                existing.Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : "");
 
                 _sessionManager.DbContext.SaveChanges();
 
-                res = SubmitScore(existing);
+                res = SubmitScore(existing, url1IsValidImageUrl, url2IsValidImageUrl);
             }
             catch (Exception e)
             {
@@ -188,12 +194,9 @@ namespace ChalmersxTools.Tools
             return res;
         }
 
-        private string SubmitScore(EarthSpheresImagesSubmission submission)
+        private string SubmitScore(EarthSpheresImagesSubmission submission, bool canAccessImage1, bool canAccessImage2)
         {
             var res = "";
-
-            var canAccessImage1 = CanAccessImageUrl(submission.Sphere1Url);
-            var canAccessImage2 = CanAccessImageUrl(submission.Sphere2Url);
 
             if (canAccessImage1 && !String.IsNullOrWhiteSpace(submission.Sphere1Name) &&
                 canAccessImage2 && !String.IsNullOrWhiteSpace(submission.Sphere2Name))
