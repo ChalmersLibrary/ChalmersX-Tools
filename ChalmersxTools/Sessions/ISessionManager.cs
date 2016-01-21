@@ -18,5 +18,6 @@ namespace ChalmersxTools.Sessions
         LtiSession TryToExtractSessionFromRequest(HttpRequestBase request);
         LtiSession CreateValidSession(LtiSession session);
         void RefreshSession(LtiSession session);
+        void UpdateLtiRequest(LtiSession session, LtiRequest ltiRequest);
     }
 }

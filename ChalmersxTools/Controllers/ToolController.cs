@@ -44,20 +44,27 @@ namespace ChalmersxTools.Controllers
                     ITool tool = null;
                     session = sessionManager.TryToExtractSessionFromRequest(Request);
 
-                    if (!session.Valid)
+                    // Try to get the LTI request from Request.
+                    Request.CheckForRequiredLtiParameters();
+
+                    var newLtiRequest = new LtiRequest(null);
+                    newLtiRequest.ParseRequest(Request);
+
+                    tool = _unityContainer.Resolve<ITool>(newLtiRequest.ConsumerKey);
+
+                    if (!tool.IsAuthorized(Request, newLtiRequest.Signature))
                     {
-                        // Try to get the LTI request from Request.
-                        Request.CheckForRequiredLtiParameters();
+                        throw new Exception("Unauthorized.");
+                    }
 
-                        session.LtiRequest = new LtiRequest(null);
-                        session.LtiRequest.ParseRequest(Request);
-
-                        tool = _unityContainer.Resolve<ITool>(session.LtiRequest.ConsumerKey);
-
-                        if (!tool.IsAuthorized(Request, session.LtiRequest.Signature))
-                        {
-                            throw new Exception("Unauthorized.");
-                        }
+                    // Update the LTI request in the session.
+                    if (session.Valid)
+                    {
+                        sessionManager.UpdateLtiRequest(session, newLtiRequest);
+                    }
+                    else
+                    {
+                        session.LtiRequest = newLtiRequest;
                     }
 
                     // Get all the course run identifiers from context ID.

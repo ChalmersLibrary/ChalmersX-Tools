@@ -200,12 +200,11 @@ namespace ChalmersxTools.Tools
 
         private string SubmitScore(EarthSpheresImagesSubmission submission, bool url1IsEmpty, bool canAccessImage1, bool url2IsEmpty, bool canAccessImage2)
         {
-            var res = "Unknown";
+            var res = "";
 
             if (canAccessImage1 && !String.IsNullOrWhiteSpace(submission.Sphere1Name) &&
                 canAccessImage2 && !String.IsNullOrWhiteSpace(submission.Sphere2Name))
             {
-                res = "1.0!\n" + _session.LtiRequest.LisOutcomeServiceUrl + "\n" + _session.LtiRequest.ConsumerKey + "\n" + ConsumerSecret + "\n" + _session.LtiRequest.LisResultSourcedId;
                 OutcomesClient.PostScore(
                     _session.LtiRequest.LisOutcomeServiceUrl,
                     _session.LtiRequest.ConsumerKey,
@@ -216,7 +215,6 @@ namespace ChalmersxTools.Tools
             else if ((canAccessImage1 && !String.IsNullOrWhiteSpace(submission.Sphere1Name)) ||
                 (canAccessImage2 && !String.IsNullOrWhiteSpace(submission.Sphere2Name)))
             {
-                res = "0.5!\n" + _session.LtiRequest.LisOutcomeServiceUrl + "\n" + _session.LtiRequest.ConsumerKey + "\n" + ConsumerSecret + "\n" + _session.LtiRequest.LisResultSourcedId;
                 OutcomesClient.PostScore(
                     _session.LtiRequest.LisOutcomeServiceUrl,
                     _session.LtiRequest.ConsumerKey,
@@ -225,7 +223,7 @@ namespace ChalmersxTools.Tools
                     0.5);
             }
 
-            /*if (!canAccessImage1 && !url1IsEmpty && !canAccessImage2 && !url2IsEmpty)
+            if (!canAccessImage1 && !url1IsEmpty && !canAccessImage2 && !url2IsEmpty)
             {
                 res = "<span style='color: red;'>Couldn't access any of the submitted images.</span>";
             }
@@ -240,7 +238,7 @@ namespace ChalmersxTools.Tools
             else
             {
                 res = "<span style='color: green;'>Successfully saved image URLs.</span>";
-            }*/
+            }
 
             return res;
         }
