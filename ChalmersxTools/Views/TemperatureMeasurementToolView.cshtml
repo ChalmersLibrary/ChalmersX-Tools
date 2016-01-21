@@ -13,7 +13,7 @@
 <body>
     <div>
         <div id="message-box">@Html.Raw(Model.ResponseMessage)</div>
-        <form id="TemperatureMeasurement">
+        <form id="temperature-measurements" method="post">
             <label for="lat">Latitude</label>
             <input type="number" name="lat" value="@Model.Submission.Position.Latitude"/>
             <label for="long">Longitude</label>

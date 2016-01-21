@@ -137,7 +137,7 @@ namespace ChalmersxTools.Tools
                         ConsumerSecret,
                         _session.LtiRequest.LisResultSourcedId,
                         0.5);
-                    res = "Your measurements are saved";
+                    res = "Your measurement is saved";
                 }
             }
             else
