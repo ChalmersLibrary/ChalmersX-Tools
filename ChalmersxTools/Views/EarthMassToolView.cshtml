@@ -18,11 +18,11 @@
         <form id="earth-mass" method="post">
             <div>
                 <label for="meanGravityAcceleration">Measured Mean Gravity Acceleration</label>
-                <input id="meanGravityAcceleration" name="meanGravityAcceleration" type="url" style="width: 74%;" value="@(Model.Submission == null ? "" : Model.Submission.MeanGravityAcceleration.ToString("e3"))" />
+                <input id="meanGravityAcceleration" name="meanGravityAcceleration" type="url" value="@(Model.Submission == null ? "" : Model.Submission.MeanGravityAcceleration.ToString("e3"))" />
             </div>
             <div>
                 <label for="earthMass">Calculated Total Mass of Earth</label>
-                <input id="earthMass" name="earthMass" type="url" style="width: 74%;" value="@(Model.Submission == null ? "" : Model.Submission.TotalEarthMass.ToString("e3"))" />
+                <input id="earthMass" name="earthMass" type="url" value="@(Model.Submission == null ? "" : Model.Submission.TotalEarthMass.ToString("e3"))" />
             </div>
             <div style="padding-top: 10px;">
                 <input type="button" value="Save" onclick="validateAndSubmitForm();">
@@ -41,5 +41,19 @@
             </div>
         }
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        function validateAndSubmitForm() {
+            $("#message-box").text("");
+
+            if ($("#meanGravityAcceleration").val() == "") {
+                $("#message-box").html("<span style='color: red;'>You have to enter a value for the mean gravity acceleration.</span>");
+            } else if ($("#earthMass").val() == "") {
+                $("#message-box").html("<span style='color: red;'>You have to enter a value for the total mass of earth.</span>");
+            } else {
+                document.forms["earth-mass"].submit();
+            }
+        }
+    </script>
 </body>
 </html>
