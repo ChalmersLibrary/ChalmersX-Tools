@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace ChalmersxTools.Tools
@@ -18,21 +19,25 @@ namespace ChalmersxTools.Tools
 
         public override ViewIdentifierAndModel HandleRequest(HttpRequestBase request)
         {
+            var res = "";
+
             if (request.Form["action"] == "create")
             {
-                CreateSubmission(request);
+                res = CreateSubmission(request);
             }
 
             if (request.Form["action"] == "edit")
             {
-                EditSubmission(request);
+                res = EditSubmission(request);
             }
 
             return new ViewIdentifierAndModel("~/Views/EarthSpheresImageToolView.cshtml",
                 new EarthSpheresImageToolViewModel()
                 {
                     Submission = GetSubmissionForCurrentStudent(),
-                    LtiSessionId = _session.Id.ToString()
+                    LtiSessionId = _session.Id.ToString(),
+                    Roles = _session.LtiRequest.Roles, 
+                    ResponseMessage = res
                 });
         }
 
@@ -59,45 +64,48 @@ namespace ChalmersxTools.Tools
 
         #region Private methods
 
-        private void CreateSubmission(HttpRequestBase request)
+        private string CreateSubmission(HttpRequestBase request)
         {
+            var res = "";
+
             try
             {
+                var url1IsValidImageUrl = CanAccessImageUrl(request.Form["sphere1Url"].ToString());
+                var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
+
                 var newSubmission = _sessionManager.DbContext.EarthSpheresImagesSubmissions.Add(new EarthSpheresImagesSubmission()
                 {
                     UserId = _session.UserId,
                     CourseOrg = _session.CourseOrg,
                     CourseId = _session.CourseId,
                     CourseRun = _session.CourseRun,
-                    Sphere1Name = request.Form["sphere1Name"].ToString(),
-                    Sphere1Url = request.Form["sphere1Url"].ToString(),
-                    Sphere2Name = request.Form["sphere2Name"].ToString(),
-                    Sphere2Url = request.Form["sphere2Url"].ToString()
+                    Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : ""),
+                    Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : ""),
+                    Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : ""),
+                    Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : "")
                 });
 
                 _sessionManager.DbContext.SaveChanges();
 
-                if (!String.IsNullOrWhiteSpace(newSubmission.Sphere1Name) && !String.IsNullOrWhiteSpace(newSubmission.Sphere1Url) &&
-                    !String.IsNullOrWhiteSpace(newSubmission.Sphere2Name) && !String.IsNullOrWhiteSpace(newSubmission.Sphere2Url))
-                {
-                    OutcomesClient.PostScore(
-                        _session.LtiRequest.LisOutcomeServiceUrl,
-                        _session.LtiRequest.ConsumerKey,
-                        ConsumerSecret,
-                        _session.LtiRequest.LisResultSourcedId,
-                        1.0);
-                }
+                res = SubmitScore(newSubmission, url1IsValidImageUrl, url2IsValidImageUrl);
             }
             catch (Exception e)
             {
                 throw new Exception("Failed to create submission.", e);
             }
+
+            return res;
         }
 
-        private void EditSubmission(HttpRequestBase request)
+        private string EditSubmission(HttpRequestBase request)
         {
+            var res = "";
+
             try
             {
+                var url1IsValidImageUrl = CanAccessImageUrl(request.Form["sphere1Url"].ToString());
+                var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
+
                 EarthSpheresImagesSubmission existing =
                     (from o in _sessionManager.DbContext.EarthSpheresImagesSubmissions
                      where o.UserId == _session.UserId &&
@@ -106,28 +114,21 @@ namespace ChalmersxTools.Tools
                      o.CourseRun == _session.CourseRun
                      select o).SingleOrDefault();
 
-                existing.Sphere1Name = request.Form["sphere1Name"].ToString();
-                existing.Sphere1Url = request.Form["sphere1Url"].ToString();
-                existing.Sphere2Name = request.Form["sphere2Name"].ToString();
-                existing.Sphere2Url = request.Form["sphere2Url"].ToString();
+                existing.Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : "");
+                existing.Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : "");
+                existing.Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : "");
+                existing.Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : "");
 
                 _sessionManager.DbContext.SaveChanges();
 
-                if (!String.IsNullOrWhiteSpace(existing.Sphere1Name) && !String.IsNullOrWhiteSpace(existing.Sphere1Url) &&
-                    !String.IsNullOrWhiteSpace(existing.Sphere2Name) && !String.IsNullOrWhiteSpace(existing.Sphere2Url))
-                {
-                    OutcomesClient.PostScore(
-                        _session.LtiRequest.LisOutcomeServiceUrl,
-                        _session.LtiRequest.ConsumerKey,
-                        ConsumerSecret,
-                        _session.LtiRequest.LisResultSourcedId,
-                        1.0);
-                }
+                res = SubmitScore(existing, url1IsValidImageUrl, url2IsValidImageUrl);
             }
             catch (Exception e)
             {
                 throw new Exception("Failed to edit existing student presentation.", e);
             }
+
+            return res;
         }
 
         private EarthSpheresImagesSubmission GetSubmissionForCurrentStudent()
@@ -167,6 +168,72 @@ namespace ChalmersxTools.Tools
             catch (Exception e)
             {
                 throw new Exception("Failed to get all submissions for course run.", e);
+            }
+
+            return res;
+        }
+
+        private bool CanAccessImageUrl(string url)
+        {
+            var res = !String.IsNullOrWhiteSpace(url);
+
+            if (res)
+            {
+                try
+                {
+                    HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+                    request.Method = "HEAD";
+                    res = request.GetResponse().ContentType.Contains("image");
+                }
+                catch
+                {
+                    res = false;
+                }
+            }
+
+            return res;
+        }
+
+        private string SubmitScore(EarthSpheresImagesSubmission submission, bool canAccessImage1, bool canAccessImage2)
+        {
+            var res = "";
+
+            if (canAccessImage1 && !String.IsNullOrWhiteSpace(submission.Sphere1Name) &&
+                canAccessImage2 && !String.IsNullOrWhiteSpace(submission.Sphere2Name))
+            {
+                OutcomesClient.PostScore(
+                    _session.LtiRequest.LisOutcomeServiceUrl,
+                    _session.LtiRequest.ConsumerKey,
+                    ConsumerSecret,
+                    _session.LtiRequest.LisResultSourcedId,
+                    1.0);
+            }
+            else if ((canAccessImage1 && !String.IsNullOrWhiteSpace(submission.Sphere1Name)) ||
+                (canAccessImage2 && !String.IsNullOrWhiteSpace(submission.Sphere2Name)))
+            {
+                OutcomesClient.PostScore(
+                    _session.LtiRequest.LisOutcomeServiceUrl,
+                    _session.LtiRequest.ConsumerKey,
+                    ConsumerSecret,
+                    _session.LtiRequest.LisResultSourcedId,
+                    0.5);
+            }
+
+            if (!canAccessImage1 && !canAccessImage2)
+            {
+                res = "<span style='color: red;'>Couldn't access any of the submitted images.</span>";
+            }
+            else if (!canAccessImage1 && !String.IsNullOrWhiteSpace(submission.Sphere1Url))
+            {
+                res = "<span style='color: red;'>Couldn't access image 1.</span>";
+            }
+            else if (!canAccessImage2 && !String.IsNullOrWhiteSpace(submission.Sphere2Url))
+            {
+                res = "<span style='color: red;'>Couldn't access image 2.</span>";
+            }
+            else
+            {
+                res = "<span style='color: green;'>Successfully saved image URLs.</span>";
             }
 
             return res;

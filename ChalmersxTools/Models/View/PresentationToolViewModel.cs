@@ -10,7 +10,6 @@ namespace ChalmersxTools.Models.View
     {
         public StudentPresentation CurrentStudentPresentation { get; set; }
         public List<TitleTextAndCoordinate> Presentations { get; set; }
-        public string Roles { get; set; }
         public string LtiRequest { get; set; }
     }
 }
