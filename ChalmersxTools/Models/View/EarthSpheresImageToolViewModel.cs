@@ -7,6 +7,6 @@ namespace ChalmersxTools.Models.View
 {
     public class EarthSpheresImageToolViewModel : LtiViewModelBase
     {
-
+        public EarthSpheresImagesSubmission Submission { get; set; }
     }
 }

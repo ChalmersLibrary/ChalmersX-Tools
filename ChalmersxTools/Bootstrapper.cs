@@ -4,6 +4,8 @@ using Unity.Mvc4;
 using ChalmersxTools.Sessions;
 using ChalmersxTools.Database;
 using ChalmersxTools.Tools;
+using System.Configuration;
+using System;
 
 namespace ChalmersxTools
 {
@@ -26,9 +28,8 @@ namespace ChalmersxTools
         public static void RegisterTypes(IUnityContainer container)
         {
             container.RegisterInstance<IUnityContainer>(container);
-            container.RegisterType<ISessionManager, SessionManager>();
             container.RegisterType<LearningToolServerDbContext>();
-
+            container.RegisterType<ISessionManager, SessionManager>();
             container.RegisterType<ITool, PresentationTool>(PresentationTool.CONSUMER_KEY);
             container.RegisterType<ITool, EarthSpheresImageTool>(EarthSpheresImageTool.CONSUMER_KEY);
         }

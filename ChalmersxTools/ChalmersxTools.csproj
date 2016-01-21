@@ -193,9 +193,14 @@
     <Compile Include="Migrations\201601151113066_RenamedSerializedLtiRequestColumn.Designer.cs">
       <DependentUpon>201601151113066_RenamedSerializedLtiRequestColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601201555210_AddEarthSpheres.cs" />
+    <Compile Include="Migrations\201601201555210_AddEarthSpheres.Designer.cs">
+      <DependentUpon>201601201555210_AddEarthSpheres.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\CsvFileData.cs" />
+    <Compile Include="Models\EarthSpheresImagesSubmission.cs" />
     <Compile Include="Models\LtiSession.cs" />
     <Compile Include="Models\View\EarthSpheresImageToolViewModel.cs" />
     <Compile Include="Models\View\LtiViewModelBase.cs" />
@@ -254,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601151113066_RenamedSerializedLtiRequestColumn.resx">
       <DependentUpon>201601151113066_RenamedSerializedLtiRequestColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601201555210_AddEarthSpheres.resx">
+      <DependentUpon>201601201555210_AddEarthSpheres.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
