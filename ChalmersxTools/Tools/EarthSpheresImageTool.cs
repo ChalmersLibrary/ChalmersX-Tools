@@ -70,6 +70,8 @@ namespace ChalmersxTools.Tools
 
             try
             {
+                var url1IsEmpty = String.IsNullOrWhiteSpace(request.Form["sphere1Url"].ToString());
+                var url2IsEmpty = String.IsNullOrWhiteSpace(request.Form["sphere2Url"].ToString());
                 var url1IsValidImageUrl = CanAccessImageUrl(request.Form["sphere1Url"].ToString());
                 var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
 
@@ -87,7 +89,7 @@ namespace ChalmersxTools.Tools
 
                 _sessionManager.DbContext.SaveChanges();
 
-                res = SubmitScore(newSubmission, url1IsValidImageUrl, url2IsValidImageUrl);
+                res = SubmitScore(newSubmission, url1IsEmpty, url1IsValidImageUrl, url2IsEmpty, url2IsValidImageUrl);
             }
             catch (Exception e)
             {
@@ -103,6 +105,8 @@ namespace ChalmersxTools.Tools
 
             try
             {
+                var url1IsEmpty = String.IsNullOrWhiteSpace(request.Form["sphere1Url"].ToString());
+                var url2IsEmpty = String.IsNullOrWhiteSpace(request.Form["sphere2Url"].ToString());
                 var url1IsValidImageUrl = CanAccessImageUrl(request.Form["sphere1Url"].ToString());
                 var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
 
@@ -121,7 +125,7 @@ namespace ChalmersxTools.Tools
 
                 _sessionManager.DbContext.SaveChanges();
 
-                res = SubmitScore(existing, url1IsValidImageUrl, url2IsValidImageUrl);
+                res = SubmitScore(existing, url1IsEmpty, url1IsValidImageUrl, url2IsEmpty, url2IsValidImageUrl);
             }
             catch (Exception e)
             {
@@ -194,7 +198,7 @@ namespace ChalmersxTools.Tools
             return res;
         }
 
-        private string SubmitScore(EarthSpheresImagesSubmission submission, bool canAccessImage1, bool canAccessImage2)
+        private string SubmitScore(EarthSpheresImagesSubmission submission, bool url1IsEmpty, bool canAccessImage1, bool url2IsEmpty, bool canAccessImage2)
         {
             var res = "";
 
@@ -223,11 +227,11 @@ namespace ChalmersxTools.Tools
             {
                 res = "<span style='color: red;'>Couldn't access any of the submitted images.</span>";
             }
-            else if (!canAccessImage1 && !String.IsNullOrWhiteSpace(submission.Sphere1Url))
+            else if (!canAccessImage1 && !url1IsEmpty)
             {
                 res = "<span style='color: red;'>Couldn't access image 1.</span>";
             }
-            else if (!canAccessImage2 && !String.IsNullOrWhiteSpace(submission.Sphere2Url))
+            else if (!canAccessImage2 && !url2IsEmpty)
             {
                 res = "<span style='color: red;'>Couldn't access image 2.</span>";
             }
