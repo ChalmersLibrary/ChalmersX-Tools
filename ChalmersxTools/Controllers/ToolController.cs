@@ -45,26 +45,36 @@ namespace ChalmersxTools.Controllers
                     session = sessionManager.TryToExtractSessionFromRequest(Request);
 
                     // Try to get the LTI request from Request.
-                    Request.CheckForRequiredLtiParameters();
-
-                    var newLtiRequest = new LtiRequest(null);
-                    newLtiRequest.ParseRequest(Request);
-
-                    tool = _unityContainer.Resolve<ITool>(newLtiRequest.ConsumerKey);
-
-                    if (!tool.IsAuthorized(Request, newLtiRequest.Signature))
+                    try
                     {
-                        throw new Exception("Unauthorized.");
+                        Request.CheckForRequiredLtiParameters();
+
+                        var newLtiRequest = new LtiRequest(null);
+                        newLtiRequest.ParseRequest(Request);
+
+                        tool = _unityContainer.Resolve<ITool>(newLtiRequest.ConsumerKey);
+
+                        if (!tool.IsAuthorized(Request, newLtiRequest.Signature))
+                        {
+                            throw new Exception("Unauthorized.");
+                        }
+
+                        // Update the LTI request in the session.
+                        if (session.Valid)
+                        {
+                            sessionManager.UpdateLtiRequest(session, newLtiRequest);
+                        }
+                        else
+                        {
+                            session.LtiRequest = newLtiRequest;
+                        }
                     }
-
-                    // Update the LTI request in the session.
-                    if (session.Valid)
+                    catch
                     {
-                        sessionManager.UpdateLtiRequest(session, newLtiRequest);
-                    }
-                    else
-                    {
-                        session.LtiRequest = newLtiRequest;
+                        if (!session.Valid)
+                        {
+                            throw;
+                        }
                     }
 
                     // Get all the course run identifiers from context ID.
