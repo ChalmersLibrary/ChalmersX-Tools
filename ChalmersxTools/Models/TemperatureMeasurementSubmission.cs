@@ -25,8 +25,8 @@ namespace ChalmersxTools.Models
         [Index("IX_UserInCourseRun", 4, IsUnique = true)]
         public string CourseRun { get; set; }
         public Coordinate Position { get; set; }
-        public double Measurement1 { get; set; }
-        public double Measurement2 { get; set; }
+        public double? Measurement1 { get; set; }
+        public double? Measurement2 { get; set; }
 
     }
 }
