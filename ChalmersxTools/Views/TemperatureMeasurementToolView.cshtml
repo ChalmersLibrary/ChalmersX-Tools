@@ -1,0 +1,27 @@
+﻿@model ChalmersxTools.Models.View.TemperatureMeasurementToolViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TemperatureMeasurementToolView</title>
+</head>
+<body>
+    <div>
+        <form>
+            <label for="lat">Latitude</label>
+            <input type="number" name="lat" value="@Model.Submission.Position.Latitude"/>
+            <label for="long">Longitude</label>
+            <input type="number" name="long" value="@Model.Submission.Position.Longitude" />
+            <label for="measurement1">Temperature day 1</label>
+            <input type="number" name="measurement1" value="@Model.Submission.measurement1"/>
+            <label for="measurement2">Temperature day 2</label>
+            <input type="number" name="measurement2" value="@Model.Submission.measurement2"/>
+        </form> 
+    </div>
+</body>
+</html>
