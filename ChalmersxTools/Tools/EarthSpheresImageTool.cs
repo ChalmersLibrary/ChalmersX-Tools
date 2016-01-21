@@ -221,11 +221,11 @@ namespace ChalmersxTools.Tools
             {
                 res = "<span style='color: red;'>Couldn't access any of the submitted images.</span>";
             }
-            else if (!canAccessImage1)
+            else if (!canAccessImage1 && !String.IsNullOrWhiteSpace(submission.Sphere1Url))
             {
                 res = "<span style='color: red;'>Couldn't access image 1.</span>";
             }
-            else if (!canAccessImage2)
+            else if (!canAccessImage2 && !String.IsNullOrWhiteSpace(submission.Sphere2Url))
             {
                 res = "<span style='color: red;'>Couldn't access image 2.</span>";
             }
