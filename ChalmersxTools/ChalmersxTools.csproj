@@ -202,6 +202,7 @@
     <Compile Include="Models\CsvFileData.cs" />
     <Compile Include="Models\EarthSpheresImagesSubmission.cs" />
     <Compile Include="Models\LtiSession.cs" />
+    <Compile Include="Models\TemperatureMeasurementSubmission.cs" />
     <Compile Include="Models\View\EarthSpheresImageToolViewModel.cs" />
     <Compile Include="Models\View\LtiViewModelBase.cs" />
     <Compile Include="Models\View\PresentationToolViewModel.cs" />
