@@ -65,10 +65,10 @@ namespace ChalmersxTools.Tools
                         Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : ""),
                         Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : ""),
                         Sphere1Location = (url1IsValidImageUrl ? request.Form["sphere1Location"].ToString() : ""),
-                        Sphere1Coordinate = (url1IsValidImageUrl ? new Coordinate(sphere1Latitude, sphere1Longitude) : null),
+                        Sphere1Coordinate = (url1IsValidImageUrl ? new Coordinate(sphere1Latitude, sphere1Longitude) : new Coordinate()),
                         Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : ""),
                         Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : ""),
-                        Sphere2Coordinate = (url2IsValidImageUrl ? new Coordinate(sphere2Latitude, sphere2Longitude) : null)
+                        Sphere2Coordinate = (url2IsValidImageUrl ? new Coordinate(sphere2Latitude, sphere2Longitude) : new Coordinate())
                     });
 
                     _sessionManager.DbContext.SaveChanges();
@@ -117,10 +117,10 @@ namespace ChalmersxTools.Tools
 
                     existing.Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : "");
                     existing.Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : "");
-                    existing.Sphere1Coordinate = (url1IsValidImageUrl ? new Coordinate(sphere1Latitude, sphere1Longitude) : null);
+                    existing.Sphere1Coordinate = (url1IsValidImageUrl ? new Coordinate(sphere1Latitude, sphere1Longitude) : new Coordinate());
                     existing.Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : "");
                     existing.Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : "");
-                    existing.Sphere2Coordinate = (url2IsValidImageUrl ? new Coordinate(sphere2Latitude, sphere2Longitude) : null);
+                    existing.Sphere2Coordinate = (url2IsValidImageUrl ? new Coordinate(sphere2Latitude, sphere2Longitude) : new Coordinate());
 
                     _sessionManager.DbContext.SaveChanges();
 
