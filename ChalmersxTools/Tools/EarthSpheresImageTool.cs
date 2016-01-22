@@ -31,7 +31,7 @@ namespace ChalmersxTools.Tools
                     csv(submission.Sphere1Coordinate.Longitude.ToString()) + "," +
                     csv(submission.Sphere2Name) + "," + 
                     csv(submission.Sphere2Url) + "," +
-                    csv(submission.Sphere1Location) + "," +
+                    csv(submission.Sphere2Location) + "," +
                     csv(submission.Sphere2Coordinate.Latitude.ToString()) + "," +
                     csv(submission.Sphere2Coordinate.Longitude.ToString()) + "\n";
             }
