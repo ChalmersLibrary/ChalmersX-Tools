@@ -23,8 +23,8 @@
                 <input type="hidden" id="sphere1Latitude" name="sphere1Latitude" value="">
                 <input type="hidden" id="sphere1Longitude" name="sphere1Longitude" value="">
                 <label for="sphere1Url">URL</label>
-                <input id="sphere1Url" name="sphere1Url" type="url" style="width: 74%;" value="@(Model.Submission == null ? "" : Model.Submission.Sphere1Url)" />
-                <select id="sphere1Name" name="sphere1Name" style="width: 24%;">
+                <input id="sphere1Url" name="sphere1Url" type="url" value="@(Model.Submission == null ? "" : Model.Submission.Sphere1Url)" />
+                <select id="sphere1Name" name="sphere1Name">
                     <option value="">Select sphere</option>
                     <option value="geosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "geosphere" ? "selected" : ""))> Geosphere</option>
                     <option value="atmosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "atmosphere" ? "selected" : ""))> Atmosphere</option>
