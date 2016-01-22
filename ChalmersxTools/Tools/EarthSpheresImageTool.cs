@@ -44,11 +44,13 @@ namespace ChalmersxTools.Tools
                 var url1IsValidImageUrl = CanAccessImageUrl(request.Form["sphere1Url"].ToString());
                 var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
                 double sphere1Latitude, sphere1Longitude, sphere2Latitude, sphere2Longitude;
+                var sphere1LatitudeParsed = Double.TryParse(request.Form["sphere1Latitude"], out sphere1Latitude);
+                var sphere1LongitudeParsed = Double.TryParse(request.Form["sphere1Longitude"], out sphere1Longitude);
+                var sphere2LatitudeParsed = Double.TryParse(request.Form["sphere2Latitude"], out sphere2Latitude);
+                var sphere2LongitudeParsed = Double.TryParse(request.Form["sphere2Longitude"], out sphere2Longitude);
 
-                if (Double.TryParse(request.Form["sphere1Latitude"], out sphere1Latitude) ||
-                    Double.TryParse(request.Form["sphere1Longitude"], out sphere1Longitude) || 
-                    Double.TryParse(request.Form["sphere2Latitude"], out sphere2Latitude) ||
-                    Double.TryParse(request.Form["sphere2Longitude"], out sphere2Longitude))
+                if ((!url1IsEmpty && (!sphere1LatitudeParsed || !sphere1LongitudeParsed)) ||
+                    (!url2IsEmpty && (!sphere2LatitudeParsed || !sphere2LongitudeParsed)))
                 {
                     res = "<span style='color: red;'>Failed to parse coordinates.</span>";
                 }
@@ -93,11 +95,13 @@ namespace ChalmersxTools.Tools
                 var url1IsValidImageUrl = CanAccessImageUrl(request.Form["sphere1Url"].ToString());
                 var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
                 double sphere1Latitude, sphere1Longitude, sphere2Latitude, sphere2Longitude;
+                var sphere1LatitudeParsed = Double.TryParse(request.Form["sphere1Latitude"], out sphere1Latitude);
+                var sphere1LongitudeParsed = Double.TryParse(request.Form["sphere1Longitude"], out sphere1Longitude);
+                var sphere2LatitudeParsed = Double.TryParse(request.Form["sphere2Latitude"], out sphere2Latitude);
+                var sphere2LongitudeParsed = Double.TryParse(request.Form["sphere2Longitude"], out sphere2Longitude);
 
-                if (!Double.TryParse(request.Form["sphere1Latitude"], out sphere1Latitude) ||
-                    !Double.TryParse(request.Form["sphere1Longitude"], out sphere1Longitude) ||
-                    !Double.TryParse(request.Form["sphere2Latitude"], out sphere2Latitude) ||
-                    !Double.TryParse(request.Form["sphere2Longitude"], out sphere2Longitude))
+                if ((!url1IsEmpty && (!sphere1LatitudeParsed || !sphere1LongitudeParsed)) ||
+                    (!url2IsEmpty && (!sphere2LatitudeParsed || !sphere2LongitudeParsed)))
                 {
                     res = "<span style='color: red;'>Failed to parse coordinates.</span>";
                 }
