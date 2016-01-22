@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using LtiLibrary.Core.Outcomes.v1;
 using ChalmersxTools.Models.Database;
+using System.Globalization;
 
 namespace ChalmersxTools.Tools
 {
@@ -25,7 +26,7 @@ namespace ChalmersxTools.Tools
                     Submission = GetSubmissionForCurrentStudent(),
                     LtiSessionId = _session.Id.ToString(),
                     Roles = _session.LtiRequest.Roles,
-                    ResponseMessage = "Foo bar"
+                    ResponseMessage = message
                 });
         }
 
@@ -62,9 +63,9 @@ namespace ChalmersxTools.Tools
                     CourseOrg = _session.CourseOrg,
                     CourseId = _session.CourseId,
                     CourseRun = _session.CourseRun,
-                    Position = new Coordinate(Double.Parse(request.Form["lat"].ToString()), Double.Parse(request.Form["long"].ToString())),
-                    Measurement1 = Double.Parse(request.Form["measurement1"].ToString()),
-                    Measurement2 = Double.Parse(request.Form["measurement2"].ToString())
+                    Position = new Coordinate(Double.Parse(request.Form["lat"].ToString(), CultureInfo.InvariantCulture), Double.Parse(request.Form["long"].ToString(), CultureInfo.InvariantCulture)),
+                    Measurement1 = Double.Parse(request.Form["measurement1"].ToString(), CultureInfo.InvariantCulture),
+                    Measurement2 = Double.Parse(request.Form["measurement2"].ToString(), CultureInfo.InvariantCulture)
                 });
 
                 _sessionManager.DbContext.SaveChanges();
@@ -95,9 +96,9 @@ namespace ChalmersxTools.Tools
                      o.CourseRun == _session.CourseRun
                      select o).SingleOrDefault();
 
-                existing.Position = new Coordinate(Double.Parse(request.Form["lat"].ToString()), Double.Parse(request.Form["long"].ToString()));
-                existing.Measurement1 = Double.Parse(request.Form["measurement1"].ToString());
-                existing.Measurement2 = Double.Parse(request.Form["measurement2"].ToString());
+                existing.Position = new Coordinate(Double.Parse(request.Form["lat"].ToString(), CultureInfo.InvariantCulture), Double.Parse(request.Form["long"].ToString(), CultureInfo.InvariantCulture));
+                existing.Measurement1 = Double.Parse(request.Form["measurement1"].ToString(), CultureInfo.InvariantCulture);
+                existing.Measurement2 = Double.Parse(request.Form["measurement2"].ToString(), CultureInfo.InvariantCulture);
 
                 _sessionManager.DbContext.SaveChanges();
 
