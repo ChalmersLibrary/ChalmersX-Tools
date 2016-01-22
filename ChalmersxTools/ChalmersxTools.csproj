@@ -201,6 +201,10 @@
     <Compile Include="Migrations\201601211255087_AddMassTemp.Designer.cs">
       <DependentUpon>201601211255087_AddMassTemp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601221152483_AddCoordinateEarthSpheresImages.cs" />
+    <Compile Include="Migrations\201601221152483_AddCoordinateEarthSpheresImages.Designer.cs">
+      <DependentUpon>201601221152483_AddCoordinateEarthSpheresImages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\CsvFileData.cs" />
@@ -275,6 +279,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601211255087_AddMassTemp.resx">
       <DependentUpon>201601211255087_AddMassTemp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601221152483_AddCoordinateEarthSpheresImages.resx">
+      <DependentUpon>201601221152483_AddCoordinateEarthSpheresImages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
