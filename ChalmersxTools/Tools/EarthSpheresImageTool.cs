@@ -68,6 +68,7 @@ namespace ChalmersxTools.Tools
                         Sphere1Coordinate = (url1IsValidImageUrl ? new Coordinate(sphere1Latitude, sphere1Longitude) : new Coordinate()),
                         Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : ""),
                         Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : ""),
+                        Sphere2Location = (url2IsValidImageUrl ? request.Form["sphere2Location"].ToString() : ""),
                         Sphere2Coordinate = (url2IsValidImageUrl ? new Coordinate(sphere2Latitude, sphere2Longitude) : new Coordinate())
                     });
 
@@ -117,9 +118,11 @@ namespace ChalmersxTools.Tools
 
                     existing.Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : "");
                     existing.Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : "");
+                    existing.Sphere1Location = (url1IsValidImageUrl ? request.Form["sphere1Location"].ToString() : "");
                     existing.Sphere1Coordinate = (url1IsValidImageUrl ? new Coordinate(sphere1Latitude, sphere1Longitude) : new Coordinate());
                     existing.Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : "");
                     existing.Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : "");
+                    existing.Sphere2Location = (url2IsValidImageUrl ? request.Form["sphere2Location"].ToString() : "");
                     existing.Sphere2Coordinate = (url2IsValidImageUrl ? new Coordinate(sphere2Latitude, sphere2Longitude) : new Coordinate());
 
                     _sessionManager.DbContext.SaveChanges();
