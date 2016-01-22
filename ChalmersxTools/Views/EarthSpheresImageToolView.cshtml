@@ -69,8 +69,15 @@
             </div>
         }
     </div>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script>
+        var geocoder;
+
+        window.onload = function initialize() {
+            geocoder = new google.maps.Geocoder();
+        }
+
         function validateAndSubmitForm() {
             $("#message-box").text("");
 
@@ -81,7 +88,24 @@
             } else if ($("#sphere2Url").val() != "" && $("#sphere2Name").find(":selected").val() == "") {
                 $("#message-box").html("<span style='color: red;'>You have to select a sphere for your image.</span>");
             } else {
-                document.forms["earth-spheres-images"].submit();
+                geocoder.geocode({ "address": $("#sphere1Location").val() }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        $("#sphere1Latitude").val(results[0].geometry.location.lat());
+                        $("#sphere1Longitude").val(results[0].geometry.location.lng());
+
+                        geocoder.geocode({ "address": $("#sphere2Location").val() }, function (results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                $("#sphere2Latitude").val(results[0].geometry.location.lat());
+                                $("#sphere2Longitude").val(results[0].geometry.location.lng());
+                                document.forms["earth-spheres-images"].submit();
+                            } else {
+                                $("#message-box").val("<p><b>Location 2 not found</b>, please provide a more specific description of your location.</p>");
+                            }
+                        });
+                    } else {
+                        $("#message-box").val("<p><b>Location 1 not found</b>, please provide a more specific description of your location.</p>");
+                    }
+                });
             }
         }
     </script>
