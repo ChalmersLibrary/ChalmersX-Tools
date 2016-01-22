@@ -28,5 +28,10 @@ namespace ChalmersxTools.Tools
         protected abstract string Create(HttpRequestBase request);
         protected abstract string Edit(HttpRequestBase request);
         protected abstract ViewIdentifierAndModel GetViewIdentifierAndModel(string message);
+
+        protected string csv(string data)
+        {
+            return "\"" + data.Replace('"', '\'').Replace("\r", @"\r").Replace("\n", @"\n") + "\"";
+        }
     }
 }

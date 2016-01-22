@@ -21,13 +21,19 @@ namespace ChalmersxTools.Tools
         public override CsvFileData HandleDataRequest()
         {
             string data = "";
-            data += "sphere1Name,sphere1Url,sphere2Name,sphere2Url\n";
+            data += "sphere1Name,sphere1Url,sphere1Location,sphere1Latitude,sphere1Longitude,sphere2Name,sphere2Url,sphere2Location,sphere2Latitude,sphere2Longitude\n";
             foreach (var submission in GetAllSubmissionsForCourseRun())
             {
-                data += "\"" + submission.Sphere1Name.Replace('"', '\'').Replace("\r", @"\r").Replace("\n", @"\n") + "\",\"" +
-                    submission.Sphere1Url.Replace('"', '\'').Replace("\r", @"\r").Replace("\n", @"\n") + "\",\"" +
-                    submission.Sphere2Name.Replace('"', '\'').Replace("\r", @"\r").Replace("\n", @"\n") + "\",\"" +
-                    submission.Sphere2Url.Replace('"', '\'').Replace("\r", @"\r").Replace("\n", @"\n") + "\"\n";
+                data += csv(submission.Sphere1Name) + "," + 
+                    csv(submission.Sphere1Url) + "," + 
+                    csv(submission.Sphere1Location) + "," +
+                    csv(submission.Sphere1Coordinate.Latitude.ToString()) + "," +
+                    csv(submission.Sphere1Coordinate.Longitude.ToString()) + "," +
+                    csv(submission.Sphere2Name) + "," + 
+                    csv(submission.Sphere2Url) + "," +
+                    csv(submission.Sphere1Location) + "," +
+                    csv(submission.Sphere2Coordinate.Latitude.ToString()) + "," +
+                    csv(submission.Sphere2Coordinate.Longitude.ToString()) + "\n";
             }
             return new CsvFileData(_session.CourseOrg + "-" + _session.CourseId + "-" + _session.CourseRun + "-earth-spheres-images.csv",
                 new System.Text.UTF8Encoding().GetBytes(data));
