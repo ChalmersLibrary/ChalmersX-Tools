@@ -16,7 +16,7 @@
         <div id="message-box">@Html.Raw(Model.ResponseMessage)</div>
         <form id="temperature-measurements" method="post">
             <fieldset>
-                <legend>Enter your location</legend>
+                <legend>Enter your location (decimal degrees)</legend>
                 <label for="lat">Latitude</label>
                 <input type="number" name="lat" value="@(Model.Submission == null ? "" : Model.Submission.Position.Latitude.ToString())" />
                 <label for="long">Longitude</label>
