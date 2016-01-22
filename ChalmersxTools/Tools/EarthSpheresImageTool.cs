@@ -94,10 +94,10 @@ namespace ChalmersxTools.Tools
                 var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
                 double sphere1Latitude, sphere1Longitude, sphere2Latitude, sphere2Longitude;
 
-                if (Double.TryParse(request.Form["sphere1Latitude"], out sphere1Latitude) ||
-                    Double.TryParse(request.Form["sphere1Longitude"], out sphere1Longitude) ||
-                    Double.TryParse(request.Form["sphere2Latitude"], out sphere2Latitude) ||
-                    Double.TryParse(request.Form["sphere2Longitude"], out sphere2Longitude))
+                if (!Double.TryParse(request.Form["sphere1Latitude"], out sphere1Latitude) ||
+                    !Double.TryParse(request.Form["sphere1Longitude"], out sphere1Longitude) ||
+                    !Double.TryParse(request.Form["sphere2Latitude"], out sphere2Latitude) ||
+                    !Double.TryParse(request.Form["sphere2Longitude"], out sphere2Longitude))
                 {
                     res = "<span style='color: red;'>Failed to parse coordinates.</span>";
                 }
