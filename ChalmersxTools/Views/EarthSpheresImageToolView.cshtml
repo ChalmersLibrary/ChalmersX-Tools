@@ -87,6 +87,10 @@
                 $("#message-box").html("<span style='color: red;'>You have to select a sphere for your image.</span>");
             } else if ($("#sphere2Url").val() != "" && $("#sphere2Name").find(":selected").val() == "") {
                 $("#message-box").html("<span style='color: red;'>You have to select a sphere for your image.</span>");
+            } else if ($("#sphere1Url").val() != "" && $("#sphere1Location").val() == "") {
+                $("#message-box").html("<span style='color: red;'>You have to enter a valid location for the image location.</span>");
+            } else if ($("#sphere2Url").val() != "" && $("#sphere2Location").val() == "") {
+                $("#message-box").html("<span style='color: red;'>You have to enter a valid location for the image location.</span>");
             } else {
                 geocoder.geocode({ "address": $("#sphere1Location").val() }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
