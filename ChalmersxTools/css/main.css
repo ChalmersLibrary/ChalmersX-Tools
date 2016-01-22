@@ -22,6 +22,11 @@ hr {
     background: #ddd;
 }
 
+fieldset {
+    border: 2px #DDDDDD solid;
+    margin-bottom: 0.7em;
+}
+
 label {
     padding: 5px 0;
     display: block;
