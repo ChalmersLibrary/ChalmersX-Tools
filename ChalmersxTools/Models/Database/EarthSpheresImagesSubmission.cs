@@ -26,7 +26,11 @@ namespace ChalmersxTools.Models.Database
         public string CourseRun { get; set; }
         public string Sphere1Url { get; set; }
         public string Sphere1Name { get; set; }
+        public string Sphere1Location { get; set; }
+        public Coordinate Sphere1Coordinate { get; set; }
         public string Sphere2Url { get; set; }
         public string Sphere2Name { get; set; }
+        public string Sphere2Location { get; set; }
+        public Coordinate Sphere2Coordinate { get; set; }
     }
 }

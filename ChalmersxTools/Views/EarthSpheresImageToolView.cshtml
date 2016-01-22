@@ -16,8 +16,13 @@
     <div>
         <div id="message-box">@Html.Raw(Model.ResponseMessage)</div>
         <form id="earth-spheres-images" method="post">
-            <div>
-                <label for="sphere1Url">Image 1</label>
+            <fieldset>
+                <legend>Image 1</legend>
+                <label for="sphere1Location">Location</label>
+                <input id="sphere1Location" name="sphere1Location" type="text" value="@(Model.Submission == null ? "" : Model.Submission.Sphere1Location)" />
+                <input type="hidden" id="sphere1Latitude" name="sphere1Latitude" value="">
+                <input type="hidden" id="sphere1Longitude" name="sphere1Longitude" value="">
+                <label for="sphere1Url">URL</label>
                 <input id="sphere1Url" name="sphere1Url" type="url" style="width: 74%;" value="@(Model.Submission == null ? "" : Model.Submission.Sphere1Url)" />
                 <select id="sphere1Name" name="sphere1Name" style="width: 24%;">
                     <option value="">Select sphere</option>
@@ -27,11 +32,17 @@
                     <option value="hydrosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "hydrosphere" ? "selected" : ""))> Hydrosphere</option>
                     <option value="cryosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "cryosphere" ? "selected" : ""))> Cryosphere</option>
                 </select>
-            </div>
-            <div>
-                <label for="sphere2Url">Image 2</label>
-                <input id="sphere2Url" name="sphere2Url" type="url" style="width: 74%;" value="@(Model.Submission == null ? "" : Model.Submission.Sphere2Url)" />
-                <select id="sphere2Name" name="sphere2Name" style="width: 24%;">
+            </fieldset>
+            <fieldset>
+                <legend>Image 2</legend>
+                <label for="sphere2Location">Location</label>
+                <input id="sphere2Location" name="sphere2Location" type="text" value="@(Model.Submission == null ? "" : Model.Submission.Sphere2Location)" />
+                <input type="hidden" id="sphere2Latitude" name="sphere2Latitude" value="">
+                <input type="hidden" id="sphere2Longitude" name="sphere2Longitude" value="">
+                <label for="sphere2Url">URL</label>
+                <input id="sphere2Url" name="sphere2Url" type="url" value="@(Model.Submission == null ? "" : Model.Submission.Sphere2Url)" />
+                <label for="sphere2Name">Sphere</label>
+                <select id="sphere2Name" name="sphere2Name">
                     <option value="">Select sphere</option>
                     <option value="geosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere2Name == "geosphere" ? "selected" : ""))>Geosphere</option>
                     <option value="atmosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere2Name == "atmosphere" ? "selected" : ""))> Atmosphere</option>
@@ -39,7 +50,7 @@
                     <option value="hydrosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere2Name == "hydrosphere" ? "selected" : ""))> Hydrosphere</option>
                     <option value="cryosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere2Name == "cryosphere" ? "selected" : ""))> Cryosphere</option>
                 </select>
-            </div>
+            </fieldset>
             <div style="padding-top: 10px;">
                 <input type="button" value="Save" onclick="validateAndSubmitForm();">
             </div>

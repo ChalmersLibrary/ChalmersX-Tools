@@ -43,22 +43,36 @@ namespace ChalmersxTools.Tools
                 var url2IsEmpty = String.IsNullOrWhiteSpace(request.Form["sphere2Url"].ToString());
                 var url1IsValidImageUrl = CanAccessImageUrl(request.Form["sphere1Url"].ToString());
                 var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
+                double sphere1Latitude, sphere1Longitude, sphere2Latitude, sphere2Longitude;
 
-                var newSubmission = _sessionManager.DbContext.EarthSpheresImagesSubmissions.Add(new EarthSpheresImagesSubmission()
+                if (Double.TryParse(request.Form["sphere1Latitude"], out sphere1Latitude) ||
+                    Double.TryParse(request.Form["sphere1Longitude"], out sphere1Longitude) || 
+                    Double.TryParse(request.Form["sphere2Latitude"], out sphere2Latitude) ||
+                    Double.TryParse(request.Form["sphere2Longitude"], out sphere2Longitude))
                 {
-                    UserId = _session.UserId,
-                    CourseOrg = _session.CourseOrg,
-                    CourseId = _session.CourseId,
-                    CourseRun = _session.CourseRun,
-                    Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : ""),
-                    Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : ""),
-                    Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : ""),
-                    Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : "")
-                });
+                    res = "<span style='color: red;'>Failed to parse coordinates.</span>";
+                }
+                else
+                {
+                    var newSubmission = _sessionManager.DbContext.EarthSpheresImagesSubmissions.Add(new EarthSpheresImagesSubmission()
+                    {
+                        UserId = _session.UserId,
+                        CourseOrg = _session.CourseOrg,
+                        CourseId = _session.CourseId,
+                        CourseRun = _session.CourseRun,
+                        Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : ""),
+                        Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : ""),
+                        Sphere1Location = (url1IsValidImageUrl ? request.Form["sphere1Location"].ToString() : ""),
+                        Sphere1Coordinate = (url1IsValidImageUrl ? new Coordinate(sphere1Latitude, sphere1Longitude) : null),
+                        Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : ""),
+                        Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : ""),
+                        Sphere2Coordinate = (url2IsValidImageUrl ? new Coordinate(sphere2Latitude, sphere2Longitude) : null)
+                    });
 
-                _sessionManager.DbContext.SaveChanges();
+                    _sessionManager.DbContext.SaveChanges();
 
-                res = SubmitScore(newSubmission, url1IsEmpty, url1IsValidImageUrl, url2IsEmpty, url2IsValidImageUrl);
+                    res = SubmitScore(newSubmission, url1IsEmpty, url1IsValidImageUrl, url2IsEmpty, url2IsValidImageUrl);
+                }
             }
             catch (Exception e)
             {
@@ -78,23 +92,36 @@ namespace ChalmersxTools.Tools
                 var url2IsEmpty = String.IsNullOrWhiteSpace(request.Form["sphere2Url"].ToString());
                 var url1IsValidImageUrl = CanAccessImageUrl(request.Form["sphere1Url"].ToString());
                 var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
+                double sphere1Latitude, sphere1Longitude, sphere2Latitude, sphere2Longitude;
 
-                EarthSpheresImagesSubmission existing =
-                    (from o in _sessionManager.DbContext.EarthSpheresImagesSubmissions
-                     where o.UserId == _session.UserId &&
-                     o.CourseOrg == _session.CourseOrg &&
-                     o.CourseId == _session.CourseId &&
-                     o.CourseRun == _session.CourseRun
-                     select o).SingleOrDefault();
+                if (Double.TryParse(request.Form["sphere1Latitude"], out sphere1Latitude) ||
+                    Double.TryParse(request.Form["sphere1Longitude"], out sphere1Longitude) ||
+                    Double.TryParse(request.Form["sphere2Latitude"], out sphere2Latitude) ||
+                    Double.TryParse(request.Form["sphere2Longitude"], out sphere2Longitude))
+                {
+                    res = "<span style='color: red;'>Failed to parse coordinates.</span>";
+                }
+                else
+                {
+                    EarthSpheresImagesSubmission existing =
+                        (from o in _sessionManager.DbContext.EarthSpheresImagesSubmissions
+                         where o.UserId == _session.UserId &&
+                         o.CourseOrg == _session.CourseOrg &&
+                         o.CourseId == _session.CourseId &&
+                         o.CourseRun == _session.CourseRun
+                         select o).SingleOrDefault();
 
-                existing.Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : "");
-                existing.Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : "");
-                existing.Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : "");
-                existing.Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : "");
+                    existing.Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : "");
+                    existing.Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : "");
+                    existing.Sphere1Coordinate = (url1IsValidImageUrl ? new Coordinate(sphere1Latitude, sphere1Longitude) : null);
+                    existing.Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : "");
+                    existing.Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : "");
+                    existing.Sphere2Coordinate = (url2IsValidImageUrl ? new Coordinate(sphere2Latitude, sphere2Longitude) : null);
 
-                _sessionManager.DbContext.SaveChanges();
+                    _sessionManager.DbContext.SaveChanges();
 
-                res = SubmitScore(existing, url1IsEmpty, url1IsValidImageUrl, url2IsEmpty, url2IsValidImageUrl);
+                    res = SubmitScore(existing, url1IsEmpty, url1IsValidImageUrl, url2IsEmpty, url2IsValidImageUrl);
+                }
             }
             catch (Exception e)
             {
