@@ -102,7 +102,7 @@
                             $("#sphere1Longitude").val(results[0].geometry.location.lng());
                             geocodedLocation1 = 1;
                         } else {
-                            $("#message-box").val("<p><b>Location 1 not found</b>, please provide a more specific description of your location.</p>");
+                            $("#message-box").html("<p><b>Location 1 not found</b>, please provide a more specific description of your location.</p>");
                         }
                     });
                 }
@@ -114,7 +114,7 @@
                             $("#sphere2Longitude").val(results[0].geometry.location.lng());
                             geocodedLocation2 = 1;
                         } else {
-                            $("#message-box").val("<p><b>Location 2 not found</b>, please provide a more specific description of your location.</p>");
+                            $("#message-box").html("<p><b>Location 2 not found</b>, please provide a more specific description of your location.</p>");
                         }
                     });
                 }
