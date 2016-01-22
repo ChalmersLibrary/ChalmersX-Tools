@@ -88,28 +88,40 @@
             } else if ($("#sphere2Url").val() != "" && $("#sphere2Name").find(":selected").val() == "") {
                 $("#message-box").html("<span style='color: red;'>You have to select a sphere for your image.</span>");
             } else if ($("#sphere1Url").val() != "" && $("#sphere1Location").val() == "") {
-                $("#message-box").html("<span style='color: red;'>You have to enter a valid location for the image location.</span>");
+                $("#message-box").html("<span style='color: red;'>You have to enter a valid location for the image.</span>");
             } else if ($("#sphere2Url").val() != "" && $("#sphere2Location").val() == "") {
-                $("#message-box").html("<span style='color: red;'>You have to enter a valid location for the image location.</span>");
+                $("#message-box").html("<span style='color: red;'>You have to enter a valid location for the image.</span>");
             } else {
-                geocoder.geocode({ "address": $("#sphere1Location").val() }, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        $("#sphere1Latitude").val(results[0].geometry.location.lat());
-                        $("#sphere1Longitude").val(results[0].geometry.location.lng());
+                var geocodedLocation1 = 0;
+                var geocodedLocation2 = 0;
 
-                        geocoder.geocode({ "address": $("#sphere2Location").val() }, function (results, status) {
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                $("#sphere2Latitude").val(results[0].geometry.location.lat());
-                                $("#sphere2Longitude").val(results[0].geometry.location.lng());
-                                document.forms["earth-spheres-images"].submit();
-                            } else {
-                                $("#message-box").val("<p><b>Location 2 not found</b>, please provide a more specific description of your location.</p>");
-                            }
-                        });
-                    } else {
-                        $("#message-box").val("<p><b>Location 1 not found</b>, please provide a more specific description of your location.</p>");
-                    }
-                });
+                if ($("#sphere1Url").val() != "") {
+                    geocoder.geocode({ "address": $("#sphere1Location").val() }, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            $("#sphere1Latitude").val(results[0].geometry.location.lat());
+                            $("#sphere1Longitude").val(results[0].geometry.location.lng());
+                            geocodedLocation1 = 1;
+                        } else {
+                            $("#message-box").val("<p><b>Location 1 not found</b>, please provide a more specific description of your location.</p>");
+                        }
+                    });
+                }
+
+                if ($("#sphere2Url").val() != "") {
+                    geocoder.geocode({ "address": $("#sphere2Location").val() }, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            $("#sphere2Latitude").val(results[0].geometry.location.lat());
+                            $("#sphere2Longitude").val(results[0].geometry.location.lng());
+                            geocodedLocation2 = 1;
+                        } else {
+                            $("#message-box").val("<p><b>Location 2 not found</b>, please provide a more specific description of your location.</p>");
+                        }
+                    });
+                }
+
+                if ((geocodedLocation1 || $("#sphere1Url").val() == "") && (geocodedLocation2 || $("#sphere2Url").val() == "")) {
+                    document.forms["earth-spheres-images"].submit();
+                }
             }
         }
     </script>
