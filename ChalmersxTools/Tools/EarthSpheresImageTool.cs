@@ -39,6 +39,31 @@ namespace ChalmersxTools.Tools
                 new System.Text.UTF8Encoding().GetBytes(data));
         }
 
+        public override ViewIdentifierAndModel HandleVisualizationRequest()
+        {
+            var model = new EarthSpheresImageGalleryViewModel();
+
+            foreach (var submission in GetAllSubmissionsForCourseRun())
+            {
+                var img1 = new GeoImage()
+                {
+                    ImageUrl = submission.Sphere1Url,
+                    Coordinate = new Coordinate(submission.Sphere1Coordinate.Latitude, submission.Sphere1Coordinate.Longitude)
+                };
+
+                var img2 = new GeoImage()
+                {
+                    ImageUrl = submission.Sphere2Url,
+                    Coordinate = new Coordinate(submission.Sphere2Coordinate.Latitude, submission.Sphere2Coordinate.Longitude)
+                };
+
+                AddSphereImageToModel(model, img1, submission.Sphere1Name);
+                AddSphereImageToModel(model, img2, submission.Sphere2Name);
+            }
+
+            return new ViewIdentifierAndModel("~/Views/EarthSpheresImageGalleryView.cshtml", model);
+        }
+
         protected override string Create(HttpRequestBase request)
         {
             var res = "";
@@ -264,6 +289,30 @@ namespace ChalmersxTools.Tools
             }
 
             return res;
+        }
+
+        private void AddSphereImageToModel(EarthSpheresImageGalleryViewModel model, GeoImage img, string sphereName)
+        {
+            if (sphereName == "geosphere")
+            {
+                model.GeosphereImages.Add(img);
+            }
+            else if (sphereName == "atmosphere")
+            {
+                model.AtmosphereImages.Add(img);
+            }
+            else if (sphereName == "biosphere")
+            {
+                model.BiosphereImages.Add(img);
+            }
+            else if (sphereName == "hydrosphere")
+            {
+                model.HydrosphereImages.Add(img);
+            }
+            else if (sphereName == "cryosphere")
+            {
+                model.CryosphereImages.Add(img);
+            }
         }
 
         #endregion

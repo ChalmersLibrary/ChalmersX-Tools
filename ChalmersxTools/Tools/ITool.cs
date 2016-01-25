@@ -19,5 +19,6 @@ namespace ChalmersxTools.Tools
         ITool SetSession(LtiSession session);
         ViewIdentifierAndModel HandleRequest(HttpRequestBase request);
         CsvFileData HandleDataRequest();
+        ViewIdentifierAndModel HandleVisualizationRequest();
     }
 }
