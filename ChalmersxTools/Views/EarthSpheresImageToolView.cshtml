@@ -58,7 +58,8 @@
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
             <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
         </form>
-        <a href="/Tool/GetVisualization?ltiSessionId=@Model.LtiSessionId">Go to collage</a>
+        <br />
+        <a href="/Tool/GetVisualization?ltiSessionId=@Model.LtiSessionId" target="_blank">Go to collage</a>
         @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
         {
             <br>
