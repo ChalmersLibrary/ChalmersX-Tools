@@ -158,6 +158,8 @@
     <Content Include="css\main.css" />
     <Content Include="Global.asax" />
     <Content Include="img\hourglass.gif" />
+    <Content Include="js\gmaps-heatmap.js" />
+    <Content Include="js\heatmap.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -254,7 +256,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="js\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
