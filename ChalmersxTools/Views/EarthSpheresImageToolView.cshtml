@@ -18,13 +18,8 @@
         <form id="earth-spheres-images" method="post">
             <fieldset>
                 <legend>Image 1</legend>
-                <label for="sphere1Location">Location</label>
-                <input id="sphere1Location" name="sphere1Location" type="text" value="@(Model.Submission == null ? "" : Model.Submission.Sphere1Location)" />
-                <input type="hidden" id="sphere1Latitude" name="sphere1Latitude" value="">
-                <input type="hidden" id="sphere1Longitude" name="sphere1Longitude" value="">
-                <label for="sphere1Url">URL</label>
-                <input id="sphere1Url" name="sphere1Url" type="url" style="width: 74%;" value="@(Model.Submission == null ? "" : Model.Submission.Sphere1Url)" />
-                <select id="sphere1Name" name="sphere1Name" style="width: 24%;">
+                <label for="sphere1Name">Sphere</label>
+                <select id="sphere1Name" name="sphere1Name">
                     <option value="">Select sphere</option>
                     <option value="geosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "geosphere" ? "selected" : ""))> Geosphere</option>
                     <option value="atmosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "atmosphere" ? "selected" : ""))> Atmosphere</option>
@@ -32,15 +27,15 @@
                     <option value="hydrosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "hydrosphere" ? "selected" : ""))> Hydrosphere</option>
                     <option value="cryosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere1Name == "cryosphere" ? "selected" : ""))> Cryosphere</option>
                 </select>
+                <label for="sphere1Location">Location</label>
+                <input id="sphere1Location" name="sphere1Location" type="text" value="@(Model.Submission == null ? "" : Model.Submission.Sphere1Location)" />
+                <input type="hidden" id="sphere1Latitude" name="sphere1Latitude" value="">
+                <input type="hidden" id="sphere1Longitude" name="sphere1Longitude" value="">
+                <label for="sphere1Url">URL</label>
+                <input id="sphere1Url" name="sphere1Url" type="url" style="width: 100%;" value="@(Model.Submission == null ? "" : Model.Submission.Sphere1Url)" />
             </fieldset>
             <fieldset>
                 <legend>Image 2</legend>
-                <label for="sphere2Location">Location</label>
-                <input id="sphere2Location" name="sphere2Location" type="text" value="@(Model.Submission == null ? "" : Model.Submission.Sphere2Location)" />
-                <input type="hidden" id="sphere2Latitude" name="sphere2Latitude" value="">
-                <input type="hidden" id="sphere2Longitude" name="sphere2Longitude" value="">
-                <label for="sphere2Url">URL</label>
-                <input id="sphere2Url" name="sphere2Url" type="url" value="@(Model.Submission == null ? "" : Model.Submission.Sphere2Url)" />
                 <label for="sphere2Name">Sphere</label>
                 <select id="sphere2Name" name="sphere2Name">
                     <option value="">Select sphere</option>
@@ -50,6 +45,12 @@
                     <option value="hydrosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere2Name == "hydrosphere" ? "selected" : ""))> Hydrosphere</option>
                     <option value="cryosphere" @(Model.Submission == null ? "" : (Model.Submission.Sphere2Name == "cryosphere" ? "selected" : ""))> Cryosphere</option>
                 </select>
+                <label for="sphere2Location">Location</label>
+                <input id="sphere2Location" name="sphere2Location" type="text" value="@(Model.Submission == null ? "" : Model.Submission.Sphere2Location)" />
+                <input type="hidden" id="sphere2Latitude" name="sphere2Latitude" value="">
+                <input type="hidden" id="sphere2Longitude" name="sphere2Longitude" value="">
+                <label for="sphere2Url">URL</label>
+                <input id="sphere2Url" name="sphere2Url" type="url" style="width: 100%;" value="@(Model.Submission == null ? "" : Model.Submission.Sphere2Url)" />
             </fieldset>
             <div style="padding-top: 10px;">
                 <input type="button" value="Save" onclick="validateAndSubmitForm();">
@@ -68,8 +69,15 @@
             </div>
         }
     </div>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script>
+        var geocoder;
+
+        window.onload = function initialize() {
+            geocoder = new google.maps.Geocoder();
+        }
+
         function validateAndSubmitForm() {
             $("#message-box").text("");
 
@@ -79,8 +87,49 @@
                 $("#message-box").html("<span style='color: red;'>You have to select a sphere for your image.</span>");
             } else if ($("#sphere2Url").val() != "" && $("#sphere2Name").find(":selected").val() == "") {
                 $("#message-box").html("<span style='color: red;'>You have to select a sphere for your image.</span>");
+            } else if ($("#sphere1Url").val() != "" && $("#sphere1Location").val() == "") {
+                $("#message-box").html("<span style='color: red;'>You have to enter a valid location for the image.</span>");
+            } else if ($("#sphere2Url").val() != "" && $("#sphere2Location").val() == "") {
+                $("#message-box").html("<span style='color: red;'>You have to enter a valid location for the image.</span>");
             } else {
-                document.forms["earth-spheres-images"].submit();
+                var geocodedLocation1 = 0;
+                var geocodedLocation2 = 0;
+
+                if ($("#sphere1Url").val() != "") {
+                    geocoder.geocode({ "address": $("#sphere1Location").val() }, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            $("#sphere1Latitude").val(results[0].geometry.location.lat());
+                            $("#sphere1Longitude").val(results[0].geometry.location.lng());
+
+                            if ($("#sphere2Url").val() != "") {
+                                geocoder.geocode({ "address": $("#sphere2Location").val() }, function (results, status) {
+                                    if (status == google.maps.GeocoderStatus.OK) {
+                                        $("#sphere2Latitude").val(results[0].geometry.location.lat());
+                                        $("#sphere2Longitude").val(results[0].geometry.location.lng());
+
+                                        document.forms["earth-spheres-images"].submit();
+                                    } else {
+                                        $("#message-box").html("<p><b>Location 2 not found</b>, please provide a more specific description of your location.</p>");
+                                    }
+                                });
+                            } else {
+                                document.forms["earth-spheres-images"].submit();
+                            }
+                        } else {
+                            $("#message-box").html("<p><b>Location 1 not found</b>, please provide a more specific description of your location.</p>");
+                        }
+                    });
+                } else if ($("#sphere2Url").val() != "") {
+                    geocoder.geocode({ "address": $("#sphere2Location").val() }, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            $("#sphere2Latitude").val(results[0].geometry.location.lat());
+                            $("#sphere2Longitude").val(results[0].geometry.location.lng());
+                            document.forms["earth-spheres-images"].submit();
+                        } else {
+                            $("#message-box").html("<p><b>Location 2 not found</b>, please provide a more specific description of your location.</p>");
+                        }
+                    });
+                }
             }
         }
     </script>
