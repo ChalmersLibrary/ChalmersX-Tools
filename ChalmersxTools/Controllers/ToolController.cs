@@ -177,9 +177,9 @@ namespace ChalmersxTools.Controllers
                             .SetSessionManager(sessionManager)
                             .SetSession(session);
 
-                        var data = tool.HandleDataRequest();
+                        var visualizationData = tool.HandleVisualizationRequest();
 
-                        res = File(data.Data, CsvFileData.CONTENT_TYPE, data.Filename);
+                        res = View(visualizationData.ViewIdentifier, visualizationData.Model);
                     }
                 }
             }
