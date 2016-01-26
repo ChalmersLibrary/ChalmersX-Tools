@@ -157,6 +157,7 @@
   <ItemGroup>
     <Content Include="css\main.css" />
     <Content Include="Global.asax" />
+    <Content Include="img\default.gif" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -212,8 +213,10 @@
     <Compile Include="Models\Database\EarthSpheresImagesSubmission.cs" />
     <Compile Include="Models\Database\LtiSession.cs" />
     <Compile Include="Models\MeasurementAndCoordinate.cs" />
+    <Compile Include="Models\GeoImage.cs" />
     <Compile Include="Models\View\EarthMassToolViewModel.cs" />
     <Compile Include="Models\Database\TemperatureMeasurementSubmission.cs" />
+    <Compile Include="Models\View\EarthSpheresImageGalleryViewModel.cs" />
     <Compile Include="Models\View\EarthSpheresImageToolViewModel.cs" />
     <Compile Include="Models\View\LtiViewModelBase.cs" />
     <Compile Include="Models\View\PresentationToolViewModel.cs" />
@@ -242,6 +245,7 @@
     <Content Include="Views\EarthSpheresImageToolView.cshtml" />
     <Content Include="Views\EarthMassToolView.cshtml" />
     <Content Include="Views\TemperatureMeasurementToolView.cshtml" />
+    <Content Include="Views\EarthSpheresImageGalleryView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

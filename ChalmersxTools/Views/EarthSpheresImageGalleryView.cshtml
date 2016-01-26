@@ -1,0 +1,177 @@
+﻿@model ChalmersxTools.Models.View.EarthSpheresImageGalleryViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EarthSpheresImageGalleryView</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+        }
+        h1, h2, h3, h4, h5 {
+            color: white;
+        }
+        a:link, a:active, a:hover, a:visited {
+            color: white;
+        }
+        .image-view-column {
+            display: inline-block;
+            width: 20%;
+            vertical-align: top;
+        }
+        .image-view-column-list {
+            list-style: none;
+            padding-left: 0px;
+        }
+        .column-header {
+            text-align: center;
+        }
+        .gallery-item {
+            display: inline-block;
+            vertical-align: top;
+            width: 100%;
+        }
+        .gallery-item-inner {
+            padding: 2px 10px;
+            text-align: center;
+        }
+        .gallery-image {
+            width: 100%;
+        }
+        .full-width {
+            width: 100%;
+        }
+        .fifth-width {
+            width: 20%;
+        }
+    </style>
+</head>
+<body>
+    <div id="spheres-image-view" style="width:100%;">
+        <div id="geosphere-column" class="image-view-column">
+            <a href="#" onclick="event.preventDefault(); toggleSingleSphereFilter('geosphere');"><h1 class="column-header">Geosphere</h1></a>
+            <ul class="image-view-column-list">
+                @for (var i = 0; i < @Model.GeosphereImages.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        Html.Raw("-->");
+                    }
+
+                    <li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.GeosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.GeosphereImages[i].ImageUrl"></a></div></li>
+
+                    if (i < @Model.GeosphereImages.Count - 1)
+                    {
+                        Html.Raw("<!--");
+                    }
+                }                                                                                                                                                                                                                                                                                                                         
+            </ul>
+        </div><!--
+        --><div id="atmosphere-column" class="image-view-column">
+            <a href="#" onclick="event.preventDefault(); toggleSingleSphereFilter('atmosphere');"><h1 class="column-header">Atmosphere</h1></a>
+            <ul class="image-view-column-list">
+                @for (var i = 0; i < @Model.AtmosphereImages.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        Html.Raw("-->");
+                    }
+
+                    <li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.AtmosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.AtmosphereImages[i].ImageUrl"></a></div></li>
+
+                    if (i < @Model.AtmosphereImages.Count - 1)
+                    {
+                        Html.Raw("<!--");
+                    }
+                }      
+            </ul>
+        </div><!--
+        --><div id="biosphere-column" class="image-view-column">
+            <a href="#" onclick="event.preventDefault(); toggleSingleSphereFilter('biosphere');"><h1 class="column-header">Biosphere</h1></a>
+            <ul class="image-view-column-list">
+                @for (var i = 0; i < @Model.BiosphereImages.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        Html.Raw("-->");
+                    }
+
+                    <li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.BiosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.BiosphereImages[i].ImageUrl"></a></div></li>
+
+                    if (i < @Model.BiosphereImages.Count - 1)
+                    {
+                        Html.Raw("<!--");
+                    }
+                }     
+            </ul>
+        </div><!--
+        --><div id="hydrosphere-column" class="image-view-column">
+            <a href="#" onclick="event.preventDefault(); toggleSingleSphereFilter('hydrosphere');"><h1 class="column-header">Hydrosphere</h1></a>
+            <ul class="image-view-column-list">
+                @for (var i = 0; i < @Model.HydrosphereImages.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        Html.Raw("-->");
+                    }
+
+                    <li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.HydrosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.HydrosphereImages[i].ImageUrl"></a></div></li>
+
+                    if (i < @Model.HydrosphereImages.Count - 1)
+                    {
+                        Html.Raw("<!--");
+                    }
+                }     
+            </ul>
+        </div><!--
+        --><div id="cryosphere-column" class="image-view-column">
+            <a href="#" onclick="event.preventDefault(); toggleSingleSphereFilter('cryosphere');"><h1 class="column-header">Cryosphere</h1></a>
+            <ul class="image-view-column-list">
+                @for (var i = 0; i < @Model.CryosphereImages.Count; i++)
+                {
+                    if (i > 0)
+                    {
+                        Html.Raw("-->");
+                    }
+
+                    <li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.CryosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.CryosphereImages[i].ImageUrl"></a></div></li>
+
+                    if (i < @Model.CryosphereImages.Count - 1)
+                    {
+                        Html.Raw("<!--");
+                    }
+                }       
+            </ul>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/luis-almeida/unveil/master/jquery.unveil.js"></script>
+    <script>
+        var spheres = [ "geosphere", "atmosphere", "biosphere", "hydrosphere", "cryosphere" ];
+
+        $(function () {
+            $("img").unveil(200, function () {
+                $(this).load(function () {
+                    $(this).addClass("gallery-image");
+                });
+            });
+        });
+
+        function toggleSingleSphereFilter(sphere) {
+            for (var i in spheres) {
+                if (spheres[i] !== sphere) {
+                    $("#" + spheres[i] + "-column").toggle();
+                }
+            }
+            $("#" + sphere + "-column").toggleClass("full-width");
+            $("#" + sphere + "-column li").toggleClass("fifth-width");
+            $("img").unveil();
+        }
+    </script>
+</body>
+</html>

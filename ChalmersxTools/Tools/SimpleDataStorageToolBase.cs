@@ -25,6 +25,11 @@ namespace ChalmersxTools.Tools
             return GetViewIdentifierAndModel(res);
         }
 
+        public override ViewIdentifierAndModel HandleVisualizationRequest()
+        {
+            throw new NotImplementedException();
+        }
+
         protected abstract string Create(HttpRequestBase request);
         protected abstract string Edit(HttpRequestBase request);
         protected abstract ViewIdentifierAndModel GetViewIdentifierAndModel(string message);

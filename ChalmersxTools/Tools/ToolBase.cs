@@ -38,5 +38,6 @@ namespace ChalmersxTools.Tools
 
         public abstract ViewIdentifierAndModel HandleRequest(HttpRequestBase request);
         public abstract CsvFileData HandleDataRequest();
+        public abstract ViewIdentifierAndModel HandleVisualizationRequest();
     }
 }

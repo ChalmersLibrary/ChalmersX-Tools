@@ -19,6 +19,7 @@ using Microsoft.Practices.Unity;
 using System.Configuration;
 using ChalmersxTools.Tools;
 using ChalmersxTools.Models.Database;
+using ChalmersxTools.Models.View;
 
 namespace ChalmersxTools.Controllers
 {
@@ -151,6 +152,49 @@ namespace ChalmersxTools.Controllers
             }
 
             return res;
+        }
+
+        [HttpGet]
+        public ActionResult GetVisualization(string ltiSessionId)
+        {
+            ActionResult res = new HttpNotFoundResult("Failed to get visualization: unknown error");
+
+            try
+            {
+                LtiSession session = null;
+
+                using (var sessionManager = _unityContainer.Resolve<ISessionManager>())
+                {
+                    session = sessionManager.GetAndRefreshSession(Guid.Parse(ltiSessionId));
+
+                    if (!session.Valid)
+                    {
+                        throw new Exception("Unauthorized.");
+                    }
+                    else
+                    {
+                        var tool = _unityContainer.Resolve<ITool>(session.ConsumerKey)
+                            .SetSessionManager(sessionManager)
+                            .SetSession(session);
+
+                        var visualizationData = tool.HandleVisualizationRequest();
+
+                        res = View(visualizationData.ViewIdentifier, visualizationData.Model);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                res = new HttpNotFoundResult("Failed to download data: " + e.Message);
+            }
+
+            return res;
+        }
+
+        [HttpGet]
+        public ActionResult Test()
+        {
+            return View("~/Views/EarthSpheresImageGalleryView.cshtml", new EarthSpheresImageGalleryViewModel());
         }
     }
 }
