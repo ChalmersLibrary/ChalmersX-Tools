@@ -9,5 +9,7 @@ namespace ChalmersxTools.Models.View
     public class EarthMassToolViewModel : LtiViewModelBase
     {
         public EarthMassSubmission Submission { get; set; }
+        public double EarthMassAverage { get; set; }
+        public int NumberOfSubmissions { get; set; }
     }
 }

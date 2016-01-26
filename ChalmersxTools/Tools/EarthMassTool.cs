@@ -115,10 +115,35 @@ namespace ChalmersxTools.Tools
 
         protected override ViewIdentifierAndModel GetViewIdentifierAndModel(string message)
         {
+            double massAverage = 0;
+            int numberOfSubmissions = 0;
+
+            try
+            {
+                List<EarthMassSubmission> allSubmissions =
+                    (from o in _sessionManager.DbContext.EarthMassSubmissions
+                        where o.CourseOrg == _session.CourseOrg &&
+                        o.CourseId == _session.CourseId &&
+                        o.CourseRun == _session.CourseRun
+                        select o).ToList();
+
+                foreach (var submission in allSubmissions)
+                {
+                    massAverage += submission.MeanGravityAcceleration;
+                    numberOfSubmissions++;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failed to get all previous submissions.", e);
+            }
+
             return new ViewIdentifierAndModel("~/Views/EarthMassToolView.cshtml",
                 new EarthMassToolViewModel()
                 {
                     Submission = GetDataForCurrentStudent(),
+                    EarthMassAverage = massAverage,
+                    NumberOfSubmissions = numberOfSubmissions,
                     LtiSessionId = _session.Id.ToString(),
                     Roles = _session.LtiRequest.Roles,
                     ResponseMessage = message
