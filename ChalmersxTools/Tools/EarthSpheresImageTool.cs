@@ -123,7 +123,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
-                throw new Exception("Failed to create submission.", e);
+                res = "<span style='color: red;'>Failed to create submission: " + e.Message + "</span>";
             }
 
             return res;
@@ -189,7 +189,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
-                throw new Exception("Failed to edit existing student presentation.", e);
+                res = "<span style='color: red;'>Failed to edit existing submission: " + e.Message + "</span>";
             }
 
             return res;
