@@ -93,6 +93,10 @@
                 $("#message-box").html("<span style='color: red;'>You have to enter a valid location for the image.</span>");
             } else if ($("#sphere2Url").val() != "" && $("#sphere2Location").val() == "") {
                 $("#message-box").html("<span style='color: red;'>You have to enter a valid location for the image.</span>");
+            } else if ($("#sphere1Url").val().substring(0, 5) != "https") {
+                $("#message-box").html("<span style='color: red;'>The URL that links to image 1 have to start with \"https\".</span>");
+            } else if ($("#sphere1Url").val().substring(0, 5) != "https") {
+                $("#message-box").html("<span style='color: red;'>The URL that links to image 2 have to start with \"https\".</span>");
             } else {
                 var geocodedLocation1 = 0;
                 var geocodedLocation2 = 0;

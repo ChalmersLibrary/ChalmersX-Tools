@@ -70,10 +70,23 @@ namespace ChalmersxTools.Tools
 
             try
             {
-                var url1IsEmpty = String.IsNullOrWhiteSpace(request.Form["sphere1Url"].ToString());
-                var url2IsEmpty = String.IsNullOrWhiteSpace(request.Form["sphere2Url"].ToString());
-                var url1IsValidImageUrl = CanAccessImageUrl(request.Form["sphere1Url"].ToString());
-                var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
+                var url1 = request.Form["sphere1Url"].ToString();
+                var url2 = request.Form["sphere2Url"].ToString();
+
+                if (!url1.StartsWith("https"))
+                {
+                    throw new Exception("URL to image 1 have to start with https.");
+                }
+
+                if (!url2.StartsWith("https"))
+                {
+                    throw new Exception("URL to image 2 have to start with https.");
+                }
+
+                var url1IsEmpty = String.IsNullOrWhiteSpace(url1);
+                var url2IsEmpty = String.IsNullOrWhiteSpace(url2);
+                var url1IsValidImageUrl = CanAccessImageUrl(url1);
+                var url2IsValidImageUrl = CanAccessImageUrl(url2);
                 double sphere1Latitude, sphere1Longitude, sphere2Latitude, sphere2Longitude;
                 var sphere1LatitudeParsed = Double.TryParse(request.Form["sphere1Latitude"], out sphere1Latitude);
                 var sphere1LongitudeParsed = Double.TryParse(request.Form["sphere1Longitude"], out sphere1Longitude);
@@ -94,11 +107,11 @@ namespace ChalmersxTools.Tools
                         CourseId = _session.CourseId,
                         CourseRun = _session.CourseRun,
                         Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : ""),
-                        Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : ""),
+                        Sphere1Url = (url1IsValidImageUrl ? url1 : ""),
                         Sphere1Location = (url1IsValidImageUrl ? request.Form["sphere1Location"].ToString() : ""),
                         Sphere1Coordinate = (url1IsValidImageUrl ? new Coordinate(sphere1Latitude, sphere1Longitude) : new Coordinate()),
                         Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : ""),
-                        Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : ""),
+                        Sphere2Url = (url2IsValidImageUrl ? url2 : ""),
                         Sphere2Location = (url2IsValidImageUrl ? request.Form["sphere2Location"].ToString() : ""),
                         Sphere2Coordinate = (url2IsValidImageUrl ? new Coordinate(sphere2Latitude, sphere2Longitude) : new Coordinate())
                     });
@@ -122,10 +135,23 @@ namespace ChalmersxTools.Tools
 
             try
             {
-                var url1IsEmpty = String.IsNullOrWhiteSpace(request.Form["sphere1Url"].ToString());
-                var url2IsEmpty = String.IsNullOrWhiteSpace(request.Form["sphere2Url"].ToString());
-                var url1IsValidImageUrl = CanAccessImageUrl(request.Form["sphere1Url"].ToString());
-                var url2IsValidImageUrl = CanAccessImageUrl(request.Form["sphere2Url"].ToString());
+                var url1 = request.Form["sphere1Url"].ToString();
+                var url2 = request.Form["sphere2Url"].ToString();
+
+                if (!url1.StartsWith("https"))
+                {
+                    throw new Exception("URL to image 1 have to start with https.");
+                }
+
+                if (!url2.StartsWith("https"))
+                {
+                    throw new Exception("URL to image 2 have to start with https.");
+                }
+
+                var url1IsEmpty = String.IsNullOrWhiteSpace(url1);
+                var url2IsEmpty = String.IsNullOrWhiteSpace(url2);
+                var url1IsValidImageUrl = CanAccessImageUrl(url1);
+                var url2IsValidImageUrl = CanAccessImageUrl(url2);
                 double sphere1Latitude, sphere1Longitude, sphere2Latitude, sphere2Longitude;
                 var sphere1LatitudeParsed = Double.TryParse(request.Form["sphere1Latitude"], out sphere1Latitude);
                 var sphere1LongitudeParsed = Double.TryParse(request.Form["sphere1Longitude"], out sphere1Longitude);
@@ -148,11 +174,11 @@ namespace ChalmersxTools.Tools
                          select o).SingleOrDefault();
 
                     existing.Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : "");
-                    existing.Sphere1Url = (url1IsValidImageUrl ? request.Form["sphere1Url"].ToString() : "");
+                    existing.Sphere1Url = (url1IsValidImageUrl ? url1 : "");
                     existing.Sphere1Location = (url1IsValidImageUrl ? request.Form["sphere1Location"].ToString() : "");
                     existing.Sphere1Coordinate = (url1IsValidImageUrl ? new Coordinate(sphere1Latitude, sphere1Longitude) : new Coordinate());
                     existing.Sphere2Name = (url2IsValidImageUrl ? request.Form["sphere2Name"].ToString() : "");
-                    existing.Sphere2Url = (url2IsValidImageUrl ? request.Form["sphere2Url"].ToString() : "");
+                    existing.Sphere2Url = (url2IsValidImageUrl ? url2 : "");
                     existing.Sphere2Location = (url2IsValidImageUrl ? request.Form["sphere2Location"].ToString() : "");
                     existing.Sphere2Coordinate = (url2IsValidImageUrl ? new Coordinate(sphere2Latitude, sphere2Longitude) : new Coordinate());
 
