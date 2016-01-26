@@ -84,7 +84,8 @@
             );
 
             var day1 = {
-                max: 8,
+                min: -30,
+                max: 30,
                 data: [
                     @for (int i = 0; i < @Model.Measurements.Count; i++)
                     {
@@ -102,7 +103,8 @@
             };
             
             var day2 = {
-                max: 8,
+                min: -30,
+                max: 30,
                 data: [
                     @for (int i = 0; i < @Model.Measurements.Count; i++)
                     {
