@@ -129,9 +129,10 @@ namespace ChalmersxTools.Tools
 
                 foreach (var submission in allSubmissions)
                 {
-                    massAverage += submission.MeanGravityAcceleration;
+                    massAverage += submission.TotalEarthMass;
                     numberOfSubmissions++;
                 }
+                massAverage = massAverage / numberOfSubmissions;
             }
             catch (Exception e)
             {
