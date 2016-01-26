@@ -34,6 +34,7 @@
             <input type="submit" value="Save" />
         </form>
         <div>
+            <button onclick="Day1()">Show day 1 measurements</button> <button onclick="Day2()">Show day 2 measurements</button><br />
             <div class="heatmap" id="map-canvas" style="height:500px;"></div>
         </div>
         @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
@@ -123,6 +124,12 @@
 
             heatmap.setData(day1);
         };
+        function Day1() {
+            heatmap.setData(day1);
+        }
+        function Day2() {
+            heatmap.setData(day2);
+        }
     </script>
 </body>
 </html>
