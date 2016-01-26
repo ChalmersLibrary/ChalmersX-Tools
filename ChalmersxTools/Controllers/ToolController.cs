@@ -185,7 +185,7 @@ namespace ChalmersxTools.Controllers
             }
             catch (Exception e)
             {
-                res = new HttpNotFoundResult("Failed to download data: " + e.Message);
+                res = new HttpNotFoundResult("Failed to get visualization: " + e.Message);
             }
 
             return res;
