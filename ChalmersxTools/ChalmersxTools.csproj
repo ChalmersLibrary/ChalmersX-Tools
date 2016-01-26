@@ -158,8 +158,6 @@
     <Content Include="css\main.css" />
     <Content Include="Global.asax" />
     <Content Include="img\default.gif" />
-    <Content Include="js\gmaps-heatmap.js" />
-    <Content Include="js\heatmap.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +212,7 @@
     <Compile Include="Models\Database\EarthMassSubmission.cs" />
     <Compile Include="Models\Database\EarthSpheresImagesSubmission.cs" />
     <Compile Include="Models\Database\LtiSession.cs" />
+    <Compile Include="Models\MeasurementAndCoordinate.cs" />
     <Compile Include="Models\GeoImage.cs" />
     <Compile Include="Models\View\EarthMassToolViewModel.cs" />
     <Compile Include="Models\Database\TemperatureMeasurementSubmission.cs" />
@@ -256,6 +255,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="js\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
