@@ -60,11 +60,11 @@
         </form>
         <br />
         <a href="/Tool/GetVisualization?ltiSessionId=@Model.LtiSessionId" target="_blank">Go to collage</a>
+        <br />
         @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
         {
-            <br>
-            <hr>
-            <br>
+            <hr />
+            <br />
             <div>
                 <p>This information is not visible for students.</p>
                 <a href="/Tool/GetData?ltiSessionId=@Model.LtiSessionId">Download data</a>
