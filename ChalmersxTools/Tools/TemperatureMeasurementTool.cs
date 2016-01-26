@@ -24,6 +24,7 @@ namespace ChalmersxTools.Tools
                 new TemperatureMeasurementToolViewModel()
                 {
                     Submission = GetSubmissionForCurrentStudent(),
+                    Measurements = GetMeasurements(),  
                     LtiSessionId = _session.Id.ToString(),
                     Roles = _session.LtiRequest.Roles,
                     ResponseMessage = message
@@ -113,6 +114,32 @@ namespace ChalmersxTools.Tools
         }
 
         #region Private methods
+
+        private List<MeasurementAndCoordinate> GetMeasurements()
+        {
+            var res = new List<MeasurementAndCoordinate>();
+            try {
+                var measurements = (from o in _sessionManager.DbContext.TemperatureMeasurementSubmissions
+                                    where o.CourseOrg == _session.CourseOrg &&
+                                    o.CourseId == _session.CourseId &&
+                                    o.CourseRun == _session.CourseRun
+                                    select o).ToList();
+                foreach (var m in measurements)
+                {
+                    res.Add(new MeasurementAndCoordinate()
+                    {
+                        Measurement1 = m.Measurement1,
+                        Measurement2 = m.Measurement2,
+                        Coordinate = m.Position
+                    });
+                }
+            }
+            catch (Exception e) {
+                throw new Exception("Failed to fetch all measurements for course run.", e);
+            }
+
+            return res;
+        }
 
         private string SubmitScore(TemperatureMeasurementSubmission submission)
         {
