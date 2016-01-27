@@ -115,6 +115,16 @@ namespace ChalmersxTools.Tools
                 }
                 else
                 {
+                    double? mes1 = null, mes2 = null;
+                    double mesout;
+                    if (Double.TryParse(request.Form["measurement1"], out mesout))
+                    {
+                        mes1 = mesout;
+                    }
+                    if (Double.TryParse(request.Form["measurement2"], out mesout))
+                    {
+                        mes2 = mesout;
+                    }
                     TemperatureMeasurementSubmission existing =
                     (from o in _sessionManager.DbContext.TemperatureMeasurementSubmissions
                      where o.UserId == _session.UserId &&
@@ -124,8 +134,8 @@ namespace ChalmersxTools.Tools
                      select o).SingleOrDefault();
 
                     existing.Position = new Coordinate(lat, lng);
-                    existing.Measurement1 = Double.Parse(request.Form["measurement1"].ToString(), CultureInfo.InvariantCulture);
-                    existing.Measurement2 = Double.Parse(request.Form["measurement2"].ToString(), CultureInfo.InvariantCulture);
+                    existing.Measurement1 = mes1;
+                    existing.Measurement2 = mes2;
 
                     _sessionManager.DbContext.SaveChanges();
 
