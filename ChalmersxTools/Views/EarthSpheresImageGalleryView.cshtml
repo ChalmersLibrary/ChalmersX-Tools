@@ -86,12 +86,7 @@
         </div><!--
         --><div id="hydrosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('hydrosphere'); event.preventDefault();">Hydrosphere</a></h1>
-            <ul class="image-view-column-list">
-                @for (var i = 0; i < @Model.HydrosphereImages.Count; i++)
-                {
-<li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.HydrosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.HydrosphereImages[i].ImageUrl"></a></div></li>
-                }     
-            </ul>
+            <ul class="image-view-column-list">@for (var i = 0; i < @Model.HydrosphereImages.Count; i++){<li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.HydrosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.HydrosphereImages[i].ImageUrl"></a></div></li>}</ul>
         </div><!--
         --><div id="cryosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('cryosphere'); event.preventDefault();">Cryosphere</a></h1>
