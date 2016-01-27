@@ -159,12 +159,13 @@
         var spheres = [ "geosphere", "atmosphere", "biosphere", "hydrosphere", "cryosphere" ];
 
         $(function () {
-            $("img").unveil(200, function () {
-                $(this).load(function () {
-                    $(this).addClass("gallery-image");
+            $("img").first().bind('load', function () {
+                $("img").unveil(200, function () {
+                    $(this).load(function () {
+                        $(this).addClass("gallery-image");
+                    });
                 });
             });
-            $(window).trigger("lookup");
         });
 
         function toggleSingleSphereFilter(sphere) {
