@@ -59,12 +59,22 @@ namespace ChalmersxTools.Tools
             try
             {
                 double lat, lng;
+                double? mes1 = null, mes2 = null;
+                double mesout;
+                if (Double.TryParse(request.Form["measurement1"], out mesout))
+                {
+                    mes1 = mesout;
+                }
+                if (Double.TryParse(request.Form["measurement2"], out mesout))
+                {
+                    mes2 = mesout;
+                }
 
                 if (!Double.TryParse(request.Form["lat"].ToString(), out lat)) {
                     res = "<span style='color: red;'>Failed to parse latitude.</span>";
                 } else if (!Double.TryParse(request.Form["long"].ToString(), out lng)) {
                     res = "<span style='color: red;'>Failed to parse longitude.</span>";
-                } else if (request.Form["measurement1"] == "" && request.Form["measurement2"] == "")
+                } else if (mes1 == null && mes2 == null)
                 {
                     res = "<span style='color: red;'>You have to insert at least one measurement.</span>";
                 } else { 
@@ -75,8 +85,8 @@ namespace ChalmersxTools.Tools
                         CourseId = _session.CourseId,
                         CourseRun = _session.CourseRun,
                         Position = new Coordinate(lat, lng),
-                        Measurement1 = Double.Parse(request.Form["measurement1"].ToString(), CultureInfo.InvariantCulture),
-                        Measurement2 = Double.Parse(request.Form["measurement2"].ToString(), CultureInfo.InvariantCulture)
+                        Measurement1 = mes1,
+                        Measurement2 = mes2
                     });
 
                     _sessionManager.DbContext.SaveChanges();
@@ -100,6 +110,16 @@ namespace ChalmersxTools.Tools
             try
             {
                 double lat, lng;
+                double? mes1 = null, mes2 = null;
+                double mesout;
+                if (Double.TryParse(request.Form["measurement1"], out mesout))
+                {
+                    mes1 = mesout;
+                }
+                if (Double.TryParse(request.Form["measurement2"], out mesout))
+                {
+                    mes2 = mesout;
+                }
 
                 if (!Double.TryParse(request.Form["lat"].ToString(), out lat))
                 {
@@ -109,22 +129,13 @@ namespace ChalmersxTools.Tools
                 {
                     res = "<span style='color: red;'>Failed to parse longitude.</span>";
                 }
-                else if (request.Form["measurement1"] == "" && request.Form["measurement2"] == "")
+                else if (mes1 == null && mes2 == null)
                 {
                     res = "<span style='color: red;'>You have to insert at least one measurement.</span>";
                 }
                 else
                 {
-                    double? mes1 = null, mes2 = null;
-                    double mesout;
-                    if (Double.TryParse(request.Form["measurement1"], out mesout))
-                    {
-                        mes1 = mesout;
-                    }
-                    if (Double.TryParse(request.Form["measurement2"], out mesout))
-                    {
-                        mes2 = mesout;
-                    }
+
                     TemperatureMeasurementSubmission existing =
                     (from o in _sessionManager.DbContext.TemperatureMeasurementSubmissions
                      where o.UserId == _session.UserId &&
