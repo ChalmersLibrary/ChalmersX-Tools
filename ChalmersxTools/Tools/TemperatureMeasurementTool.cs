@@ -58,21 +58,31 @@ namespace ChalmersxTools.Tools
 
             try
             {
-                var newSubmission = _sessionManager.DbContext.TemperatureMeasurementSubmissions.Add(new TemperatureMeasurementSubmission()
+                double lat, lng;
+
+                if (!Double.TryParse(request.Form["lat"].ToString(), out lat)) {
+                    res = "<span style='color: red;'>Failed to parse latitude.</span>";
+                } else if (!Double.TryParse(request.Form["long"].ToString(), out lng)) {
+                    res = "<span style='color: red;'>Failed to parse longitude.</span>";
+                } else if (request.Form["measurement1"] == "" && request.Form["measurement2"] == "")
                 {
-                    UserId = _session.UserId,
-                    CourseOrg = _session.CourseOrg,
-                    CourseId = _session.CourseId,
-                    CourseRun = _session.CourseRun,
-                    Position = new Coordinate(Double.Parse(request.Form["lat"].ToString(), CultureInfo.InvariantCulture), Double.Parse(request.Form["long"].ToString(), CultureInfo.InvariantCulture)),
-                    Measurement1 = Double.Parse(request.Form["measurement1"].ToString(), CultureInfo.InvariantCulture),
-                    Measurement2 = Double.Parse(request.Form["measurement2"].ToString(), CultureInfo.InvariantCulture)
-                });
+                    res = "<span style='color: red;'>You have to insert at least one measurement.</span>";
+                } else { 
+                    var newSubmission = _sessionManager.DbContext.TemperatureMeasurementSubmissions.Add(new TemperatureMeasurementSubmission()
+                    {
+                        UserId = _session.UserId,
+                        CourseOrg = _session.CourseOrg,
+                        CourseId = _session.CourseId,
+                        CourseRun = _session.CourseRun,
+                        Position = new Coordinate(Double.Parse(request.Form["lat"].ToString(), CultureInfo.InvariantCulture), Double.Parse(request.Form["long"].ToString(), CultureInfo.InvariantCulture)),
+                        Measurement1 = Double.Parse(request.Form["measurement1"].ToString(), CultureInfo.InvariantCulture),
+                        Measurement2 = Double.Parse(request.Form["measurement2"].ToString(), CultureInfo.InvariantCulture)
+                    });
 
-                _sessionManager.DbContext.SaveChanges();
+                    _sessionManager.DbContext.SaveChanges();
 
-                res = SubmitScore(newSubmission);
-
+                    res = SubmitScore(newSubmission);
+                }
             }
             catch (Exception e)
             {
