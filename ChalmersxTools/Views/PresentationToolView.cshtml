@@ -13,7 +13,7 @@
 </head>
 <body>
     <div>
-        <span id="wrong-location"></span>
+        <span id="message-box"></span>
         <form id="student-presentation" method="post">
             <div>
                 <label class="default-label" for="sp-name">Name</label>
@@ -97,7 +97,7 @@
         }
 
         function codeAddress() {
-            document.getElementById("wrong-location").innerHTML = "";
+            document.getElementById("message-box").innerHTML = "";
             var address = document.getElementById("sp-location").value;
             geocoder.geocode({ "address": address }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
@@ -105,7 +105,7 @@
                     document.getElementById("sp-longitude").value = results[0].geometry.location.lng();
                     document.forms["student-presentation"].submit();
                 } else {
-                    document.getElementById("wrong-location").innerHTML = "<p><b>Location not found</b>, please provide a more specific description of your location.</p>";
+                    document.getElementById("message-box").innerHTML = "<span style='color: red;'><p><b>Location not found</b>, please provide a more specific description of your location.</p></span>";
                 }
             });
         }
