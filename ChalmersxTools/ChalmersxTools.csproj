@@ -206,6 +206,10 @@
     <Compile Include="Migrations\201601221152483_AddCoordinateEarthSpheresImages.Designer.cs">
       <DependentUpon>201601221152483_AddCoordinateEarthSpheresImages.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601271532069_AddUserHostAddress.cs" />
+    <Compile Include="Migrations\201601271532069_AddUserHostAddress.Designer.cs">
+      <DependentUpon>201601271532069_AddUserHostAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\CsvFileData.cs" />
@@ -287,6 +291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601221152483_AddCoordinateEarthSpheresImages.resx">
       <DependentUpon>201601221152483_AddCoordinateEarthSpheresImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601271532069_AddUserHostAddress.resx">
+      <DependentUpon>201601271532069_AddUserHostAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
