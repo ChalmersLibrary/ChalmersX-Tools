@@ -54,15 +54,14 @@
             </fieldset>
             <div style="padding-top: 10px;">
                 <input type="button" value="Save" onclick="validateAndSubmitForm();">
+                <a href="/Tool/GetVisualization?ltiSessionId=@Model.LtiSessionId" target="_blank"><input type="button" value="Go to Collage"></a>
             </div>
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
             <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
         </form>
-        <br />
-        <a href="/Tool/GetVisualization?ltiSessionId=@Model.LtiSessionId" target="_blank">Go to collage</a>
-        <br />
         @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
         {
+            <br />
             <hr />
             <br />
             <div>
