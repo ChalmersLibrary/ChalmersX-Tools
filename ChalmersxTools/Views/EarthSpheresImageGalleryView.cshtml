@@ -164,7 +164,7 @@
                     $(this).addClass("gallery-image");
                 });
             });
-            $("img").unveil();
+            $(window).trigger("lookup");
         });
 
         function toggleSingleSphereFilter(sphere) {
