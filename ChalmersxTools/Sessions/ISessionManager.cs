@@ -15,7 +15,7 @@ namespace ChalmersxTools.Sessions
     {
         LearningToolServerDbContext DbContext { get; }
 
-        LtiSession GetAndRefreshSession(Guid ltiSessionId);
+        LtiSession GetAndRefreshSession(Guid ltiSessionId, string userHostAddress);
         LtiSession TryToExtractSessionFromRequest(HttpRequestBase request);
         LtiSession CreateValidSession(LtiSession session);
         void RefreshSession(LtiSession session);

@@ -48,13 +48,13 @@ namespace ChalmersxTools.Sessions
 
             if (request.Form["ltiSessionId"] != null && request.Form["ltiSessionId"].ToString() != "")
             {
-                res = GetAndRefreshSession(Guid.Parse(request.Form["ltiSessionId"].ToString()));
+                res = GetAndRefreshSession(Guid.Parse(request.Form["ltiSessionId"].ToString()), request.UserHostAddress);
             }
 
             return res;
         }
 
-        public LtiSession GetAndRefreshSession(Guid ltiSessionId)
+        public LtiSession GetAndRefreshSession(Guid ltiSessionId, string userHostAddress)
         {
             LtiSession res = new LtiSession();
 
@@ -66,7 +66,7 @@ namespace ChalmersxTools.Sessions
                                       where s.Id == ltiSessionId
                                       select s).SingleOrDefault();
 
-                if (existingLtiSession != null)
+                if (existingLtiSession != null && existingLtiSession.UserHostAddress == userHostAddress)
                 {
                     if (existingLtiSession.Timestamp < DateTime.Now.AddDays(-1))
                     {
@@ -118,7 +118,8 @@ namespace ChalmersxTools.Sessions
                         CourseRun = session.CourseRun,
                         UserId = session.LtiRequest.UserId,
                         Timestamp = DateTime.Now,
-                        LtiRequest = session.LtiRequest
+                        LtiRequest = session.LtiRequest,
+                        UserHostAddress = session.UserHostAddress
                     };
                     res.SerializeLtiRequest();
                     res = _dbContext.LtiSessions.Add(res);
@@ -140,7 +141,8 @@ namespace ChalmersxTools.Sessions
                     CourseRun = session.CourseRun,
                     UserId = session.LtiRequest.UserId,
                     Timestamp = DateTime.Now,
-                    LtiRequest = session.LtiRequest
+                    LtiRequest = session.LtiRequest,
+                    UserHostAddress = session.UserHostAddress
                 };
                 res.SerializeLtiRequest();
                 res = _dbContext.LtiSessions.Add(res);

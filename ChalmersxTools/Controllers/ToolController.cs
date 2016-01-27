@@ -91,6 +91,7 @@ namespace ChalmersxTools.Controllers
                     }
                     else
                     {
+                        session.UserHostAddress = Request.UserHostAddress;
                         session = sessionManager.CreateValidSession(session);
                     }
 
@@ -128,7 +129,7 @@ namespace ChalmersxTools.Controllers
 
                 using (var sessionManager = _unityContainer.Resolve<ISessionManager>())
                 {
-                    session = sessionManager.GetAndRefreshSession(Guid.Parse(ltiSessionId));
+                    session = sessionManager.GetAndRefreshSession(Guid.Parse(ltiSessionId), Request.UserHostAddress);
 
                     if (!session.Valid)
                     {
@@ -165,7 +166,7 @@ namespace ChalmersxTools.Controllers
 
                 using (var sessionManager = _unityContainer.Resolve<ISessionManager>())
                 {
-                    session = sessionManager.GetAndRefreshSession(Guid.Parse(ltiSessionId));
+                    session = sessionManager.GetAndRefreshSession(Guid.Parse(ltiSessionId), Request.UserHostAddress);
 
                     if (!session.Valid)
                     {

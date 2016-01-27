@@ -31,6 +31,7 @@ namespace ChalmersxTools.Models.Database
         public string CourseRun { get; set; }
         public DateTime Timestamp { get; set; }
         public string LtiRequestSerialized { get; set; }
+        public string UserHostAddress { get; set; }
 
         private bool _valid = false;
         [NotMapped]
