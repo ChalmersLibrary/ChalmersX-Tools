@@ -114,14 +114,14 @@
 
                                         document.forms["earth-spheres-images"].submit();
                                     } else {
-                                        $("#message-box").html("<p><b>Location 2 not found</b>, please provide a more specific description of your location.</p>");
+                                        $("#message-box").html("<span style='color: red;'><p><b>Location 2 not found</b>, please provide a more specific description of your location.</p></span>");
                                     }
                                 });
                             } else {
                                 document.forms["earth-spheres-images"].submit();
                             }
                         } else {
-                            $("#message-box").html("<p><b>Location 1 not found</b>, please provide a more specific description of your location.</p>");
+                            $("#message-box").html("<span style='color: red;'><p><b>Location 1 not found</b>, please provide a more specific description of your location.</p></span>");
                         }
                     });
                 } else if ($("#sphere2Url").val() != "") {
@@ -131,7 +131,7 @@
                             $("#sphere2Longitude").val(results[0].geometry.location.lng());
                             document.forms["earth-spheres-images"].submit();
                         } else {
-                            $("#message-box").html("<p><b>Location 2 not found</b>, please provide a more specific description of your location.</p>");
+                            $("#message-box").html("<span style='color: red;'><p><b>Location 2 not found</b>, please provide a more specific description of your location.</p></span>");
                         }
                     });
                 }
