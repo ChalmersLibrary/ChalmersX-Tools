@@ -62,17 +62,7 @@
             <ul class="image-view-column-list">
                 @for (var i = 0; i < @Model.GeosphereImages.Count; i++)
                 {
-                    if (i > 0)
-                    {
-                        Html.Raw("-->");
-                    }
-
-                    <li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.GeosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.GeosphereImages[i].ImageUrl"></a></div></li>
-
-                    if (i < @Model.GeosphereImages.Count - 1)
-                    {
-                        Html.Raw("<!--");
-                    }
+<li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.GeosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.GeosphereImages[i].ImageUrl"></a></div></li>
                 }                                                                                                                                                                                                                                                                                                                         
             </ul>
         </div><!--
@@ -81,17 +71,7 @@
             <ul class="image-view-column-list">
                 @for (var i = 0; i < @Model.AtmosphereImages.Count; i++)
                 {
-                    if (i > 0)
-                    {
-                        Html.Raw("-->");
-                    }
-
-                    <li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.AtmosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.AtmosphereImages[i].ImageUrl"></a></div></li>
-
-                    if (i < @Model.AtmosphereImages.Count - 1)
-                    {
-                        Html.Raw("<!--");
-                    }
+<li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.AtmosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.AtmosphereImages[i].ImageUrl"></a></div></li>
                 }      
             </ul>
         </div><!--
@@ -100,17 +80,7 @@
             <ul class="image-view-column-list">
                 @for (var i = 0; i < @Model.BiosphereImages.Count; i++)
                 {
-                    if (i > 0)
-                    {
-                        Html.Raw("-->");
-                    }
-
-                    <li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.BiosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.BiosphereImages[i].ImageUrl"></a></div></li>
-
-                    if (i < @Model.BiosphereImages.Count - 1)
-                    {
-                        Html.Raw("<!--");
-                    }
+<li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.BiosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.BiosphereImages[i].ImageUrl"></a></div></li>
                 }     
             </ul>
         </div><!--
@@ -119,17 +89,7 @@
             <ul class="image-view-column-list">
                 @for (var i = 0; i < @Model.HydrosphereImages.Count; i++)
                 {
-                    if (i > 0)
-                    {
-                        Html.Raw("-->");
-                    }
-
-                    <li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.HydrosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.HydrosphereImages[i].ImageUrl"></a></div></li>
-
-                    if (i < @Model.HydrosphereImages.Count - 1)
-                    {
-                        Html.Raw("<!--");
-                    }
+<li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.HydrosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.HydrosphereImages[i].ImageUrl"></a></div></li>
                 }     
             </ul>
         </div><!--
@@ -138,17 +98,7 @@
             <ul class="image-view-column-list">
                 @for (var i = 0; i < @Model.CryosphereImages.Count; i++)
                 {
-                    if (i > 0)
-                    {
-                        Html.Raw("-->");
-                    }
-
-                    <li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.CryosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.CryosphereImages[i].ImageUrl"></a></div></li>
-
-                    if (i < @Model.CryosphereImages.Count - 1)
-                    {
-                        Html.Raw("<!--");
-                    }
+<li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.CryosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.CryosphereImages[i].ImageUrl"></a></div></li>
                 }       
             </ul>
         </div>
