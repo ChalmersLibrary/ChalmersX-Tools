@@ -16,8 +16,11 @@
         h1, h2, h3, h4, h5 {
             color: white;
         }
-        a:link, a:active, a:hover, a:visited {
+        a:link, a:visited, a:hover, a:active {
             color: white;
+        }
+        a.discrete-link:link, a.discrete-link:visited, a.discrete-link:hover, a.discrete-link:active {
+            text-decoration: none;
         }
         .image-view-column {
             display: inline-block;
@@ -53,8 +56,9 @@
 </head>
 <body>
     <div id="spheres-image-view" style="width:100%;">
+        <div id="back-link" style="position: fixed; left: 20px; top: 20px; font-size: 3em; color: white; font-weight: bold; display: none;" data-fullscreen-sphere=""><a class="discrete-link" href="#" onclick="toggleSingleSphereFilter($(this).parent().data('fullscreen-sphere')); event.preventDefault();"><</a></div>
         <div id="geosphere-column" class="image-view-column">
-            <a href="#" onclick="event.preventDefault(); toggleSingleSphereFilter('geosphere');"><h1 class="column-header">Geosphere</h1></a>
+            <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('geosphere'); event.preventDefault();">Geosphere</a></h1>
             <ul class="image-view-column-list">
                 @for (var i = 0; i < @Model.GeosphereImages.Count; i++)
                 {
@@ -73,7 +77,7 @@
             </ul>
         </div><!--
         --><div id="atmosphere-column" class="image-view-column">
-            <a href="#" onclick="event.preventDefault(); toggleSingleSphereFilter('atmosphere');"><h1 class="column-header">Atmosphere</h1></a>
+            <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('atmosphere'); event.preventDefault();">Atmosphere</a></h1>
             <ul class="image-view-column-list">
                 @for (var i = 0; i < @Model.AtmosphereImages.Count; i++)
                 {
@@ -92,7 +96,7 @@
             </ul>
         </div><!--
         --><div id="biosphere-column" class="image-view-column">
-            <a href="#" onclick="event.preventDefault(); toggleSingleSphereFilter('biosphere');"><h1 class="column-header">Biosphere</h1></a>
+            <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('biosphere'); event.preventDefault();">Biosphere</a></h1>
             <ul class="image-view-column-list">
                 @for (var i = 0; i < @Model.BiosphereImages.Count; i++)
                 {
@@ -111,7 +115,7 @@
             </ul>
         </div><!--
         --><div id="hydrosphere-column" class="image-view-column">
-            <a href="#" onclick="event.preventDefault(); toggleSingleSphereFilter('hydrosphere');"><h1 class="column-header">Hydrosphere</h1></a>
+            <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('hydrosphere'); event.preventDefault();">Hydrosphere</a></h1>
             <ul class="image-view-column-list">
                 @for (var i = 0; i < @Model.HydrosphereImages.Count; i++)
                 {
@@ -130,7 +134,7 @@
             </ul>
         </div><!--
         --><div id="cryosphere-column" class="image-view-column">
-            <a href="#" onclick="event.preventDefault(); toggleSingleSphereFilter('cryosphere');"><h1 class="column-header">Cryosphere</h1></a>
+            <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('cryosphere'); event.preventDefault();">Cryosphere</a></h1>
             <ul class="image-view-column-list">
                 @for (var i = 0; i < @Model.CryosphereImages.Count; i++)
                 {
@@ -171,6 +175,7 @@
             $("#" + sphere + "-column").toggleClass("full-width");
             $("#" + sphere + "-column li").toggleClass("fifth-width");
             $("img").unveil();
+            $("#back-link").toggle().data("fullscreen-sphere", sphere);
         }
     </script>
 </body>

@@ -190,11 +190,5 @@ namespace ChalmersxTools.Controllers
 
             return res;
         }
-
-        [HttpGet]
-        public ActionResult Test()
-        {
-            return View("~/Views/EarthSpheresImageGalleryView.cshtml", new EarthSpheresImageGalleryViewModel());
-        }
     }
 }
