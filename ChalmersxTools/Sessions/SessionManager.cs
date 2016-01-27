@@ -104,54 +104,28 @@ namespace ChalmersxTools.Sessions
 
             if (res != null)
             {
-                res.DeserializeLtiRequest();
-
-                if (res.Timestamp < DateTime.Now.AddDays(-1))
-                {
-                    // Remove the session if it is older than a day.
-                    _dbContext.LtiSessions.Remove(res);
-                    res = new LtiSession()
-                    {
-                        ConsumerKey = session.LtiRequest.ConsumerKey,
-                        CourseOrg = session.CourseOrg,
-                        CourseId = session.CourseId,
-                        CourseRun = session.CourseRun,
-                        UserId = session.LtiRequest.UserId,
-                        Timestamp = DateTime.Now,
-                        LtiRequest = session.LtiRequest,
-                        UserHostAddress = session.UserHostAddress
-                    };
-                    res.SerializeLtiRequest();
-                    res = _dbContext.LtiSessions.Add(res);
-                    _dbContext.SaveChanges();
-                }
-                else
-                {
-                    RefreshSession(res);
-                }
-            }
-            else
-            {
-                // Create a new session ID if we didn't have a valid session ID.
-                res = new LtiSession()
-                {
-                    ConsumerKey = session.LtiRequest.ConsumerKey,
-                    CourseOrg = session.CourseOrg,
-                    CourseId = session.CourseId,
-                    CourseRun = session.CourseRun,
-                    UserId = session.LtiRequest.UserId,
-                    Timestamp = DateTime.Now,
-                    LtiRequest = session.LtiRequest,
-                    UserHostAddress = session.UserHostAddress
-                };
-                res.SerializeLtiRequest();
-                res = _dbContext.LtiSessions.Add(res);
+                _dbContext.LtiSessions.Remove(res);
                 _dbContext.SaveChanges();
+            }
 
-                if (res == null)
-                {
-                    throw new Exception("Failed to fetch newly created LTI session.");
-                }
+            res = new LtiSession()
+            {
+                ConsumerKey = session.LtiRequest.ConsumerKey,
+                CourseOrg = session.CourseOrg,
+                CourseId = session.CourseId,
+                CourseRun = session.CourseRun,
+                UserId = session.LtiRequest.UserId,
+                Timestamp = DateTime.Now,
+                LtiRequest = session.LtiRequest,
+                UserHostAddress = session.UserHostAddress
+            };
+            res.SerializeLtiRequest();
+            res = _dbContext.LtiSessions.Add(res);
+            _dbContext.SaveChanges();
+
+            if (res == null)
+            {
+                throw new Exception("Failed to fetch newly created LTI session.");
             }
 
             return res;
