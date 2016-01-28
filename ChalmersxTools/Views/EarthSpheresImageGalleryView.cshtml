@@ -58,15 +58,12 @@
     <div id="spheres-image-view" style="width:100%;">
         @{
             var geosphereCount = Model.GeosphereImages.Count;
-            var geosphereInColumn = Convert.ToInt32(Math.Ceiling((double)geosphereCount / 5));
             var geosphereColumns = Model.GeosphereImages.Select((c, i) => new { c, i })
-                .GroupBy(x => x.i % geosphereInColumn)
+                .GroupBy(x => x.i % 5)
                 .Select(g => g.Select(x => x.c))
                 .ToList();
-            var atmosphereCount = Model.AtmosphereImages.Count;
-            var atmosphereInColumn = Convert.ToInt32(Math.Ceiling((double)atmosphereCount / 5));
             var atmosphereColumns = Model.AtmosphereImages.Select((c, i) => new { c, i })
-                .GroupBy(x => x.i % atmosphereInColumn)
+                .GroupBy(x => x.i % 5)
                 .Select(g => g.Select(x => x.c))
                 .ToList();
             var biosphereCount = Model.BiosphereImages.Count;
