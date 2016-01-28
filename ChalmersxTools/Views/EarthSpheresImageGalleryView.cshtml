@@ -60,8 +60,7 @@
 <body>
     <div id="spheres-image-view" style="width:100%;">
         @{
-            var geosphereCount = Model.GeosphereImages.Count;
-            var geosphereColumns = Model.GeosphereImages.Select((c, i) => new { c, i })
+            var gcs = Model.GeosphereImages.Select((c, i) => new { c, i })
                 .GroupBy(x => x.i % 5)
                 .Select(g => g.Select(x => x.c))
                 .ToList();
@@ -69,34 +68,39 @@
                 .GroupBy(x => x.i % 5)
                 .Select(g => g.Select(x => x.c))
                 .ToList();
-            var biosphereCount = Model.BiosphereImages.Count;
-            var biosphereInColumn = Convert.ToInt32(Math.Ceiling((double)biosphereCount / 5));
-            var hydrosphereCount = Model.HydrosphereImages.Count;
-            var hydrosphereInColumn = Convert.ToInt32(Math.Ceiling((double)hydrosphereCount / 5));
-            var cryosphereCount = Model.CryosphereImages.Count;
-            var cryosphereInColumn = Convert.ToInt32(Math.Ceiling((double)cryosphereCount / 5));
+            var bcs = Model.BiosphereImages.Select((c, i) => new { c, i })
+                .GroupBy(x => x.i % 5)
+                .Select(g => g.Select(x => x.c))
+                .ToList();
+            var hcs = Model.HydrosphereImages.Select((c, i) => new { c, i })
+                .GroupBy(x => x.i % 5)
+                .Select(g => g.Select(x => x.c))
+                .ToList();
+            var ccs = Model.CryosphereImages.Select((c, i) => new { c, i })
+                .GroupBy(x => x.i % 5)
+                .Select(g => g.Select(x => x.c))
+                .ToList();
             
         <div id="back-link" style="position: fixed; left: 20px; top: 20px; font-size: 3em; color: white; font-weight: bold; display: none;" data-fullscreen-sphere=""><a class="discrete-link" href="#" onclick="toggleSingleSphereFilter($(this).parent().data('fullscreen-sphere')); event.preventDefault();"><</a></div>
         <div id="geosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('geosphere'); event.preventDefault();">Geosphere</a></h1>
-            <ul class="image-view-column-list">@for (var i = 0; i < geosphereCount; i++){<li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.GeosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.GeosphereImages[i].ImageUrl"></a></div></li>}</ul>
+            <div>@{foreach (var c in gcs){<ul class="image-view-column-list">@foreach (var i in c){<li class="gallery-item"><div class="gallery-item-inner"><a href="@i.ImageUrl"><img src="/img/default.gif" data-src="@i.ImageUrl"></a></div></li>}</ul>}}</div>
         </div><!--
         --><div id="atmosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('atmosphere'); event.preventDefault();">Atmosphere</a></h1>
-            <div>@{foreach (var ac in acs){<ul class="image-view-column-list">@foreach (var i in ac){<li class="gallery-item"><div class="gallery-item-inner"><a href="@i.ImageUrl"><img src="/img/default.gif" data-src="@i.ImageUrl"></a></div></li>}</ul>}}
-            </div>
+            <div>@{foreach (var c in acs){<ul class="image-view-column-list">@foreach (var i in c){<li class="gallery-item"><div class="gallery-item-inner"><a href="@i.ImageUrl"><img src="/img/default.gif" data-src="@i.ImageUrl"></a></div></li>}</ul>}}</div>
         </div><!--
         --><div id="biosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('biosphere'); event.preventDefault();">Biosphere</a></h1>
-            <ul class="image-view-column-list">@for (var i = 0; i < biosphereCount; i++){<li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.BiosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.BiosphereImages[i].ImageUrl"></a></div></li>}</ul>
+            <div>@{foreach (var c in bcs){<ul class="image-view-column-list">@foreach (var i in c){<li class="gallery-item"><div class="gallery-item-inner"><a href="@i.ImageUrl"><img src="/img/default.gif" data-src="@i.ImageUrl"></a></div></li>}</ul>}}</div>
         </div><!--
         --><div id="hydrosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('hydrosphere'); event.preventDefault();">Hydrosphere</a></h1>
-            <ul class="image-view-column-list">@for (var i = 0; i < hydrosphereCount; i++){<li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.HydrosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.HydrosphereImages[i].ImageUrl"></a></div></li>}</ul>
+            <div>@{foreach (var c in hcs){<ul class="image-view-column-list">@foreach (var i in c){<li class="gallery-item"><div class="gallery-item-inner"><a href="@i.ImageUrl"><img src="/img/default.gif" data-src="@i.ImageUrl"></a></div></li>}</ul>}}</div>
         </div><!--
         --><div id="cryosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('cryosphere'); event.preventDefault();">Cryosphere</a></h1>
-            <ul class="image-view-column-list">@for (var i = 0; i < cryosphereCount; i++){<li class="gallery-item"><div class="gallery-item-inner"><a href="@Model.CryosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.CryosphereImages[i].ImageUrl"></a></div></li>}</ul>
+            <div>@{foreach (var c in ccs){<ul class="image-view-column-list">@foreach (var i in c){<li class="gallery-item"><div class="gallery-item-inner"><a href="@i.ImageUrl"><img src="/img/default.gif" data-src="@i.ImageUrl"></a></div></li>}</ul>}}</div>
         </div>
         }
     </div>
