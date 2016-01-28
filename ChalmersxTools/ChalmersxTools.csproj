@@ -164,6 +164,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SqlClientConfig.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Database\LearningToolServerDbContext.cs" />
     <Compile Include="EventHandlers\OwinStartup.cs" />
@@ -254,6 +255,7 @@
     <Content Include="Views\EarthMassToolView.cshtml" />
     <Content Include="Views\TemperatureMeasurementToolView.cshtml" />
     <Content Include="Views\EarthSpheresImageGalleryView.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
