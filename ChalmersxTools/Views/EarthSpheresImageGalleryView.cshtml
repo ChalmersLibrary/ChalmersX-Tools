@@ -24,7 +24,7 @@
         }
         .image-view-column {
             display: inline-block;
-            width: 20%;
+            width: 100%;
             vertical-align: top;
         }
         .image-view-column-list {
@@ -52,9 +52,29 @@
         .full-width {
             width: 100%;
         }
-        .fifth-width {
-            width: 20%;
+        .column-width {
+            width: 100%;
         }
+
+        @@media screen and (min-width: 480px) {
+            .image-view-column {
+                width: 20%;
+            }
+
+            .column-width {
+                width: 20%;
+            }
+        }
+        
+        @@media screen and (min-width: 768px) {
+            .image-view-column {
+                width: 20%;
+            }
+
+            .column-width {
+                width: 20%;
+            }
+        } 
     </style>
 </head>
 <body>
@@ -128,7 +148,7 @@
                 }
             }
             $("#" + sphere + "-column").toggleClass("full-width");
-            $("#" + sphere + "-column ul").toggleClass("fifth-width");
+            $("#" + sphere + "-column ul").toggleClass("column-width");
             $("img").unveil();
             $("#back-link").toggle().data("fullscreen-sphere", sphere);
         }
