@@ -203,7 +203,7 @@ namespace ChalmersxTools.Tools
                         ConsumerSecret,
                         _session.LtiRequest.LisResultSourcedId,
                         1.0);
-                    res = "Your measurements are saved";
+                    res = "<span style='color: green;'>Your measurements are saved</span>";
                 } else if (submission.Measurement1 == null || submission.Measurement2 == null)
                 {
                     OutcomesClient.PostScore(
@@ -212,7 +212,7 @@ namespace ChalmersxTools.Tools
                         ConsumerSecret,
                         _session.LtiRequest.LisResultSourcedId,
                         0.5);
-                    res = "Your measurement is saved";
+                    res = "<span style='color: green;'>Your measurement is saved</span>";
                 }
             }
             else
