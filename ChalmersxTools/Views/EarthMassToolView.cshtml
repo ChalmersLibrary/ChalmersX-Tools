@@ -49,6 +49,9 @@
     <script>
         function validateAndSubmitForm() {
             $("#message-box").text("");
+            $("#earthMass").val($("#earthMass").val().replace(",", "."));
+            $("#meanGravityAcceleration").val($("#meanGravityAcceleration").val().replace(",", "."));
+
 
             if ($("#meanGravityAcceleration").val() == "") {
                 $("#message-box").html("<span style='color: red;'>You have to enter a value for the mean gravity acceleration.</span>");

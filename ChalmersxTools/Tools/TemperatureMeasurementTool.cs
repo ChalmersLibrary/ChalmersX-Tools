@@ -142,6 +142,10 @@ namespace ChalmersxTools.Tools
                 {
                     res = "<span style='color: red;'>You have to insert at least one measurement.</span>";
                 }
+                else if (mes1<-50 || mes1>50 || mes2<-50 || mes2>50)
+                {
+                    res = "<span style='color: red;'>Your measurements should be in Celsius and in the range of -50 to 50.</span>";
+                }
                 else
                 {
 
@@ -208,7 +212,7 @@ namespace ChalmersxTools.Tools
                         ConsumerSecret,
                         _session.LtiRequest.LisResultSourcedId,
                         1.0);
-                    res = "Your measurements are saved";
+                    res = "<span style='color: green;'>Your measurements are saved</span>";
                 } else if (submission.Measurement1 == null || submission.Measurement2 == null)
                 {
                     OutcomesClient.PostScore(
@@ -216,8 +220,8 @@ namespace ChalmersxTools.Tools
                         _session.LtiRequest.ConsumerKey,
                         ConsumerSecret,
                         _session.LtiRequest.LisResultSourcedId,
-                        0.5);
-                    res = "Your measurement is saved";
+                        1.0);
+                    res = "<span style='color: green;'>Your measurement is saved</span>";
                 }
             }
             else
