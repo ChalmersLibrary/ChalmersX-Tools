@@ -96,7 +96,7 @@ namespace ChalmersxTools.Sessions
             LtiSession res =
                 (from s in _dbContext.LtiSessions
                  where s.ConsumerKey == session.LtiRequest.ConsumerKey &&
-                 s.ContextId == session.ContextId &&
+                 s.ContextId == session.LtiRequest.ContextId &&
                  s.UserId == session.LtiRequest.UserId
                  select s).SingleOrDefault();
 
