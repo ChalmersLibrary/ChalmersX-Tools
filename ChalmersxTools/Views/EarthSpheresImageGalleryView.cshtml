@@ -57,16 +57,16 @@
 <body>
     <div id="spheres-image-view" style="width:100%;">
         @{
-            var geosphereCount = @Model.GeosphereImages.Count;
-            var geosphereInColumn = geosphereCount/5;
-            var atmosphereCount = @Model.AtmosphereImages.Count;
-            var atmosphereInColumn = atmosphereCount/5;
-            var biosphereCount = @Model.BiosphereImages.Count;
-            var biosphereInColumn = biosphereCount/5;
-            var hydrosphereCount = @Model.HydrosphereImages.Count;
-            var hydrosphereInColumn = hydrosphereCount/5;
-            var cryosphereCount = @Model.CryosphereImages.Count;
-            var cryosphereInColumn = cryosphereCount/5;
+            var geosphereCount = Model.GeosphereImages.Count;
+            var geosphereInColumn = Convert.ToInt32(Math.Ceiling((double)geosphereCount / 5));
+            var atmosphereCount = Model.AtmosphereImages.Count;
+            var atmosphereInColumn = Convert.ToInt32(Math.Ceiling((double)atmosphereCount / 5));
+            var biosphereCount = Model.BiosphereImages.Count;
+            var biosphereInColumn = Convert.ToInt32(Math.Ceiling((double)biosphereCount / 5));
+            var hydrosphereCount = Model.HydrosphereImages.Count;
+            var hydrosphereInColumn = Convert.ToInt32(Math.Ceiling((double)hydrosphereCount / 5));
+            var cryosphereCount = Model.CryosphereImages.Count;
+            var cryosphereInColumn = Convert.ToInt32(Math.Ceiling((double)cryosphereCount / 5));
             
         <div id="back-link" style="position: fixed; left: 20px; top: 20px; font-size: 3em; color: white; font-weight: bold; display: none;" data-fullscreen-sphere=""><a class="discrete-link" href="#" onclick="toggleSingleSphereFilter($(this).parent().data('fullscreen-sphere')); event.preventDefault();"><</a></div>
         <div id="geosphere-column" class="image-view-column">
@@ -81,7 +81,7 @@
                     var columnCount = 1; 
                     for (var i = 0; i < atmosphereCount; i++)
                     {
-                        if (Convert.ToInt32(Math.Ceiling((double)i / atmosphereInColumn)) > columnCount)
+                        if (i / atmosphereInColumn > columnCount)
                         { 
                             @:</ul> 
                             @:<ul class="image-view-column-list">
