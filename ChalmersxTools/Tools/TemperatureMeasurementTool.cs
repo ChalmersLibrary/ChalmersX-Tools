@@ -202,7 +202,7 @@ namespace ChalmersxTools.Tools
                         _session.LtiRequest.ConsumerKey,
                         ConsumerSecret,
                         _session.LtiRequest.LisResultSourcedId,
-                        0.5);
+                        1.0);
                     res = "<span style='color: green;'>Your measurement is saved</span>";
                 }
             }
