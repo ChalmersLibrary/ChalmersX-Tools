@@ -76,28 +76,30 @@
         --><div id="atmosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('atmosphere'); event.preventDefault();">Atmosphere</a></h1>
             <div>
-            @{ 
-                var columnCount = 0; 
-                for (var i = 0; i < atmosphereCount; i++)
-                {
-                    if (i / atmosphereInColumn > columnCount)
-                    { 
-                        @:<ul class="image-view-column-list">
-                    }
+                <ul class="image-view-column-list">
+                @{ 
+                    var columnCount = 1; 
+                    for (var i = 0; i < atmosphereCount; i++)
+                    {
+                        if (i / atmosphereInColumn > columnCount)
+                        { 
+                            @:<ul class="image-view-column-list">
+                        }
                     
-                    <li class="gallery-item">
-                        <div class="gallery-item-inner">
-                            <a href="@Model.AtmosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.AtmosphereImages[i].ImageUrl"></a>
-                        </div>
-                    </li>
+                        <li class="gallery-item">
+                            <div class="gallery-item-inner">
+                                <a href="@Model.AtmosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.AtmosphereImages[i].ImageUrl"></a>
+                            </div>
+                        </li>
                     
-                    if (i / atmosphereInColumn > columnCount) 
-                    { 
-                        columnCount++; 
-                        @:</ul> 
+                        if (i / atmosphereInColumn > columnCount) 
+                        { 
+                            columnCount++; 
+                            @:</ul> 
+                        }
                     }
                 }
-            }
+                </ul>
             </div>
         </div><!--
         --><div id="biosphere-column" class="image-view-column">
