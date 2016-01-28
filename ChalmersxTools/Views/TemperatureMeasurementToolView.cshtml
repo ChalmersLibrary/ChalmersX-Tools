@@ -24,9 +24,9 @@
             </fieldset>
             <fieldset>
                 <legend>Enter your measurements</legend>
-                <label for="measurement1">Temperature day 1</label>
+                <label for="measurement1">Temperature day 1 (in Celsius!)</label>
                 <input type="text" name="measurement1" value="@(Model.Submission == null ? "" : Model.Submission.Measurement1.ToString())" />
-                <label for="measurement2">Temperature day 2</label>
+                <label for="measurement2">Temperature day 2 (in Celsius!)</label>
                 <input type="text" name="measurement2" value="@(Model.Submission == null ? "" : Model.Submission.Measurement2.ToString())" />
             </fieldset>
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
