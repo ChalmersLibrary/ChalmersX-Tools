@@ -25,13 +25,13 @@
             <fieldset>
                 <legend>Enter your measurements</legend>
                 <label for="measurement1">Temperature day 1 (in Celsius!)</label>
-                <input type="text" name="measurement1" value="@(Model.Submission == null ? "" : Model.Submission.Measurement1.ToString())" />
+                <input type="text" id="measurement1" name="measurement1" value="@(Model.Submission == null ? "" : Model.Submission.Measurement1.ToString())" />
                 <label for="measurement2">Temperature day 2 (in Celsius!)</label>
-                <input type="text" name="measurement2" value="@(Model.Submission == null ? "" : Model.Submission.Measurement2.ToString())" />
+                <input type="text" id="measurement2" name="measurement2" value="@(Model.Submission == null ? "" : Model.Submission.Measurement2.ToString())" />
             </fieldset>
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
             <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
-            <input type="submit" value="Save" />
+            <input type="button" value="Save" onclick="validateAndSubmit()"/>
         </form>
         @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
         {
@@ -45,5 +45,12 @@
         }
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        function validateAndSubmit() {
+            $("#measurement1").val.toString().replace(',', '.');
+            $("#measurement2").val.toString().replace(',', '.');
+            document.forms["temperature-measurements"].submit();
+        }
+    </script>
 </body>
 </html>
