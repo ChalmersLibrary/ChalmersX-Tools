@@ -82,7 +82,8 @@
         </div><!--
         --><div id="atmosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('atmosphere'); event.preventDefault();">Atmosphere</a></h1>
-            <div>@{foreach (var ac in acs) { @:<ul class="image-view-column-list">@foreach (var i in ac) {<li class="gallery-item"><div class="gallery-item-inner"><a href="@i.ImageUrl"><img src="/img/default.gif" data-src="@i.ImageUrl"></a></div></li>}@:</ul>}}</div>
+            <div>@{foreach (var ac in acs){<ul class="image-view-column-list">@foreach (var i in ac){<li class="gallery-item"><div class="gallery-item-inner"><a href="@i.ImageUrl"><img src="/img/default.gif" data-src="@i.ImageUrl"></a></div></li>}</ul>}}
+            </div>
         </div><!--
         --><div id="biosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('biosphere'); event.preventDefault();">Biosphere</a></h1>
