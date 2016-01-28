@@ -193,13 +193,27 @@ namespace ChalmersxTools.Tools
 
         protected override ViewIdentifierAndModel GetViewIdentifierAndModel(string message)
         {
+            int numberOfSubmissions = 0;
+
+            try
+            {
+                numberOfSubmissions = (from o in _sessionManager.DbContext.EarthSpheresImagesSubmissions
+                     where o.ContextId == _session.ContextId
+                     select o).ToList().Count;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failed to get all previous submissions.", e);
+            }
+
             return new ViewIdentifierAndModel("~/Views/EarthSpheresImageToolView.cshtml",
                 new EarthSpheresImageToolViewModel()
                 {
                     Submission = GetSubmissionForCurrentStudent(),
                     LtiSessionId = _session.Id.ToString(),
                     Roles = _session.LtiRequest.Roles,
-                    ResponseMessage = message
+                    ResponseMessage = message,
+                    NumberOfSubmissions = numberOfSubmissions
                 });
         }
 

@@ -68,6 +68,9 @@
                 <p>This information is not visible for students.</p>
                 <a href="/Tool/GetData?ltiSessionId=@Model.LtiSessionId">Download data</a>
             </div>
+            <div>
+                <p>Number of Submissions: @Model.NumberOfSubmissions.ToString()</p>
+            </div>
         }
     </div>
     <script src="https://maps.googleapis.com/maps/api/js"></script>

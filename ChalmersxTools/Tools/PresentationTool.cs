@@ -100,6 +100,19 @@ namespace ChalmersxTools.Tools
 
         protected override ViewIdentifierAndModel GetViewIdentifierAndModel(string message)
         {
+            int numberOfSubmissions = 0;
+
+            try
+            {
+                numberOfSubmissions = (from o in _sessionManager.DbContext.StudentPresentations
+                                       where o.ContextId == _session.ContextId
+                                       select o).ToList().Count;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failed to get all previous submissions.", e);
+            }
+
             return new ViewIdentifierAndModel("~/Views/PresentationToolView.cshtml",
                 new PresentationToolViewModel()
                 {
@@ -107,7 +120,8 @@ namespace ChalmersxTools.Tools
                     Presentations = GetTitleTextAndCoordinateList(),
                     Roles = _session.LtiRequest.Roles,
                     LtiSessionId = _session.Id.ToString(),
-                    ResponseMessage = message
+                    ResponseMessage = message,
+                    NumberOfSubmissions = numberOfSubmissions
                 });
         }
 
