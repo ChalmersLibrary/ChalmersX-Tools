@@ -85,7 +85,6 @@
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('atmosphere'); event.preventDefault();">Atmosphere</a></h1>
             <div>
                 @{ 
-                    var columnCount = 1;
                     foreach (var atmosphereColumn in atmosphereColumns)
                     {
                         @:<ul class="image-view-column-list">
@@ -93,11 +92,11 @@
                         {
                             <li class="gallery-item">
                                 <div class="gallery-item-inner">
-                                    <a href="@Model.AtmosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.AtmosphereImages[i].ImageUrl"></a>
+                                    <a href="@geoImage.ImageUrl"><img src="/img/default.gif" data-src="@geoImage.ImageUrl"></a>
                                 </div>
                             </li>
                         }
-                        @:</ul> 
+                        @:</ul>
                     }
                 }
             </div>
