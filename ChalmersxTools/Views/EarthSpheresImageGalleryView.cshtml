@@ -59,8 +59,16 @@
         @{
             var geosphereCount = Model.GeosphereImages.Count;
             var geosphereInColumn = Convert.ToInt32(Math.Ceiling((double)geosphereCount / 5));
+            var geosphereColumns = Model.GeosphereImages.Select((c, i) => new { c, i })
+                .GroupBy(x => x.i % geosphereInColumn)
+                .Select(g => g.Select(x => x.c))
+                .ToList();
             var atmosphereCount = Model.AtmosphereImages.Count;
             var atmosphereInColumn = Convert.ToInt32(Math.Ceiling((double)atmosphereCount / 5));
+            var atmosphereColumns = Model.AtmosphereImages.Select((c, i) => new { c, i })
+                .GroupBy(x => x.i % atmosphereInColumn)
+                .Select(g => g.Select(x => x.c))
+                .ToList();
             var biosphereCount = Model.BiosphereImages.Count;
             var biosphereInColumn = Convert.ToInt32(Math.Ceiling((double)biosphereCount / 5));
             var hydrosphereCount = Model.HydrosphereImages.Count;
@@ -76,26 +84,22 @@
         --><div id="atmosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('atmosphere'); event.preventDefault();">Atmosphere</a></h1>
             <div>
-                <ul class="image-view-column-list">
                 @{ 
-                    var columnCount = 1; 
-                    for (var i = 0; i < atmosphereCount; i++)
+                    var columnCount = 1;
+                    foreach (var atmosphereColumn in atmosphereColumns)
                     {
-                        if (i / atmosphereInColumn > columnCount)
-                        { 
-                            @:</ul> 
-                            @:<ul class="image-view-column-list">
-                            columnCount++; 
+                        @:<ul class="image-view-column-list">
+                        foreach (var geoImage in atmosphereColumn)
+                        {
+                            <li class="gallery-item">
+                                <div class="gallery-item-inner">
+                                    <a href="@Model.AtmosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.AtmosphereImages[i].ImageUrl"></a>
+                                </div>
+                            </li>
                         }
-                    
-                        <li class="gallery-item">
-                            <div class="gallery-item-inner">
-                                <a href="@Model.AtmosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.AtmosphereImages[i].ImageUrl"></a>
-                            </div>
-                        </li>
+                        @:</ul> 
                     }
                 }
-                </ul>
             </div>
         </div><!--
         --><div id="biosphere-column" class="image-view-column">
