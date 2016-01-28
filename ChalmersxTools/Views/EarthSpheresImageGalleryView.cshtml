@@ -83,7 +83,9 @@
                     {
                         if (i / atmosphereInColumn > columnCount)
                         { 
+                            @:</ul> 
                             @:<ul class="image-view-column-list">
+                            columnCount++; 
                         }
                     
                         <li class="gallery-item">
@@ -91,12 +93,6 @@
                                 <a href="@Model.AtmosphereImages[i].ImageUrl"><img src="/img/default.gif" data-src="@Model.AtmosphereImages[i].ImageUrl"></a>
                             </div>
                         </li>
-                    
-                        if (i / atmosphereInColumn > columnCount) 
-                        { 
-                            columnCount++; 
-                            @:</ul> 
-                        }
                     }
                 }
                 </ul>
