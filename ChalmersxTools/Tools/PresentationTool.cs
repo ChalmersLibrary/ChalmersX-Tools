@@ -34,7 +34,7 @@ namespace ChalmersxTools.Tools
                     presentation.LocationLat.ToString() + "\",\"" +
                     presentation.LocationLong.ToString() + "\"\n";
             }
-            return new CsvFileData(_session.CourseOrg + "-" + _session.CourseId + "-" + _session.CourseRun + "-presentations.csv",
+            return new CsvFileData(_session.ContextId + "-presentations.csv",
                 new System.Text.UTF8Encoding().GetBytes(data));
         }
 
@@ -46,9 +46,7 @@ namespace ChalmersxTools.Tools
                 _sessionManager.DbContext.StudentPresentations.Add(new StudentPresentation()
                 {
                     UserId = _session.UserId,
-                    CourseOrg = _session.CourseOrg,
-                    CourseId = _session.CourseId,
-                    CourseRun = _session.CourseRun,
+                    ContextId = _session.ContextId,
                     Name = request.Form["name"].ToString(),
                     LocationName = request.Form["location"].ToString(),
                     LocationLat = Double.Parse(request.Form["latitude"].ToString(), CultureInfo.InvariantCulture),
@@ -81,9 +79,7 @@ namespace ChalmersxTools.Tools
                 StudentPresentation existingStudentPresentation =
                     (from sp in _sessionManager.DbContext.StudentPresentations
                      where sp.UserId == _session.UserId &&
-                     sp.CourseOrg == _session.CourseOrg &&
-                     sp.CourseId == _session.CourseId &&
-                     sp.CourseRun == _session.CourseRun
+                     sp.ContextId == _session.ContextId
                      select sp).SingleOrDefault();
 
                 existingStudentPresentation.Name = request.Form["name"].ToString();
@@ -124,9 +120,7 @@ namespace ChalmersxTools.Tools
             try
             {
                 res = (from sp in _sessionManager.DbContext.StudentPresentations
-                       where sp.CourseOrg == _session.CourseOrg &&
-                           sp.CourseId == _session.CourseId &&
-                           sp.CourseRun == _session.CourseRun &&
+                       where sp.ContextId == _session.ContextId &&
                            sp.UserId == _session.UserId
                        select sp).SingleOrDefault();
             }
@@ -146,9 +140,7 @@ namespace ChalmersxTools.Tools
             {
                 var rand = new Random();
                 var studentPresentations = (from sp in _sessionManager.DbContext.StudentPresentations
-                                            where sp.CourseOrg == _session.CourseOrg &&
-                                                sp.CourseId == _session.CourseId &&
-                                                sp.CourseRun == _session.CourseRun
+                                            where sp.ContextId == _session.ContextId
                                             select sp).ToList();
                 var coordinates = new HashSet<Coordinate>();
                 foreach (var sp in studentPresentations)
@@ -185,9 +177,7 @@ namespace ChalmersxTools.Tools
             {
                 res = (from sp in _sessionManager.DbContext.StudentPresentations
                        where
-                           sp.CourseOrg == _session.CourseOrg &&
-                           sp.CourseId == _session.CourseId &&
-                           sp.CourseRun == _session.CourseRun
+                           sp.ContextId == _session.ContextId
                        select sp).ToList();
             }
             catch (Exception e)

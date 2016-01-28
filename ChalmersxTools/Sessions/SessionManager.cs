@@ -96,9 +96,7 @@ namespace ChalmersxTools.Sessions
             LtiSession res =
                 (from s in _dbContext.LtiSessions
                  where s.ConsumerKey == session.LtiRequest.ConsumerKey &&
-                 s.CourseOrg == session.CourseOrg &&
-                 s.CourseId == session.CourseId &&
-                 s.CourseRun == session.CourseRun &&
+                 s.ContextId == session.ContextId &&
                  s.UserId == session.LtiRequest.UserId
                  select s).SingleOrDefault();
 
@@ -111,9 +109,7 @@ namespace ChalmersxTools.Sessions
             res = new LtiSession()
             {
                 ConsumerKey = session.LtiRequest.ConsumerKey,
-                CourseOrg = session.CourseOrg,
-                CourseId = session.CourseId,
-                CourseRun = session.CourseRun,
+                ContextId = session.LtiRequest.ContextId,
                 UserId = session.LtiRequest.UserId,
                 Timestamp = DateTime.Now,
                 LtiRequest = session.LtiRequest,

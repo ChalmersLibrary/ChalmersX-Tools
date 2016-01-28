@@ -33,11 +33,8 @@ namespace ChalmersxTools.Tools
 
         public override CsvFileData HandleDataRequest()
         {
-            string data = "", courseOrg = "", courseId = "", courseRun = "";
+            string data = "";
 
-            courseOrg = _session.CourseOrg;
-            courseId = _session.CourseId;
-            courseRun = _session.CourseRun;
             var submissions = GetAllSubmissionsForCourseRun();
             data += "latitude,longitude,measurement1,measurement2\n";
             foreach (var submission in submissions)
@@ -48,7 +45,7 @@ namespace ChalmersxTools.Tools
                     submission.Measurement2 + "\"\n";
             }
 
-            return new CsvFileData(courseOrg + "-" + courseId + "-" + courseRun + "-temperature-measurements.csv",
+            return new CsvFileData(_session.ContextId + "-temperature-measurements.csv",
                 new System.Text.UTF8Encoding().GetBytes(data));
         }
 
@@ -81,9 +78,7 @@ namespace ChalmersxTools.Tools
                     var newSubmission = _sessionManager.DbContext.TemperatureMeasurementSubmissions.Add(new TemperatureMeasurementSubmission()
                     {
                         UserId = _session.UserId,
-                        CourseOrg = _session.CourseOrg,
-                        CourseId = _session.CourseId,
-                        CourseRun = _session.CourseRun,
+                        ContextId = _session.ContextId,
                         Position = new Coordinate(lat, lng),
                         Measurement1 = mes1,
                         Measurement2 = mes2
@@ -139,9 +134,7 @@ namespace ChalmersxTools.Tools
                     TemperatureMeasurementSubmission existing =
                     (from o in _sessionManager.DbContext.TemperatureMeasurementSubmissions
                      where o.UserId == _session.UserId &&
-                     o.CourseOrg == _session.CourseOrg &&
-                     o.CourseId == _session.CourseId &&
-                     o.CourseRun == _session.CourseRun
+                     o.ContextId == _session.ContextId
                      select o).SingleOrDefault();
 
                     existing.Position = new Coordinate(lat, lng);
@@ -168,9 +161,7 @@ namespace ChalmersxTools.Tools
             var res = new List<MeasurementAndCoordinate>();
             try {
                 var measurements = (from o in _sessionManager.DbContext.TemperatureMeasurementSubmissions
-                                    where o.CourseOrg == _session.CourseOrg &&
-                                    o.CourseId == _session.CourseId &&
-                                    o.CourseRun == _session.CourseRun
+                                    where o.ContextId == _session.ContextId
                                     select o).ToList();
                 foreach (var m in measurements)
                 {
@@ -230,9 +221,7 @@ namespace ChalmersxTools.Tools
             try
             {
                 res = (from o in _sessionManager.DbContext.TemperatureMeasurementSubmissions
-                       where o.CourseOrg == _session.CourseOrg &&
-                           o.CourseId == _session.CourseId &&
-                           o.CourseRun == _session.CourseRun &&
+                       where o.ContextId == _session.ContextId &&
                            o.UserId == _session.UserId
                        select o).SingleOrDefault();
             }
@@ -252,9 +241,7 @@ namespace ChalmersxTools.Tools
             {
                 res = (from o in _sessionManager.DbContext.TemperatureMeasurementSubmissions
                        where
-                           o.CourseOrg == _session.CourseOrg &&
-                           o.CourseId == _session.CourseId &&
-                           o.CourseRun == _session.CourseRun
+                           o.ContextId == _session.ContextId
                        select o).ToList();
             }
             catch (Exception e)

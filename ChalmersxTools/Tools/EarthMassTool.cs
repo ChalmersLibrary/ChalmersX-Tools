@@ -26,7 +26,7 @@ namespace ChalmersxTools.Tools
                 data += "\"" + submission.MeanGravityAcceleration.ToString() + "\",\"" +
                     submission.TotalEarthMass.ToString() + "\"\n";
             }
-            return new CsvFileData(_session.CourseOrg + "-" + _session.CourseId + "-" + _session.CourseRun + "-earth-mass.csv",
+            return new CsvFileData(_session.ContextId + "-earth-mass.csv",
                 new System.Text.UTF8Encoding().GetBytes(data));
         }
 
@@ -51,9 +51,7 @@ namespace ChalmersxTools.Tools
                     var newSubmission = _sessionManager.DbContext.EarthMassSubmissions.Add(new EarthMassSubmission()
                     {
                         UserId = _session.UserId,
-                        CourseOrg = _session.CourseOrg,
-                        CourseId = _session.CourseId,
-                        CourseRun = _session.CourseRun,
+                        ContextId = _session.ContextId,
                         MeanGravityAcceleration = meanGravityAcceleration,
                         TotalEarthMass = earthMass
                     });
@@ -92,9 +90,7 @@ namespace ChalmersxTools.Tools
                     EarthMassSubmission existing =
                         (from o in _sessionManager.DbContext.EarthMassSubmissions
                          where o.UserId == _session.UserId &&
-                         o.CourseOrg == _session.CourseOrg &&
-                         o.CourseId == _session.CourseId &&
-                         o.CourseRun == _session.CourseRun
+                         o.ContextId == _session.ContextId
                          select o).SingleOrDefault();
 
                     existing.MeanGravityAcceleration = meanGravityAcceleration;
@@ -122,9 +118,7 @@ namespace ChalmersxTools.Tools
             {
                 List<EarthMassSubmission> allSubmissions =
                     (from o in _sessionManager.DbContext.EarthMassSubmissions
-                        where o.CourseOrg == _session.CourseOrg &&
-                        o.CourseId == _session.CourseId &&
-                        o.CourseRun == _session.CourseRun
+                        where o.ContextId == _session.ContextId
                         select o).ToList();
 
                 foreach (var submission in allSubmissions)
@@ -161,9 +155,7 @@ namespace ChalmersxTools.Tools
             {
                 res = (from o in _sessionManager.DbContext.EarthMassSubmissions
                        where
-                           o.CourseOrg == _session.CourseOrg &&
-                           o.CourseId == _session.CourseId &&
-                           o.CourseRun == _session.CourseRun
+                           o.ContextId == _session.ContextId
                        select o).ToList();
             }
             catch (Exception e)
@@ -181,9 +173,7 @@ namespace ChalmersxTools.Tools
             try
             {
                 res = (from o in _sessionManager.DbContext.EarthMassSubmissions
-                       where o.CourseOrg == _session.CourseOrg &&
-                           o.CourseId == _session.CourseId &&
-                           o.CourseRun == _session.CourseRun &&
+                       where o.ContextId == _session.ContextId &&
                            o.UserId == _session.UserId
                        select o).SingleOrDefault();
             }

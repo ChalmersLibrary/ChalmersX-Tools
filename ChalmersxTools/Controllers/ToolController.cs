@@ -79,12 +79,6 @@ namespace ChalmersxTools.Controllers
                         }
                     }
 
-                    // Get all the course run identifiers from context ID.
-                    var contextIdList = session.LtiRequest.ContextId.Split('/');
-                    session.CourseOrg = contextIdList[0];
-                    session.CourseId = contextIdList[1];
-                    session.CourseRun = contextIdList[2];
-
                     if (session.Valid)
                     {
                         sessionManager.RefreshSession(session);

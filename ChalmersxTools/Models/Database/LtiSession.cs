@@ -15,20 +15,14 @@ namespace ChalmersxTools.Models.Database
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         [StringLength(64)]
-        [Index("IX_StudentWithToolOnCourseRun", 1, IsUnique = true)]
+        [Index("IX_StudentWithToolInContext", 1, IsUnique = true)]
         public string ConsumerKey { get; set; }
         [StringLength(64)]
-        [Index("IX_StudentWithToolOnCourseRun", 2, IsUnique = true)]
+        [Index("IX_StudentWithToolInContext", 2, IsUnique = true)]
         public string UserId { get; set; }
-        [StringLength(64)]
-        [Index("IX_StudentWithToolOnCourseRun", 3, IsUnique = true)]
-        public string CourseOrg { get; set; }
-        [StringLength(64)]
-        [Index("IX_StudentWithToolOnCourseRun", 4, IsUnique = true)]
-        public string CourseId { get; set; }
-        [StringLength(64)]
-        [Index("IX_StudentWithToolOnCourseRun", 5, IsUnique = true)]
-        public string CourseRun { get; set; }
+        [StringLength(128)]
+        [Index("IX_StudentWithToolInContext", 3, IsUnique = true)]
+        public string ContextId { get; set; }
         public DateTime Timestamp { get; set; }
         public string LtiRequestSerialized { get; set; }
         public string UserHostAddress { get; set; }

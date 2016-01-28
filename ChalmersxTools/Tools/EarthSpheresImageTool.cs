@@ -35,7 +35,7 @@ namespace ChalmersxTools.Tools
                     csv(submission.Sphere2Coordinate.Latitude.ToString()) + "," +
                     csv(submission.Sphere2Coordinate.Longitude.ToString()) + "\n";
             }
-            return new CsvFileData(_session.CourseOrg + "-" + _session.CourseId + "-" + _session.CourseRun + "-earth-spheres-images.csv",
+            return new CsvFileData(_session.ContextId + "-earth-spheres-images.csv",
                 new System.Text.UTF8Encoding().GetBytes(data));
         }
 
@@ -103,9 +103,7 @@ namespace ChalmersxTools.Tools
                     var newSubmission = _sessionManager.DbContext.EarthSpheresImagesSubmissions.Add(new EarthSpheresImagesSubmission()
                     {
                         UserId = _session.UserId,
-                        CourseOrg = _session.CourseOrg,
-                        CourseId = _session.CourseId,
-                        CourseRun = _session.CourseRun,
+                        ContextId = _session.ContextId,
                         Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : ""),
                         Sphere1Url = (url1IsValidImageUrl ? url1 : ""),
                         Sphere1Location = (url1IsValidImageUrl ? request.Form["sphere1Location"].ToString() : ""),
@@ -168,9 +166,7 @@ namespace ChalmersxTools.Tools
                     EarthSpheresImagesSubmission existing =
                         (from o in _sessionManager.DbContext.EarthSpheresImagesSubmissions
                          where o.UserId == _session.UserId &&
-                         o.CourseOrg == _session.CourseOrg &&
-                         o.CourseId == _session.CourseId &&
-                         o.CourseRun == _session.CourseRun
+                         o.ContextId == _session.ContextId
                          select o).SingleOrDefault();
 
                     existing.Sphere1Name = (url1IsValidImageUrl ? request.Form["sphere1Name"].ToString() : "");
@@ -216,9 +212,7 @@ namespace ChalmersxTools.Tools
             try
             {
                 res = (from o in _sessionManager.DbContext.EarthSpheresImagesSubmissions
-                        where o.CourseOrg == _session.CourseOrg &&
-                            o.CourseId == _session.CourseId &&
-                            o.CourseRun == _session.CourseRun &&
+                        where o.ContextId == _session.ContextId &&
                             o.UserId == _session.UserId
                         select o).SingleOrDefault();
             }
@@ -238,9 +232,7 @@ namespace ChalmersxTools.Tools
             {
                 res = (from o in _sessionManager.DbContext.EarthSpheresImagesSubmissions
                        where
-                           o.CourseOrg == _session.CourseOrg &&
-                           o.CourseId == _session.CourseId &&
-                           o.CourseRun == _session.CourseRun
+                           o.ContextId == _session.ContextId
                        select o).ToList();
             }
             catch (Exception e)

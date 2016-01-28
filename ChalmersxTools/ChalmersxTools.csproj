@@ -210,6 +210,10 @@
     <Compile Include="Migrations\201601271532069_AddUserHostAddress.Designer.cs">
       <DependentUpon>201601271532069_AddUserHostAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601280729390_AddContextIdRemoveOthers.cs" />
+    <Compile Include="Migrations\201601280729390_AddContextIdRemoveOthers.Designer.cs">
+      <DependentUpon>201601280729390_AddContextIdRemoveOthers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\CsvFileData.cs" />
@@ -294,6 +298,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601271532069_AddUserHostAddress.resx">
       <DependentUpon>201601271532069_AddUserHostAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601280729390_AddContextIdRemoveOthers.resx">
+      <DependentUpon>201601280729390_AddContextIdRemoveOthers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
