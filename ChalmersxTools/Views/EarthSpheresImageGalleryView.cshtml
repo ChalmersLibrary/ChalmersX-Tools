@@ -81,7 +81,7 @@
                     var columnCount = 1; 
                     for (var i = 0; i < atmosphereCount; i++)
                     {
-                        if (i / atmosphereInColumn > columnCount)
+                        if (Convert.ToInt32(Math.Ceiling((double)i / atmosphereInColumn)) > columnCount)
                         { 
                             @:</ul> 
                             @:<ul class="image-view-column-list">
