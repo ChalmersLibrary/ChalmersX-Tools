@@ -64,7 +64,7 @@
                 .GroupBy(x => x.i % 5)
                 .Select(g => g.Select(x => x.c))
                 .ToList();
-            var atmosphereColumns = Model.AtmosphereImages.Select((c, i) => new { c, i })
+            var acs = Model.AtmosphereImages.Select((c, i) => new { c, i })
                 .GroupBy(x => x.i % 5)
                 .Select(g => g.Select(x => x.c))
                 .ToList();
@@ -82,23 +82,7 @@
         </div><!--
         --><div id="atmosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('atmosphere'); event.preventDefault();">Atmosphere</a></h1>
-            <div>
-                @{ 
-                    foreach (var atmosphereColumn in atmosphereColumns)
-                    {
-                        @:<ul class="image-view-column-list">
-                        foreach (var geoImage in atmosphereColumn)
-                        {
-                            <li class="gallery-item">
-                                <div class="gallery-item-inner">
-                                    <a href="@geoImage.ImageUrl"><img src="/img/default.gif" data-src="@geoImage.ImageUrl"></a>
-                                </div>
-                            </li>
-                        }
-                        @:</ul>
-                    }
-                }
-            </div>
+            <div>@{foreach (var ac in acs) { @:<ul class="image-view-column-list">@foreach (var i in ac) {<li class="gallery-item"><div class="gallery-item-inner"><a href="@i.ImageUrl"><img src="/img/default.gif" data-src="@i.ImageUrl"></a></div></li>}@:</ul>}}</div>
         </div><!--
         --><div id="biosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('biosphere'); event.preventDefault();">Biosphere</a></h1>
