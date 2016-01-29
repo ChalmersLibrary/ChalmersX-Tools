@@ -33,6 +33,7 @@
             list-style: none;
             padding-left: 0px;
             margin: 0;
+            width: 100%;
         }
         .column-header {
             text-align: center;
@@ -140,11 +141,11 @@
         var spheres = [ "geosphere", "atmosphere", "biosphere", "hydrosphere", "cryosphere" ];
 
         $(function () {
-            /*$("img").unveil(200, function () {
+            $("img").unveil(200, function () {
                 $(this).load(function () {
                     $(this).addClass("gallery-image");
                 });
-            });*/
+            });
 
             $("img").first().bind('load', function () {
                 $(window).trigger("lookup");
