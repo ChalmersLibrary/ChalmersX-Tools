@@ -24,7 +24,7 @@ namespace ChalmersxTools.Tools
 
             try
             {
-                numberOfSubmissions = (from o in _sessionManager.DbContext.EarthSpheresImagesSubmissions
+                numberOfSubmissions = (from o in _sessionManager.DbContext.TemperatureMeasurementSubmissions
                                        where o.ContextId == _session.ContextId
                                        select o).ToList().Count;
             }
