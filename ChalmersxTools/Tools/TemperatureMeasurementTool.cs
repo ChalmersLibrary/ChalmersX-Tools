@@ -13,6 +13,8 @@ namespace ChalmersxTools.Tools
 {
     public class TemperatureMeasurementTool : SimpleDataStorageToolBase
     {
+        private readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public static readonly string CONSUMER_KEY = "ChalmersxTemperatureMeasurementTool";
 
         public override string ConsumerKey { get { return CONSUMER_KEY; } }
@@ -30,6 +32,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to get all previous submissions: " + e.Message);
                 throw new Exception("Failed to get all previous submissions.", e);
             }
 
@@ -105,6 +108,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to create submission: " + e.Message);
                 throw new Exception("Failed to create submission.", e);
             }
 
@@ -166,7 +170,8 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
-                throw new Exception("Failed to edit existing student presentation.", e);
+                _log.Error("Failed to edit existing submission: " + e.Message);
+                throw new Exception("Failed to edit existing submission.", e);
             }
 
             return res;
@@ -192,6 +197,7 @@ namespace ChalmersxTools.Tools
                 }
             }
             catch (Exception e) {
+                _log.Error("Failed to fetch all measurements for course run: " + e.Message);
                 throw new Exception("Failed to fetch all measurements for course run.", e);
             }
 
@@ -245,6 +251,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to fetch current submission: " + e.Message);
                 throw new Exception("Failed to fetch current submission.", e);
             }
 
@@ -264,6 +271,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to get all submissions for course run: " + e.Message);
                 throw new Exception("Failed to get all submissions for course run.", e);
             }
 

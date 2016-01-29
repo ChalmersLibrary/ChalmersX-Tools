@@ -25,6 +25,8 @@ namespace ChalmersxTools.Controllers
 {
     public class ToolController : Controller
     {
+        private readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private IUnityContainer _unityContainer;
 
         public ToolController(IUnityContainer unityContainer)
@@ -101,8 +103,9 @@ namespace ChalmersxTools.Controllers
                     resultingView = View(data.ViewIdentifier, data.Model);
                 }
             }
-            catch (LtiException e)
+            catch (Exception e)
             {
+                _log.Error("Failed to get tool: " + e.Message);
                 resultingView = View("~/Views/StdErrorView.cshtml", new StdError()
                 {
                     Message = e.Message
@@ -143,6 +146,7 @@ namespace ChalmersxTools.Controllers
             }
             catch (Exception e)
             {
+                _log.Error("Failed to get data: " + e.Message);
                 res = new HttpNotFoundResult("Failed to download data: " + e.Message);
             }
 
@@ -180,6 +184,7 @@ namespace ChalmersxTools.Controllers
             }
             catch (Exception e)
             {
+                _log.Error("Failed to get visualization: " + e.Message);
                 res = new HttpNotFoundResult("Failed to get visualization: " + e.Message);
             }
 

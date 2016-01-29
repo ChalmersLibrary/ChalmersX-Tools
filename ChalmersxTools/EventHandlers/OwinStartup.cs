@@ -4,6 +4,7 @@ using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartup(typeof(ChalmersxTools.EventHandlers.OwinStartup))]
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "Web.config", Watch = true)]
 
 namespace ChalmersxTools.EventHandlers
 {

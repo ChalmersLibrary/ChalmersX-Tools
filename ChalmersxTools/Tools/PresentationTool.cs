@@ -16,6 +16,8 @@ namespace ChalmersxTools.Tools
 {
     public class PresentationTool : SimpleDataStorageToolBase
     {
+        private readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public static readonly string CONSUMER_KEY = "ChalmersxPresentationTool";
 
         public override string ConsumerKey { get { return CONSUMER_KEY; } }
@@ -65,6 +67,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to create student presentation: " + e.Message);
                 throw new Exception("Failed to create student presentation.", e);
             }
             return res;
@@ -92,6 +95,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to edit existing student presentation: " + e.Message);
                 throw new Exception("Failed to edit existing student presentation.", e);
             }
 
@@ -110,6 +114,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to get all previous submissions: " + e.Message);
                 throw new Exception("Failed to get all previous submissions.", e);
             }
 
@@ -140,6 +145,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to fetch current student presentation: " + e.Message);
                 throw new Exception("Failed to fetch current student presentation.", e);
             }
 
@@ -177,7 +183,8 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
-                throw new Exception("Failed to fetch all student presentations for course run.", e);
+                _log.Error("Failed to fetch all title, text and coordinate for course run: " + e.Message);
+                throw new Exception("Failed to fetch all title, text and coordinate for course run.", e);
             }
 
             return res;
@@ -196,6 +203,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to get all student presentations for course run: " + e.Message);
                 throw new Exception("Failed to get all student presentations for course run.", e);
             }
 

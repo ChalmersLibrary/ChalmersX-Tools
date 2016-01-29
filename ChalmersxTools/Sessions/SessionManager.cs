@@ -12,6 +12,8 @@ namespace ChalmersxTools.Sessions
 {
     public class SessionManager : ISessionManager
     {
+        private readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private LearningToolServerDbContext _dbContext;
 
         public SessionManager(LearningToolServerDbContext dbContext)
@@ -85,6 +87,7 @@ namespace ChalmersxTools.Sessions
             }
             catch (Exception e)
             {
+                _log.Error("Failed to get session: " + e.Message);
                 throw new Exception("Failed to get session.", e);
             }
 

@@ -13,6 +13,8 @@ namespace ChalmersxTools.Tools
 {
     public class EarthSpheresImageTool : SimpleDataStorageToolBase
     {
+        private readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public static readonly string CONSUMER_KEY = "ChalmersxEarthSpheresImageTool";
 
         public override string ConsumerKey { get { return CONSUMER_KEY; } }
@@ -121,6 +123,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to create submission: " + e.Message);
                 res = "<span style='color: red;'>Failed to create submission: " + e.Message + "</span>";
             }
 
@@ -185,6 +188,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to edit existing submission: " + e.Message);
                 res = "<span style='color: red;'>Failed to edit existing submission: " + e.Message + "</span>";
             }
 
@@ -203,6 +207,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to get all previous submissions: " + e.Message);
                 throw new Exception("Failed to get all previous submissions.", e);
             }
 
@@ -232,6 +237,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to fetch current submission: " + e.Message);
                 throw new Exception("Failed to fetch current submission.", e);
             }
 
@@ -251,6 +257,7 @@ namespace ChalmersxTools.Tools
             }
             catch (Exception e)
             {
+                _log.Error("Failed to get all submissions for course run: " + e.Message);
                 throw new Exception("Failed to get all submissions for course run.", e);
             }
 
