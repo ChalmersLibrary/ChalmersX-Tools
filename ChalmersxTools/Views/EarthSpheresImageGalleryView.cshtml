@@ -127,7 +127,7 @@
                 .Select(g => g.Select(x => x.c))
                 .ToList();
             
-        <div id="back-link" style="position: fixed; left: 20px; top: 20px; font-size: 3em; color: white; font-weight: bold; display: none;" data-fullscreen-sphere=""><a class="discrete-link" href="#" onclick="toggleSingleSphereFilter($(this).parent().data('fullscreen-sphere')); event.preventDefault();"><</a></div>
+        <div id="back-link" data-fullscreen-sphere=""><a class="discrete-link" href="#" onclick="toggleSingleSphereFilter($(this).parent().data('fullscreen-sphere')); event.preventDefault();"><</a></div>
         <div id="geosphere-column" class="image-view-column">
             <h1 class="column-header"><a href="#" onclick="toggleSingleSphereFilter('geosphere'); event.preventDefault();">Geosphere</a></h1>
             <div>@{foreach (var c in gcs){<ul class="image-view-column-list">@foreach (var i in c){<li class="gallery-item"><div class="gallery-item-inner"><a href="@i.ImageUrl"><img src="/img/default.gif" data-src="@i.ImageUrl"></a></div></li>}</ul>}}</div>
