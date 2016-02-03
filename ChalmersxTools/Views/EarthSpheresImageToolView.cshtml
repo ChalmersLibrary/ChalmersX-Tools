@@ -54,8 +54,9 @@
             </fieldset>
             <div style="padding-top: 10px;">
                 <input type="button" value="Save" onclick="validateAndSubmitForm();">
-                <a href="/Tool/GetVisualization?ltiSessionId=@Model.LtiSessionId" target="_blank"><input type="button" value="Go to Collage"></a>
             </div>
+            <br />
+            <a href="/Tool/GetVisualization?ltiSessionId=@Model.LtiSessionId" target="_blank">Go to Collage</a>
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
             <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
         </form>
