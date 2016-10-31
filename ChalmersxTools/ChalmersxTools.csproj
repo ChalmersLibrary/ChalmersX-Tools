@@ -161,6 +161,11 @@
   <ItemGroup>
     <Content Include="css\main.css" />
     <Content Include="Global.asax" />
+    <Content Include="images\m1.png" />
+    <Content Include="images\m2.png" />
+    <Content Include="images\m3.png" />
+    <Content Include="images\m4.png" />
+    <Content Include="images\m5.png" />
     <Content Include="img\default.gif" />
     <Content Include="Web.config" />
   </ItemGroup>
