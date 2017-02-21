@@ -224,14 +224,20 @@
     <Compile Include="Migrations\201601280729390_AddContextIdRemoveOthers.Designer.cs">
       <DependentUpon>201601280729390_AddContextIdRemoveOthers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702211427321_AddSingleTempSubmission.cs" />
+    <Compile Include="Migrations\201702211427321_AddSingleTempSubmission.Designer.cs">
+      <DependentUpon>201702211427321_AddSingleTempSubmission.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\CsvFileData.cs" />
     <Compile Include="Models\Database\EarthMassSubmission.cs" />
     <Compile Include="Models\Database\EarthSpheresImagesSubmission.cs" />
     <Compile Include="Models\Database\LtiSession.cs" />
+    <Compile Include="Models\Database\SingleTemperatureMeasurementSubmission.cs" />
     <Compile Include="Models\MeasurementAndCoordinate.cs" />
     <Compile Include="Models\GeoImage.cs" />
+    <Compile Include="Models\MeasurementWithTimeAndPlace.cs" />
     <Compile Include="Models\View\EarthMassToolViewModel.cs" />
     <Compile Include="Models\Database\TemperatureMeasurementSubmission.cs" />
     <Compile Include="Models\View\EarthSpheresImageGalleryViewModel.cs" />
@@ -242,6 +248,7 @@
     <Compile Include="Models\Database\StudentPresentation.cs" />
     <Compile Include="Models\TitleTextAndCoordinate.cs" />
     <Compile Include="Models\ViewIdentifierAndModel.cs" />
+    <Compile Include="Models\View\SingleTemperatureMeasurementToolViewModel.cs" />
     <Compile Include="Models\View\TemperatureMeasurementToolViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sessions\ISessionManager.cs" />
@@ -251,6 +258,7 @@
     <Compile Include="Tools\ITool.cs" />
     <Compile Include="Tools\PresentationTool.cs" />
     <Compile Include="Tools\SimpleDataStorageToolBase.cs" />
+    <Compile Include="Tools\SingleTemperatureMesaurementTool.cs" />
     <Compile Include="Tools\TemperatureMeasurementTool.cs" />
     <Compile Include="Tools\ToolBase.cs" />
   </ItemGroup>
@@ -265,6 +273,7 @@
     <Content Include="Views\TemperatureMeasurementToolView.cshtml" />
     <Content Include="Views\EarthSpheresImageGalleryView.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\SingleTemperatureMeasurementToolView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -312,6 +321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601280729390_AddContextIdRemoveOthers.resx">
       <DependentUpon>201601280729390_AddContextIdRemoveOthers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702211427321_AddSingleTempSubmission.resx">
+      <DependentUpon>201702211427321_AddSingleTempSubmission.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

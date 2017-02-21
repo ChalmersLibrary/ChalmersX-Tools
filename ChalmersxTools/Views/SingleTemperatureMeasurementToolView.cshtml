@@ -1,0 +1,61 @@
+﻿@model ChalmersxTools.Models.View.SingleTemperatureMeasurementToolViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TemperatureMeasurementToolView</title>
+    <link href="css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <div id="message-box">@Html.Raw(Model.ResponseMessage)</div>
+        <form id="temperature-measurements" method="post">
+            <fieldset>
+                <legend>Enter your location (decimal degrees)</legend>
+                <label for="lat">Latitude</label>
+                <input type="text" id="lat" name="lat" value="@(Model.Submission == null ? "" : Model.Submission.Position.Latitude.ToString())" />
+                <label for="long">Longitude</label>
+                <input type="text" id="long" name="long" value="@(Model.Submission == null ? "" : @Model.Submission.Position.Longitude.ToString())" />
+            </fieldset>
+            <fieldset>
+                <legend>Enter your measurements</legend>
+                <label for="measurement">Temperature (in Celsius)</label>
+                <input type="text" id="measurement" name="measurement" value="@(Model.Submission == null ? "" : Model.Submission.Measurement.ToString())" />
+                <label for="measurement2">Time of measurement (24h clock)</label>
+                <input type="text" id="time" name="time" placeholder="hh:mm" value="@(Model.Submission == null ? "" : Model.Submission.Time.ToString())" />
+            </fieldset>
+            <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
+            <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
+            <input type="button" value="Save" onclick="validateAndSubmit()" />
+        </form>
+        @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
+        {
+            <br>
+            <hr>
+            <br>
+            <div>
+                <p>This information is not visible for students.</p>
+                <a href="/Tool/GetData?ltiSessionId=@Model.LtiSessionId">Download data</a>
+            </div>
+            <div>
+                <p>Number of Submissions: @Model.NumberOfSubmissions.ToString()</p>
+            </div>
+        }
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        function validateAndSubmit() {
+            $("#measurement").val($("#measurement").val().replace(",", "."));
+            $("#lat").val($("#lat").val().replace(",", "."));
+            $("#long").val($("#long").val().replace(",", "."));
+            document.forms["temperature-measurements"].submit();
+        }
+    </script>
+</body>
+</html>
+
