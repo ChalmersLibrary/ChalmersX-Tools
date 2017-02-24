@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ChalmersxTools.Lti
 {
-    public class LtiLibraryOutcomesClient
+    public class LtiLibraryOutcomesClient : ILtiOutcomesClient
     {
         public BasicResult PostScore(string serviceUrl, string consumerKey, string consumerSecret, string lisResultSourcedId, double? score)
         {

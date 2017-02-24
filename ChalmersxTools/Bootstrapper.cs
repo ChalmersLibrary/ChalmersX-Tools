@@ -6,6 +6,9 @@ using ChalmersxTools.Database;
 using ChalmersxTools.Tools;
 using System.Configuration;
 using System;
+using ChalmersxTools.Config;
+using ChalmersxTools.Web;
+using ChalmersxTools.Lti;
 
 namespace ChalmersxTools
 {
@@ -30,6 +33,12 @@ namespace ChalmersxTools
             container.RegisterInstance<IUnityContainer>(container);
             container.RegisterType<LearningToolServerDbContext>();
             container.RegisterType<ISessionManager, SessionManager>();
+            container.RegisterType<IConfig, DefaultConfig>();
+            container.RegisterType<ILtiOutcomesClient, LtiLibraryOutcomesClient>();
+
+            container.RegisterInstance<IWebApiClient>(new SystemNetHttpClient());
+
+            // Tools
             container.RegisterType<ITool, PresentationTool>(PresentationTool.CONSUMER_KEY);
             container.RegisterType<ITool, EarthSpheresImageTool>(EarthSpheresImageTool.CONSUMER_KEY);
             container.RegisterType<ITool, EarthMassTool>(EarthMassTool.CONSUMER_KEY);
