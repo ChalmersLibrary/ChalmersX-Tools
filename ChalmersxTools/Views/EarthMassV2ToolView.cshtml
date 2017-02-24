@@ -51,13 +51,40 @@
             </div>
         }
     </div>
+    <div id="visualizationContainer" style="display: none;">
+        <canvas id="visualization" width="640" height="480"></canvas>
+    </div>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="~/js/Chartjs/Chart.min.js"></script>
     <script>
         var geocoder;
+        var ctx;
+        var visChart;
 
         window.onload = function initialize() {
             geocoder = new google.maps.Geocoder();
+
+            if ($("#meanGravityAcceleration").val() != "" && $("#earthMass").val() != "" && $("#location").val() != "") {
+
+                var labels = ["10", "20", "30", "40", "50"]; // TODO: Generate this from the data.
+
+                ctx = document.getElementById("visualization").getContext("2d");
+                visChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+
+                        ]
+                    },
+                    options: {
+                        
+                    }
+                });
+
+                $("#visualizationContainer").show();
+            }
         }
 
         function validateAndSubmitForm() {
