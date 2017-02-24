@@ -10,5 +10,6 @@ namespace ChalmersxTools.Config
     {
         string LtiConsumerSecret { get; }
         string OpenWeatherMapApiKey { get; }
+        string GoogleMapsApiKey { get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ChalmersxTools.Models.Database;
+﻿using ChalmersxTools.Config;
+using ChalmersxTools.Models.Database;
 using ChalmersxTools.Tools;
 using ChalmersxTools.Web;
 using LtiLibrary.Core.Common;
@@ -28,11 +29,7 @@ namespace ChalmersxTools.Tests.Tools
             {
                 SingleTemperatureMeasurementSubmission res;
                 var tool = new SingleTemperatureMesaurementTool(
-                        new Config.Fakes.StubIConfig
-                        {
-                            LtiConsumerSecretGet = () => { return ""; },
-                            OpenWeatherMapApiKeyGet = () => { return ConfigurationManager.AppSettings["openWeatherMapApiKey"]; }
-                        },
+                        new DefaultConfig(),
                         new SystemNetHttpClient(), // We want to do a real request to Googles API.
                         new ChalmersxTools.Lti.Fakes.StubILtiOutcomesClient()
                         {

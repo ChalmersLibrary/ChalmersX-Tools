@@ -381,7 +381,8 @@ namespace ChalmersxTools.Tools
             var timezoneResponse = _webApiClient.GetJson("https://maps.googleapis.com/maps/api/timezone/json?location=" +
                 lat.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," +
                 lng.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) +
-                "&timestamp=" + timestamp);
+                "&timestamp=" + timestamp +
+                "&key=" + _config.GoogleMapsApiKey);
 
             if (timezoneResponse != null && timezoneResponse.status == "OK")
             {

@@ -24,5 +24,13 @@ namespace ChalmersxTools.Config
                 return ConfigurationManager.AppSettings["openWeatherMapApiKey"];
             }
         }
+
+        public string GoogleMapsApiKey
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["googleMapsApiKey"];
+            }
+        }
     }
 }
