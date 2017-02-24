@@ -173,6 +173,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SqlClientConfig.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Config\DefaultConfig.cs" />
+    <Compile Include="Config\IConfig.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Database\LearningToolServerDbContext.cs" />
@@ -180,6 +182,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Lti\ILtiOutcomesClient.cs" />
+    <Compile Include="Lti\LtiLibraryOutcomesClient.cs" />
     <Compile Include="Migrations\201601131224157_NewBeginning.cs" />
     <Compile Include="Migrations\201601131224157_NewBeginning.Designer.cs">
       <DependentUpon>201601131224157_NewBeginning.cs</DependentUpon>
@@ -228,6 +232,10 @@
     <Compile Include="Migrations\201702211427321_AddSingleTempSubmission.Designer.cs">
       <DependentUpon>201702211427321_AddSingleTempSubmission.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702241017060_AddStationReferenceMeasurement.cs" />
+    <Compile Include="Migrations\201702241017060_AddStationReferenceMeasurement.Designer.cs">
+      <DependentUpon>201702241017060_AddStationReferenceMeasurement.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\CsvFileData.cs" />
@@ -261,6 +269,8 @@
     <Compile Include="Tools\SingleTemperatureMesaurementTool.cs" />
     <Compile Include="Tools\TemperatureMeasurementTool.cs" />
     <Compile Include="Tools\ToolBase.cs" />
+    <Compile Include="Web\AspNetHttpClient.cs" />
+    <Compile Include="Web\IWebApiClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -324,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702211427321_AddSingleTempSubmission.resx">
       <DependentUpon>201702211427321_AddSingleTempSubmission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702241017060_AddStationReferenceMeasurement.resx">
+      <DependentUpon>201702241017060_AddStationReferenceMeasurement.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,9 @@
-﻿using ChalmersxTools.Models;
+﻿using ChalmersxTools.Config;
+using ChalmersxTools.Lti;
+using ChalmersxTools.Models;
 using ChalmersxTools.Models.Database;
 using ChalmersxTools.Models.View;
+using ChalmersxTools.Web;
 using LtiLibrary.Core.Outcomes.v1;
 using System;
 using System.Collections.Generic;
@@ -12,12 +15,23 @@ namespace ChalmersxTools.Tools
 {
     public class SingleTemperatureMesaurementTool : SimpleDataStorageToolBase
     {
-        private readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
         public static readonly string CONSUMER_KEY = "ChalmersxSingleTemperatureMeasurementTool";
 
         public override string ConsumerKey { get { return CONSUMER_KEY; } }
-        override protected string ConsumerSecret { get { return ConfigurationManager.AppSettings["ltiConsumerSecret"]; } }
+        override protected string ConsumerSecret { get { return _config.LtiConsumerSecret; } }
+
+        private string _openWeatherMapApiKey { get { return _config.OpenWeatherMapApiKey; } }
+        private readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private IConfig _config;
+        private IWebApiClient _webApiClient;
+        private ILtiOutcomesClient _ltiOutcomesClient;
+
+        public SingleTemperatureMesaurementTool(IConfig config, IWebApiClient webApiClient, ILtiOutcomesClient ltiOutcomesClient)
+        {
+            _config = config;
+            _webApiClient = webApiClient;
+            _ltiOutcomesClient = ltiOutcomesClient;
+        }
 
         protected override ViewIdentifierAndModel GetViewIdentifierAndModel(string message)
         {
@@ -71,15 +85,16 @@ namespace ChalmersxTools.Tools
 
             try
             {
-                double lat, lng;
+                double lat = 0, lng = 0;
                 double? measurement = null;
                 double mesout;
-                DateTime time;
+                DateTime time = DateTime.Now;
                 if (Double.TryParse(request.Form["measurement"], out mesout))
                 {
                     measurement = mesout;
                 }
 
+                var goodToGo = false;
                 if (!Double.TryParse(request.Form["lat"].ToString(), out lat))
                 {
                     res = "<span style='color: red;'>Failed to parse latitude.</span>";
@@ -105,13 +120,38 @@ namespace ChalmersxTools.Tools
                 }
                 else
                 {
+                    goodToGo = true;
+                }
+
+                TempTimeAndPos stationTempTimeAndPos = null;
+                if (goodToGo)
+                {
+                    try
+                    {
+                        stationTempTimeAndPos = GetTempNow(lat, lng);
+                    }
+                    catch (Exception e)
+                    {
+                        _log.Error("Failed when fetching temperature from Open Weather Map.", e);
+                        res = "<span style='color: red;'>Failed to fetch temperature.</span>";
+                        goodToGo = false;
+                    }
+                }
+
+                if (goodToGo)
+                {
+                    var measurementPosition = new Coordinate(lat, lng);
                     var newSubmission = _sessionManager.DbContext.SingleTemperatureMeasurementSubmissions.Add(new SingleTemperatureMeasurementSubmission()
                     {
                         UserId = _session.UserId,
                         ContextId = _session.ContextId,
-                        Position = new Coordinate(lat, lng),
+                        Position = measurementPosition,
                         Measurement = measurement,
-                        Time = time
+                        Time = time,
+                        StationPosition = stationTempTimeAndPos.Position,
+                        StationMeasurement = stationTempTimeAndPos.Temp,
+                        StationTime = stationTempTimeAndPos.Time,
+                        DistanceInMeters = CalculateDistanceInMeters(measurementPosition, stationTempTimeAndPos.Position)
                     });
 
                     _sessionManager.DbContext.SaveChanges();
@@ -134,15 +174,16 @@ namespace ChalmersxTools.Tools
 
             try
             {
-                double lat, lng;
+                double lat = 0, lng = 0;
                 double? measurement = null;
                 double mesout;
-                DateTime time;
+                DateTime time = DateTime.Now;
                 if (Double.TryParse(request.Form["measurement"], out mesout))
                 {
                     measurement = mesout;
                 }
 
+                var goodToGo = false;
                 if (!Double.TryParse(request.Form["lat"].ToString(), out lat))
                 {
                     res = "<span style='color: red;'>Failed to parse latitude.</span>";
@@ -168,7 +209,26 @@ namespace ChalmersxTools.Tools
                 }
                 else
                 {
+                    goodToGo = true;
+                }
 
+                TempTimeAndPos stationTempTimeAndPos = null;
+                if (goodToGo)
+                {
+                    try
+                    {
+                        stationTempTimeAndPos = GetTempNow(lat, lng);
+                    }
+                    catch (Exception e)
+                    {
+                        _log.Error("Failed when fetching temperature from Open Weather Map.", e);
+                        res = "<span style='color: red;'>Failed to fetch temperature.</span>";
+                        goodToGo = false;
+                    }
+                }
+
+                if (goodToGo)
+                {
                     SingleTemperatureMeasurementSubmission existing =
                     (from o in _sessionManager.DbContext.SingleTemperatureMeasurementSubmissions
                      where o.UserId == _session.UserId &&
@@ -178,6 +238,10 @@ namespace ChalmersxTools.Tools
                     existing.Position = new Coordinate(lat, lng);
                     existing.Measurement = measurement;
                     existing.Time = time;
+                    existing.StationPosition = stationTempTimeAndPos.Position;
+                    existing.StationMeasurement = stationTempTimeAndPos.Temp;
+                    existing.StationTime = stationTempTimeAndPos.Time;
+                    existing.DistanceInMeters = CalculateDistanceInMeters(existing.Position, stationTempTimeAndPos.Position);
 
                     _sessionManager.DbContext.SaveChanges();
 
@@ -230,7 +294,7 @@ namespace ChalmersxTools.Tools
             {
                 if (submission.Measurement != null)
                 {
-                    OutcomesClient.PostScore(
+                    _ltiOutcomesClient.PostScore(
                         _session.LtiRequest.LisOutcomeServiceUrl,
                         _session.LtiRequest.ConsumerKey,
                         ConsumerSecret,
@@ -286,6 +350,102 @@ namespace ChalmersxTools.Tools
 
             return res;
         }
+
+        private TempTimeAndPos GetTempNow(double lat, double lng)
+        {
+            TempTimeAndPos res = null;
+
+            var weatherResponse = _webApiClient.GetJson("http://api.openweathermap.org/data/2.5/weather?lat=" +
+                lat + "&lon=" + lng + "&apikey=" +
+                _openWeatherMapApiKey + "&units=metric");
+
+            long timestamp = 0;
+            if (weatherResponse != null && weatherResponse.cod == "200")
+            {
+                res = new TempTimeAndPos
+                {
+                    Position = new Coordinate
+                    {
+                        Latitude = weatherResponse.coord.lat,
+                        Longitude = weatherResponse.coord.lon
+                    },
+                    Temp = weatherResponse.main.temp
+                };
+                timestamp = weatherResponse.dt;
+            }
+            else
+            {
+                throw new Exception("Failed to fetch temperature from Open Weather Map.");
+            }
+
+            var timezoneResponse = _webApiClient.GetJson("https://maps.googleapis.com/maps/api/timezone/json?location=" +
+                lat.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," +
+                lng.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) +
+                "&timestamp=" + timestamp);
+
+            if (timezoneResponse != null && timezoneResponse.status == "OK")
+            {
+                var daylightSavingsTimeOffset = timezoneResponse.dstOffset.ToObject<int>();
+                var rawOffset = timezoneResponse.rawOffset.ToObject<int>();
+                timestamp = timestamp + daylightSavingsTimeOffset + rawOffset;
+                res.Time = new DateTime(new DateTime(1970, 1, 1).Ticks + timestamp * 10 * 1000 * 1000);
+            }
+            else
+            {
+                throw new Exception("Failed to convert time to UTC.");
+            }
+
+            return res;
+        }
+
+        private DateTime ConvertToUtc(double lat, double lng, DateTime time)
+        {
+            var res = time;
+
+            var response = _webApiClient.GetJson("https://maps.googleapis.com/maps/api/timezone/json?location=" +
+                lat.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," + 
+                lng.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + 
+                "&timestamp=" + DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).Ticks/10/1000/1000);
+
+            if (response.status == "OK")
+            {
+                var daylightSavingsTimeOffset = response.dstOffset.ToObject<double>();
+                var rawOffset = response.rawOffset.ToObject<double>();
+                res = res.AddSeconds(-1 * daylightSavingsTimeOffset);
+                res = res.AddSeconds(-1 * rawOffset);
+            }
+            else
+            {
+                throw new Exception("Failed to convert to GMT.");
+            }
+
+            return res;
+        }
+
+        private int CalculateDistanceInMeters(Coordinate pos1, Coordinate pos2)
+        {
+            var radiusOfEarth = 6371e3;
+            var lat1Rad = pos1.Latitude / 180 * Math.PI;
+            var lat2Rad = pos2.Latitude / 180 * Math.PI;
+            var lon1Rad = pos1.Longitude / 180 * Math.PI;
+            var lon2Rad = pos2.Longitude / 180 * Math.PI;
+            var deltaLatRad = lat2Rad - lat1Rad;
+            var deltaLonRad = lon2Rad - lon1Rad;
+            var a = Math.Sin(deltaLatRad / 2) * Math.Sin(deltaLatRad / 2) +
+                Math.Cos(lat1Rad) * Math.Cos(lat2Rad) * 
+                Math.Sin(deltaLonRad / 2) * Math.Sin(deltaLonRad / 2);
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var distance = radiusOfEarth * c;
+            return Convert.ToInt32(Math.Round(distance));
+        }
+
         #endregion
+    }
+
+    class TempTimeAndPos
+    {
+        public Coordinate Position { get; set; }
+        public DateTime Time { get; set; }
+        public Double Temp { get; set; }
     }
 }

@@ -18,8 +18,15 @@ namespace ChalmersxTools.Models.Database
         [StringLength(128)]
         [Index("IX_UserInContext", 2, IsUnique = true)]
         public string ContextId { get; set; }
+
         public Coordinate Position { get; set; }
         public DateTime Time { get; set; }
         public double? Measurement { get; set; }
+
+        public Coordinate StationPosition { get; set; }
+        public DateTime StationTime { get; set; }
+        public double? StationMeasurement { get; set; }
+
+        public int? DistanceInMeters { get; set; }
     }
 }
