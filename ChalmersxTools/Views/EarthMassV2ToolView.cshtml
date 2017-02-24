@@ -1,0 +1,89 @@
+﻿@model ChalmersxTools.Models.View.EarthMassV2ToolViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EarthMassToolView</title>
+    <link href="css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <div id="message-box">@Html.Raw(Model.ResponseMessage)</div>
+        <form id="earth-mass" method="post">
+            <div>
+                <label for="meanGravityAcceleration">Measured Mean Gravity Acceleration</label>
+                <input id="meanGravityAcceleration" name="meanGravityAcceleration" type="url" value="@(Model.Submission == null ? "" : Model.Submission.MeanGravityAcceleration.ToString("e3"))" />
+            </div>
+            <div>
+                <label for="earthMass">Calculated Total Mass of Earth</label>
+                <input id="earthMass" name="earthMass" type="url" value="@(Model.Submission == null ? "" : Model.Submission.TotalEarthMass.ToString("e3"))" />
+            </div>
+            <div>
+                <label for="location">Location</label>
+                <input id="location" name="location" type="text" value="@(Model.Submission == null ? "" : Model.Submission.Location)" />
+                <input type="hidden" id="latitude" name="latitude" value="">
+                <input type="hidden" id="longitude" name="longitude" value="">
+            </div>
+            <div style="padding-top: 10px;">
+                <input type="button" value="Save" onclick="validateAndSubmitForm();">
+            </div>
+            <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
+            <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
+        </form>
+        @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
+        {
+            <br>
+            <hr>
+            <br>
+            <div>
+                <p>This information is not visible for students.</p>
+                <a href="/Tool/GetData?ltiSessionId=@Model.LtiSessionId">Download data</a>
+            </div>
+            <div>
+                <p>Earth Mass Average: @Model.EarthMassAverage.ToString("e3")</p>
+                <p>Number of Submissions: @Model.NumberOfSubmissions.ToString()</p>
+            </div>
+        }
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        var geocoder;
+
+        window.onload = function initialize() {
+            geocoder = new google.maps.Geocoder();
+        }
+
+        function validateAndSubmitForm() {
+            $("#message-box").text("");
+            $("#earthMass").val($("#earthMass").val().replace(",", "."));
+            $("#meanGravityAcceleration").val($("#meanGravityAcceleration").val().replace(",", "."));
+
+
+            if ($("#meanGravityAcceleration").val() == "") {
+                $("#message-box").html("<span style='color: red;'>You have to enter a value for the mean gravity acceleration.</span>");
+            } else if ($("#earthMass").val() == "") {
+                $("#message-box").html("<span style='color: red;'>You have to enter a value for the total mass of earth.</span>");
+            } else if ($("#location").val() == "") {
+                $("#message-box").html("<span style='color: red;'>You have to enter a valid location.</span>");
+            } else {
+                geocoder.geocode({ "address": $("#location").val() }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        $("#latitude").val(results[0].geometry.location.lat());
+                        $("#longitude").val(results[0].geometry.location.lng());
+                        document.forms["earth-mass"].submit();
+                    } else {
+                        $("#message-box").html("<span style='color: red;'><p><b>Location not found</b>, please provide a more specific description of your location.</p></span>");
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
