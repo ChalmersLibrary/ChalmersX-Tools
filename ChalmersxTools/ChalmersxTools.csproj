@@ -236,6 +236,10 @@
     <Compile Include="Migrations\201702241017060_AddStationReferenceMeasurement.Designer.cs">
       <DependentUpon>201702241017060_AddStationReferenceMeasurement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702241432359_AddEarthMassV2Submission.cs" />
+    <Compile Include="Migrations\201702241432359_AddEarthMassV2Submission.Designer.cs">
+      <DependentUpon>201702241432359_AddEarthMassV2Submission.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\CsvFileData.cs" />
@@ -341,6 +345,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702241017060_AddStationReferenceMeasurement.resx">
       <DependentUpon>201702241017060_AddStationReferenceMeasurement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702241432359_AddEarthMassV2Submission.resx">
+      <DependentUpon>201702241432359_AddEarthMassV2Submission.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
