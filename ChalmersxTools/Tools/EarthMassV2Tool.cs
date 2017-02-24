@@ -22,11 +22,14 @@ namespace ChalmersxTools.Tools
         public override CsvFileData HandleDataRequest()
         {
             string data = "";
-            data += "meanGravityAcceleration,massOfEarth\n";
+            data += "meanGravityAcceleration,massOfEarth,location,latitude,longitude\n";
             foreach (var submission in GetAllData())
             {
                 data += "\"" + submission.MeanGravityAcceleration.ToString() + "\",\"" +
-                    submission.TotalEarthMass.ToString() + "\"\n";
+                    submission.TotalEarthMass.ToString() + "," + 
+                    submission.Location + "," + 
+                    submission.Position.Latitude.ToString() + "," + 
+                    submission.Position.Longitude.ToString() + "\"\n";
             }
             return new CsvFileData(_session.ContextId + "-earth-mass.csv",
                 new System.Text.UTF8Encoding().GetBytes(data));
