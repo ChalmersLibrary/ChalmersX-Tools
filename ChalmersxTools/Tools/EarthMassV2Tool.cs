@@ -26,8 +26,8 @@ namespace ChalmersxTools.Tools
             foreach (var submission in GetAllData())
             {
                 data += "\"" + submission.MeanGravityAcceleration.ToString() + "\",\"" +
-                    submission.TotalEarthMass.ToString() + "," + 
-                    submission.Location + "," + 
+                    submission.TotalEarthMass.ToString() + ",\"" + 
+                    submission.Location + "\"," + 
                     submission.Position.Latitude.ToString() + "," + 
                     submission.Position.Longitude.ToString() + "\"\n";
             }
