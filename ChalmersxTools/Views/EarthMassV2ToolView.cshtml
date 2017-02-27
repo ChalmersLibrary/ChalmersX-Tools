@@ -67,7 +67,11 @@
 
             if ($("#meanGravityAcceleration").val() != "" && $("#earthMass").val() != "" && $("#location").val() != "") {
 
-                var labels = ["10", "20", "30", "40", "50"]; // TODO: Generate this from the data.
+                var labels = ["", "", "", "", "", "", "", "", "", "10",
+                    "", "", "", "", "", "", "", "", "", "20",
+                    "", "", "", "", "", "", "", "", "", "30",
+                    "", "", "", "", "", "", "", "", "", "40",
+                    "", "", "", "", "", "", "", "", "", "50"]; // TODO: Generate this from the data.
 
                 ctx = document.getElementById("visualization").getContext("2d");
                 visChart = new Chart(ctx, {
@@ -94,7 +98,13 @@
                                 pointHoverBorderWidth: 2,
                                 pointRadius: 1,
                                 pointHitRadius: 10,
-                                data: [5.972e24, 5.972e24],
+                                data: [{
+                                    x: 0,
+                                    y: 5.972e24 
+                                },{
+                                    x: 50,
+                                    y: 5.972e24
+                                }],
                                 spanGaps: false,
                             },
                             {
@@ -116,7 +126,15 @@
                                 pointHoverBorderWidth: 2,
                                 pointRadius: 1,
                                 pointHitRadius: 10,
-                                data: [[5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24]],
+                                data: [[5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
+                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
+                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
+                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
+                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
+                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
+                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
+                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
+                                    5.343e24, 5.453e24]],
                                 spanGaps: false,
                             },
                             {
@@ -138,7 +156,26 @@
                                 pointHoverBorderWidth: 2,
                                 pointRadius: 1,
                                 pointHitRadius: 10,
-                                data: [5.343e24, 5.567e24, 5.782e24, 5.864e24, 5.972e24],
+                                data: [{
+                                    x: 10,
+                                    y: 5.343e24
+                                },
+                                {
+                                    x: 20,
+                                    y: 5.567e24
+                                },
+                                {
+                                    x: 30,
+                                    y: 5.782e24
+                                },
+                                {
+                                    x: 40,
+                                    y: 5.864e24
+                                },
+                                {
+                                    x: 50,
+                                    y: 5.972e24
+                                }],
                                 spanGaps: false,
                             }
                         ]
