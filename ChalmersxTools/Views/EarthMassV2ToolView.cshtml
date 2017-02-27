@@ -36,6 +36,9 @@
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
             <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
         </form>
+        <div id="visualizationContainer" style="display: none;">
+            <canvas id="visualization" width="640" height="480"></canvas>
+        </div>
         @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
         {
             <br>
@@ -50,9 +53,6 @@
                 <p>Number of Submissions: @Model.NumberOfSubmissions.ToString()</p>
             </div>
         }
-    </div>
-    <div id="visualizationContainer" style="display: none;">
-        <canvas id="visualization" width="640" height="480"></canvas>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -76,7 +76,29 @@
                         labels: labels,
                         datasets: [
                             {
-                                label: "Det bästa datasettet",
+                                label: "Correct Earth Mass",
+                                fill: false,
+                                lineTension: 0.1,
+                                backgroundColor: "rgba(192,75,192,0.4)",
+                                borderColor: "rgba(192,75,192,1)",
+                                borderCapStyle: 'butt',
+                                borderDash: [],
+                                borderDashOffset: 0.0,
+                                borderJoinStyle: 'miter',
+                                pointBorderColor: "rgba(192,75,192,1)",
+                                pointBackgroundColor: "#fff",
+                                pointBorderWidth: 1,
+                                pointHoverRadius: 5,
+                                pointHoverBackgroundColor: "rgba(192,75,192,1)",
+                                pointHoverBorderColor: "rgba(220,220,220,1)",
+                                pointHoverBorderWidth: 2,
+                                pointRadius: 1,
+                                pointHitRadius: 10,
+                                data: [5.972e24, 5.972e24],
+                                spanGaps: false,
+                            },
+                            {
+                                label: "User Measurements",
                                 fill: false,
                                 lineTension: 0.1,
                                 backgroundColor: "rgba(75,192,192,0.4)",
@@ -94,7 +116,29 @@
                                 pointHoverBorderWidth: 2,
                                 pointRadius: 1,
                                 pointHitRadius: 10,
-                                data: [65, 59, 80, 81, 56, 55, 40],
+                                data: [[5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24, 6.132e24, 5.678e24, 5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24, 6.132e24, 5.678e24]],
+                                spanGaps: false,
+                            },
+                            {
+                                label: "Accumulated Average",
+                                fill: false,
+                                lineTension: 0.1,
+                                backgroundColor: "rgba(192,192,75,0.4)",
+                                borderColor: "rgba(192,192,75,1)",
+                                borderCapStyle: 'butt',
+                                borderDash: [],
+                                borderDashOffset: 0.0,
+                                borderJoinStyle: 'miter',
+                                pointBorderColor: "rgba(192,192,75,1)",
+                                pointBackgroundColor: "#fff",
+                                pointBorderWidth: 1,
+                                pointHoverRadius: 5,
+                                pointHoverBackgroundColor: "rgba(192,192,75,1)",
+                                pointHoverBorderColor: "rgba(220,220,220,1)",
+                                pointHoverBorderWidth: 2,
+                                pointRadius: 1,
+                                pointHitRadius: 10,
+                                data: [5.343e24, 5.567e24, 5.782e24, 5.864e24, 5.972e24],
                                 spanGaps: false,
                             }
                         ]
