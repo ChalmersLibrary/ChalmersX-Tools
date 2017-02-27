@@ -45,6 +45,7 @@ namespace ChalmersxTools
             container.RegisterType<ITool, TemperatureMeasurementTool>(TemperatureMeasurementTool.CONSUMER_KEY);
             container.RegisterType<ITool, SingleTemperatureMesaurementTool>(SingleTemperatureMesaurementTool.CONSUMER_KEY);
             container.RegisterType<ITool, EarthMassV2Tool>(EarthMassV2Tool.CONSUMER_KEY);
+            container.RegisterType<ITool, LocationTool>(LocationTool.CONSUMER_KEY);
         }
     }
 }
