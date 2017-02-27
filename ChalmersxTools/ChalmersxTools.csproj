@@ -249,6 +249,7 @@
     <Compile Include="Models\Database\EarthSpheresImagesSubmission.cs" />
     <Compile Include="Models\Database\LtiSession.cs" />
     <Compile Include="Models\Database\SingleTemperatureMeasurementSubmission.cs" />
+    <Compile Include="Models\Database\LocationSubmission.cs" />
     <Compile Include="Models\MeasurementAndCoordinate.cs" />
     <Compile Include="Models\GeoImage.cs" />
     <Compile Include="Models\MeasurementWithTimeAndPlace.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="Models\View\EarthSpheresImageGalleryViewModel.cs" />
     <Compile Include="Models\View\EarthSpheresImageToolViewModel.cs" />
     <Compile Include="Models\View\LtiViewModelBase.cs" />
+    <Compile Include="Models\View\LocationToolViewModel.cs" />
     <Compile Include="Models\View\PresentationToolViewModel.cs" />
     <Compile Include="Models\StdError.cs" />
     <Compile Include="Models\Database\StudentPresentation.cs" />
@@ -272,6 +274,7 @@
     <Compile Include="Tools\EarthMassTool.cs" />
     <Compile Include="Tools\EarthSpheresImageTool.cs" />
     <Compile Include="Tools\ITool.cs" />
+    <Compile Include="Tools\LocationTool.cs" />
     <Compile Include="Tools\PresentationTool.cs" />
     <Compile Include="Tools\SimpleDataStorageToolBase.cs" />
     <Compile Include="Tools\SingleTemperatureMesaurementTool.cs" />
@@ -294,6 +297,7 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\SingleTemperatureMeasurementToolView.cshtml" />
     <Content Include="Views\EarthMassV2ToolView.cshtml" />
+    <Content Include="Views\LocationToolView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

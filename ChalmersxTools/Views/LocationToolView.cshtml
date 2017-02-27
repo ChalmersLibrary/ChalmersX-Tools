@@ -1,0 +1,153 @@
+﻿@model ChalmersxTools.Models.View.LocationToolViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LocationToolView</title>
+    <link href="css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <span id="message-box"></span>
+        <form id="student-location" method="post">
+            <div>
+                <label class="default-label" for="sp-name">Name</label>
+                <input type="text" id="sp-name" name="name" value="@(Model.CurrentLocationSubmission == null ? "" : Model.CurrentLocationSubmission.Name)">
+            </div>
+            <div>
+                <label class="default-label" for="sp-location">Location</label>
+                <input type="text" id="sp-location" name="location" value="@(Model.CurrentLocationSubmission == null ? "" : Model.CurrentLocationSubmission.LocationName)">
+                <input type="hidden" id="sp-latitude" name="latitude" value="">
+                <input type="hidden" id="sp-longitude" name="longitude" value="">
+            </div>
+            <div style="padding-top: 10px;">
+                <input type="button" value="Save" onclick="validateAndSubmitForm();">
+            </div>
+            <input type="hidden" name="action" value="@(Model.CurrentLocationSubmission == null ? "create" : "edit")">
+            <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
+        </form>
+        <br>
+        <hr>
+        <br>
+        <div>
+            <span id="ttc-map-error"></span>
+            <div id="ttc-map" style="height: 500px;"></div>
+        </div>
+        @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
+        {
+            <br>
+            <hr>
+            <br>
+            <div>
+                <p>This information is not visible for students.</p>
+                <a href="/Tool/GetData?ltiSessionId=@Model.LtiSessionId">Download data</a>
+            </div>
+            <div>
+                <p>Number of Submissions: @Model.NumberOfSubmissions.ToString()</p>
+            </div>
+        }
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        var geocoder;
+        var map;
+        var locations = [
+            @for (int i = 0; i < Model.Locations.Count; i++)
+            {
+                var location = Model.Locations[i];
+                <text>{ 
+                    title:"@Html.Raw(location.Title.Replace("\r\n", "<br />"))",
+                    text:"@Html.Raw(location.Text.Replace("\r\n", "<br />").Replace("\"", "'"))",
+                    coordinate:{ 
+                        latitude:@location.Coordinate.Latitude, 
+                        longitude:@location.Coordinate.Longitude
+                    } 
+                }
+                </text>
+                if (i < Model.Locations.Count - 1)
+                {
+                    <text>,</text>
+                }
+            }
+        ];
+        var markers = [];
+        var markerClusterer;
+
+        window.onload = function initialize() {
+            geocoder = new google.maps.Geocoder();
+
+            var myLatlng = new google.maps.LatLng(20.0, 15.0);
+            var mapOptions = {
+                zoom: 2,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("ttc-map"), mapOptions);
+            markerClusterer = new MarkerClusterer(map);
+
+            populateMapWithMarkers();
+        }
+
+        function validateAndSubmitForm() {
+            document.getElementById("message-box").innerHTML = "";
+
+            if ($("#sp-name").val() === "") {
+                $("#message-box").html("<span style='color: red;'>Your name cannot be empty.</span>");
+            } else {
+                var address = document.getElementById("sp-location").value;
+                geocoder.geocode({ "address": address }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        document.getElementById("sp-latitude").value = results[0].geometry.location.lat();
+                        document.getElementById("sp-longitude").value = results[0].geometry.location.lng();
+                    } else {
+                        document.getElementById("message-box").innerHTML = "<span style='color: red;'><p><b>Location not found</b>, please provide a more specific description of your location.</p></span>";
+                    }
+                });
+            }
+        }
+
+        function removeAllMarkersFromMap() {
+            for (var i = 0; i < markers.length; i++) {
+                markerClusterer.removeMarker(markers[i]);
+                markers[i].setMap(null);
+                markers[i] = null;
+            }
+            markers.length = 0;
+        }
+
+        function populateMapWithMarkers() {
+            for (var i = 0; i < locations.length; i++) {
+                markers.push(createMarker(map,
+                    locations[i].title,
+                    locations[i].text,
+                    locations[i].coordinate.latitude,
+                    locations[i].coordinate.longitude));
+            }
+        }
+
+        function createMarker(map, title, text, latitude, longitude) {
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(latitude, longitude),
+                map: map,
+                title: title
+            });
+            var contentString = "<h3>" + title + "</h3><p>" + text + "</p>";
+            var infoWindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+            marker.addListener("click", function () {
+                infoWindow.open(map, marker);
+            });
+            markerClusterer.addMarker(marker);
+            return marker;
+        }
+    </script>
+</body>
+</html>
