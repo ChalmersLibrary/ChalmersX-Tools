@@ -67,121 +67,194 @@
 
             if ($("#meanGravityAcceleration").val() != "" && $("#earthMass").val() != "" && $("#location").val() != "") {
 
-                var labels = ["", "", "", "", "", "", "", "", "", "10",
-                    "", "", "", "", "", "", "", "", "", "20",
-                    "", "", "", "", "", "", "", "", "", "30",
-                    "", "", "", "", "", "", "", "", "", "40",
-                    "", "", "", "", "", "", "", "", "", "50"]; // TODO: Generate this from the data.
+                var measurements = [
+                  5.343e24,
+                  5.843e24,
+                  6.412e24,
+                  5.812e24,
+                  5.912e24,
+                  5.633e24,
+                  6.821e24,
+                  5.343e24,
+                  5.843e24,
+                  6.412e24,
+                  5.812e24,
+                  5.912e24,
+                  5.633e24,
+                  6.821e24,
+                  5.343e24,
+                  5.843e24,
+                  6.412e24,
+                  5.812e24,
+                  5.912e24,
+                  5.633e24,
+                  6.821e24,
+                  5.343e24,
+                  5.843e24,
+                  6.412e24,
+                  5.812e24,
+                  5.912e24,
+                  5.633e24,
+                  6.821e24,
+                  5.343e24,
+                  5.843e24,
+                  6.412e24,
+                  5.812e24,
+                  5.912e24,
+                  5.633e24,
+                  6.821e24,
+                  5.343e24,
+                  5.843e24,
+                  6.412e24,
+                  5.812e24,
+                  5.912e24,
+                  5.633e24,
+                  6.821e24,
+                  5.633e24,
+                  6.821e24,
+                  5.343e24,
+                  5.843e24,
+                  6.412e24,
+                  5.812e24,
+                  5.912e24,
+                  5.633e24,
+                  6.821e24,
+                  5.343e24,
+                  5.843e24,
+                  6.412e24,
+                  5.812e24,
+                  5.912e24,
+                  5.633e24,
+                  6.821e24,
+                  5.343e24,
+                  5.843e24
+                ];
+
+                var numberOfCumulativeAverages = 10;
+                var cumulativeAveragesStep = measurements.length / numberOfCumulativeAverages;
+                if (cumulativeAveragesStep < 1) {
+                    cumulativeAveragesStep = 1;
+                } else {
+                    cumulativeAveragesStep = Math.floor(cumulativeAveragesStep);
+                }
+                var cumulativeAveragesIndexes = [];
+                for (var i = 0; i < numberOfCumulativeAverages; i++) {
+                    cumulativeAveragesIndexes.push(i * cumulativeAveragesStep);
+                }
+
+                var accumulatedMass = 0.0;
+                var userMeasurementsData = [];
+                var cumulativeAverageData = [];
+                for (var i = 0; i < measurements.length; i++) {
+                    accumulatedMass += measurements[i];
+                    userMeasurementsData.push({
+                        x: i + 1,
+                        y: measurements[i]
+                    });
+                    if (cumulativeAveragesIndexes.indexOf(i) >= 0 || i == measurements.length - 1) {
+                        cumulativeAverageData.push({
+                            x: i + 1,
+                            y: accumulatedMass / (i + 1)
+                        });
+                    }
+                }
 
                 ctx = document.getElementById("visualization").getContext("2d");
                 visChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: labels,
                         datasets: [
-                            {
-                                label: "Correct Earth Mass",
-                                fill: false,
-                                lineTension: 0.1,
-                                backgroundColor: "rgba(192,75,192,0.4)",
-                                borderColor: "rgba(192,75,192,1)",
-                                borderCapStyle: 'butt',
-                                borderDash: [],
-                                borderDashOffset: 0.0,
-                                borderJoinStyle: 'miter',
-                                pointBorderColor: "rgba(192,75,192,1)",
-                                pointBackgroundColor: "#fff",
-                                pointBorderWidth: 1,
-                                pointHoverRadius: 5,
-                                pointHoverBackgroundColor: "rgba(192,75,192,1)",
-                                pointHoverBorderColor: "rgba(220,220,220,1)",
-                                pointHoverBorderWidth: 2,
-                                pointRadius: 1,
-                                pointHitRadius: 10,
-                                data: [{
-                                    x: 0,
-                                    y: 5.972e24 
-                                },{
-                                    x: 50,
-                                    y: 5.972e24
-                                }],
-                                spanGaps: false,
-                            },
-                            {
-                                label: "User Measurements",
-                                fill: false,
-                                lineTension: 0.1,
-                                backgroundColor: "rgba(75,192,192,0.4)",
-                                borderColor: "rgba(75,192,192,1)",
-                                borderCapStyle: 'butt',
-                                borderDash: [],
-                                borderDashOffset: 0.0,
-                                borderJoinStyle: 'miter',
-                                pointBorderColor: "rgba(75,192,192,1)",
-                                pointBackgroundColor: "#fff",
-                                pointBorderWidth: 1,
-                                pointHoverRadius: 5,
-                                pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                                pointHoverBorderColor: "rgba(220,220,220,1)",
-                                pointHoverBorderWidth: 2,
-                                pointRadius: 1,
-                                pointHitRadius: 10,
-                                data: [[5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
-                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
-                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
-                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
-                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
-                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
-                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
-                                    5.343e24, 5.453e24, 6.214e24, 5.678e24, 5.856e24, 5.764e24,
-                                    5.343e24, 5.453e24]],
-                                spanGaps: false,
-                            },
-                            {
-                                label: "Accumulated Average",
-                                fill: false,
-                                lineTension: 0.1,
-                                backgroundColor: "rgba(192,192,75,0.4)",
-                                borderColor: "rgba(192,192,75,1)",
-                                borderCapStyle: 'butt',
-                                borderDash: [],
-                                borderDashOffset: 0.0,
-                                borderJoinStyle: 'miter',
-                                pointBorderColor: "rgba(192,192,75,1)",
-                                pointBackgroundColor: "#fff",
-                                pointBorderWidth: 1,
-                                pointHoverRadius: 5,
-                                pointHoverBackgroundColor: "rgba(192,192,75,1)",
-                                pointHoverBorderColor: "rgba(220,220,220,1)",
-                                pointHoverBorderWidth: 2,
-                                pointRadius: 1,
-                                pointHitRadius: 10,
-                                data: [{
-                                    x: 10,
-                                    y: 5.343e24
-                                },
-                                {
-                                    x: 20,
-                                    y: 5.567e24
-                                },
-                                {
-                                    x: 30,
-                                    y: 5.782e24
-                                },
-                                {
-                                    x: 40,
-                                    y: 5.864e24
-                                },
-                                {
-                                    x: 50,
-                                    y: 5.972e24
-                                }],
-                                spanGaps: false,
-                            }
+                          {
+                              label: "Correct Earth Mass",
+                              fill: false,
+                              lineTension: 0.1,
+                              backgroundColor: "rgba(192,75,192,0.4)",
+                              borderColor: "rgba(192,75,192,1)",
+                              borderCapStyle: 'butt',
+                              borderDash: [],
+                              borderDashOffset: 0.0,
+                              borderJoinStyle: 'miter',
+                              pointBorderColor: "rgba(192,75,192,1)",
+                              pointBackgroundColor: "#fff",
+                              pointBorderWidth: 1,
+                              pointHoverRadius: 5,
+                              pointHoverBackgroundColor: "rgba(192,75,192,1)",
+                              pointHoverBorderColor: "rgba(220,220,220,1)",
+                              pointHoverBorderWidth: 2,
+                              pointRadius: 1,
+                              pointHitRadius: 10,
+                              data: [{
+                                  x: 1,
+                                  y: 5.972e24
+                              }, {
+                                  x: userMeasurementsData.length,
+                                  y: 5.972e24
+                              }],
+                              spanGaps: false,
+                          },
+                          {
+                              label: "User Measurements",
+                              fill: false,
+                              lineTension: 0.1,
+                              backgroundColor: "rgba(75,192,192,0.4)",
+                              borderColor: "rgba(75,192,192,0)",
+                              borderCapStyle: 'butt',
+                              borderDash: [],
+                              borderDashOffset: 0.0,
+                              borderJoinStyle: 'miter',
+                              pointBorderColor: "rgba(75,192,192,1)",
+                              pointBackgroundColor: "#fff",
+                              pointBorderWidth: 3,
+                              pointHoverRadius: 5,
+                              pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                              pointHoverBorderColor: "rgba(220,220,220,1)",
+                              pointHoverBorderWidth: 2,
+                              pointRadius: 1,
+                              pointHitRadius: 10,
+                              data: userMeasurementsData,
+                              spanGaps: false,
+                          },
+                          {
+                              label: "Cumulative Average",
+                              fill: false,
+                              lineTension: 0.1,
+                              backgroundColor: "rgba(192,192,75,0.4)",
+                              borderColor: "rgba(192,192,75,1)",
+                              borderCapStyle: 'butt',
+                              borderDash: [],
+                              borderDashOffset: 0.0,
+                              borderJoinStyle: 'miter',
+                              pointBorderColor: "rgba(192,192,75,1)",
+                              pointBackgroundColor: "#fff",
+                              pointBorderWidth: 1,
+                              pointHoverRadius: 5,
+                              pointHoverBackgroundColor: "rgba(192,192,75,1)",
+                              pointHoverBorderColor: "rgba(220,220,220,1)",
+                              pointHoverBorderWidth: 2,
+                              pointRadius: 1,
+                              pointHitRadius: 10,
+                              data: cumulativeAverageData,
+                              spanGaps: false,
+                          }
                         ]
                     },
                     options: {
-                        
+                        scales: {
+                            xAxes: [{
+                                type: 'linear',
+                                position: 'bottom',
+                                ticks: {
+                                    min: 1
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    userCallback: function (value, index, values) {
+                                        return Math.round(value / 1e21) * 1e21; // Fix so that we don't get many decimals on y-axis.
+                                    }
+                                }
+                            }]
+                        }
                     }
                 });
 
