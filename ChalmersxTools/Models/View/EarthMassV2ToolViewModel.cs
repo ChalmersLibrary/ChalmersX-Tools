@@ -10,5 +10,6 @@ namespace ChalmersxTools.Models.View
     {
         public EarthMassV2Submission Submission { get; set; }
         public double EarthMassAverage { get; set; }
+        public List<double> Measurements { get; set; }
     }
 }

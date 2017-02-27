@@ -67,7 +67,9 @@
 
             if ($("#meanGravityAcceleration").val() != "" && $("#earthMass").val() != "" && $("#location").val() != "") {
 
-                var measurements = [
+                var measurements = [@String.Join(",", Model.Measurements)];
+
+                /*var measurements = [
                   5.343e24,
                   5.843e24,
                   6.412e24,
@@ -75,7 +77,7 @@
                   5.912e24,
                   5.633e24,
                   6.821e24
-                ];
+                ];*/
 
                 var numberOfCumulativeAverages = 10;
                 var cumulativeAveragesStep = measurements.length / numberOfCumulativeAverages;

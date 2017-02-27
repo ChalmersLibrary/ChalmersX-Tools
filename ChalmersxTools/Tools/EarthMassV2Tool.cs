@@ -138,6 +138,7 @@ namespace ChalmersxTools.Tools
         {
             double massAverage = 0;
             int numberOfSubmissions = 0;
+            var measurements = new List<double>();
 
             try
             {
@@ -145,6 +146,8 @@ namespace ChalmersxTools.Tools
                     (from o in _sessionManager.DbContext.EarthMassV2Submissions
                         where o.ContextId == _session.ContextId
                         select o).ToList();
+
+                measurements = allSubmissions.Select(x => x.TotalEarthMass).ToList();
 
                 foreach (var submission in allSubmissions)
                 {
@@ -167,7 +170,8 @@ namespace ChalmersxTools.Tools
                     NumberOfSubmissions = numberOfSubmissions,
                     LtiSessionId = _session.Id.ToString(),
                     Roles = _session.LtiRequest.Roles,
-                    ResponseMessage = message
+                    ResponseMessage = message,
+                    Measurements = measurements
                 });
         }
 
