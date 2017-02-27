@@ -74,72 +74,14 @@
                   5.812e24,
                   5.912e24,
                   5.633e24,
-                  6.821e24,
-                  5.343e24,
-                  5.843e24,
-                  6.412e24,
-                  5.812e24,
-                  5.912e24,
-                  5.633e24,
-                  6.821e24,
-                  5.343e24,
-                  5.843e24,
-                  6.412e24,
-                  5.812e24,
-                  5.912e24,
-                  5.633e24,
-                  6.821e24,
-                  5.343e24,
-                  5.843e24,
-                  6.412e24,
-                  5.812e24,
-                  5.912e24,
-                  5.633e24,
-                  6.821e24,
-                  5.343e24,
-                  5.843e24,
-                  6.412e24,
-                  5.812e24,
-                  5.912e24,
-                  5.633e24,
-                  6.821e24,
-                  5.343e24,
-                  5.843e24,
-                  6.412e24,
-                  5.812e24,
-                  5.912e24,
-                  5.633e24,
-                  6.821e24,
-                  5.633e24,
-                  6.821e24,
-                  5.343e24,
-                  5.843e24,
-                  6.412e24,
-                  5.812e24,
-                  5.912e24,
-                  5.633e24,
-                  6.821e24,
-                  5.343e24,
-                  5.843e24,
-                  6.412e24,
-                  5.812e24,
-                  5.912e24,
-                  5.633e24,
-                  6.821e24,
-                  5.343e24,
-                  5.843e24
+                  6.821e24
                 ];
 
                 var numberOfCumulativeAverages = 10;
                 var cumulativeAveragesStep = measurements.length / numberOfCumulativeAverages;
-                if (cumulativeAveragesStep < 1) {
-                    cumulativeAveragesStep = 1;
-                } else {
-                    cumulativeAveragesStep = Math.floor(cumulativeAveragesStep);
-                }
                 var cumulativeAveragesIndexes = [];
                 for (var i = 0; i < numberOfCumulativeAverages; i++) {
-                    cumulativeAveragesIndexes.push(i * cumulativeAveragesStep);
+                    cumulativeAveragesIndexes.push(Math.floor(i * cumulativeAveragesStep));
                 }
 
                 var accumulatedMass = 0.0;
@@ -168,17 +110,17 @@
                               label: "Correct Earth Mass",
                               fill: false,
                               lineTension: 0.1,
-                              backgroundColor: "rgba(192,75,192,0.4)",
-                              borderColor: "rgba(192,75,192,1)",
+                              backgroundColor: "rgba(75,192,75,0.4)",
+                              borderColor: "rgba(75,192,75,1)",
                               borderCapStyle: 'butt',
                               borderDash: [],
                               borderDashOffset: 0.0,
                               borderJoinStyle: 'miter',
-                              pointBorderColor: "rgba(192,75,192,1)",
+                              pointBorderColor: "rgba(75,192,75,1)",
                               pointBackgroundColor: "#fff",
                               pointBorderWidth: 1,
                               pointHoverRadius: 5,
-                              pointHoverBackgroundColor: "rgba(192,75,192,1)",
+                              pointHoverBackgroundColor: "rgba(75,192,75,1)",
                               pointHoverBorderColor: "rgba(220,220,220,1)",
                               pointHoverBorderWidth: 2,
                               pointRadius: 1,
@@ -187,7 +129,7 @@
                                   x: 1,
                                   y: 5.972e24
                               }, {
-                                  x: userMeasurementsData.length,
+                                  x: userMeasurementsData.length < 2 ? 2 : userMeasurementsData.length,
                                   y: 5.972e24
                               }],
                               spanGaps: false,
@@ -196,17 +138,17 @@
                               label: "User Measurements",
                               fill: false,
                               lineTension: 0.1,
-                              backgroundColor: "rgba(75,192,192,0.4)",
-                              borderColor: "rgba(75,192,192,0)",
+                              backgroundColor: "rgba(192,75,75,0.4)",
+                              borderColor: "rgba(192,75,75,0)",
                               borderCapStyle: 'butt',
                               borderDash: [],
                               borderDashOffset: 0.0,
                               borderJoinStyle: 'miter',
-                              pointBorderColor: "rgba(75,192,192,1)",
+                              pointBorderColor: "rgba(192,75,75,1)",
                               pointBackgroundColor: "#fff",
                               pointBorderWidth: 3,
                               pointHoverRadius: 5,
-                              pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                              pointHoverBackgroundColor: "rgba(192,75,75,1)",
                               pointHoverBorderColor: "rgba(220,220,220,1)",
                               pointHoverBorderWidth: 2,
                               pointRadius: 1,
@@ -244,7 +186,8 @@
                                 type: 'linear',
                                 position: 'bottom',
                                 ticks: {
-                                    min: 1
+                                    min: 1,
+                                    max: userMeasurementsData.length < 2 ? 2 : userMeasurementsData.length
                                 }
                             }],
                             yAxes: [{
