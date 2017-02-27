@@ -106,6 +106,7 @@
                     if (status == google.maps.GeocoderStatus.OK) {
                         document.getElementById("sp-latitude").value = results[0].geometry.location.lat();
                         document.getElementById("sp-longitude").value = results[0].geometry.location.lng();
+                        document.forms["student-location"].submit();
                     } else {
                         document.getElementById("message-box").innerHTML = "<span style='color: red;'><p><b>Location not found</b>, please provide a more specific description of your location.</p></span>";
                     }
