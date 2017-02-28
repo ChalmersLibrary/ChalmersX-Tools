@@ -36,11 +36,11 @@
         @if (Model.Submission != null)
         {
             var timeDiff = Model.Submission.Time - Model.Submission.StationTime;
+            <br />
             <div>
                 The difference between your measurement (@Model.Submission.Measurement) and a weather station in the Dark Sky network
                 (@Model.Submission.StationMeasurement) is @(Model.Submission.Measurement - Model.Submission.StationMeasurement) degrees.
                 The time difference between the two measurements is @Math.Abs(timeDiff.Hours) hours and @Math.Abs(timeDiff.Minutes) minutes.
-                <br />
                 <a href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
             </div>
         }
