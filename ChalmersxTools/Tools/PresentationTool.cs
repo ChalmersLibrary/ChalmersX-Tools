@@ -50,7 +50,7 @@ namespace ChalmersxTools.Tools
                     UserId = _session.UserId,
                     ContextId = _session.ContextId,
                     Name = System.Web.HttpUtility.HtmlEncode(request.Form["name"].ToString()),
-                    LocationName = System.Web.HttpUtility.HtmlEncode(request.Form["location"].ToString()),
+                    LocationName = request.Form["location"].ToString(),
                     LocationLat = Double.Parse(request.Form["latitude"].ToString(), CultureInfo.InvariantCulture),
                     LocationLong = Double.Parse(request.Form["longitude"].ToString(), CultureInfo.InvariantCulture),
                     Presentation = System.Web.HttpUtility.HtmlEncode(request.Form["presentation"].ToString())
