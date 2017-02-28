@@ -36,6 +36,8 @@
                 (@Model.Submission.StationMeasurement) is @(Model.Submission.Measurement - Model.Submission.StationMeasurement) degrees. 
                 The time difference between the two measurements is @((Model.Submission.Time - Model.Submission.StationTime).ToString("HH:mm")).
                 <br />
+                <a href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
+                <br />
             </div>
             }
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
