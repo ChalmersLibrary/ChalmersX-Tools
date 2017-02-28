@@ -73,11 +73,11 @@ namespace ChalmersxTools.Tools
                 data += "\"" + submission.Position.Latitude + "\",\"" +
                     submission.Position.Longitude + "\",\"" +
                     submission.Measurement + "\",\"" +
-                    submission.Time + "\",\"" +
+                    submission.Time.ToString("yyyy-MM-dd HH:mm") + "\",\"" +
                     submission.StationPosition.Latitude + "\",\"" +
                     submission.StationPosition.Longitude + "\",\"" +
                     submission.StationMeasurement + "\",\"" +
-                    submission.StationTime + "\"\n";
+                    submission.StationTime.ToString("yyyy-MM-dd HH:mm") + "\"\n";
             }
 
             return new CsvFileData(_session.ContextId + "-temperature-measurements.csv",
