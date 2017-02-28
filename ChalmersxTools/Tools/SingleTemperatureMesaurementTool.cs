@@ -67,13 +67,17 @@ namespace ChalmersxTools.Tools
             string data = "";
 
             var submissions = GetAllSubmissionsForCourseRun();
-            data += "latitude,longitude,measurement,time\n";
+            data += "latitude,longitude,measurement,time,stationlatitude,stationlongitude,stationmeasurement,stationtime\n";
             foreach (var submission in submissions)
             {
                 data += "\"" + submission.Position.Latitude + "\",\"" +
                     submission.Position.Longitude + "\",\"" +
                     submission.Measurement + "\",\"" +
-                    submission.Time + "\"\n";
+                    submission.Time + "\",\"" +
+                    submission.StationPosition.Latitude + "\",\"" +
+                    submission.StationPosition.Longitude + "\",\"" +
+                    submission.StationMeasurement + "\",\"" +
+                    submission.StationTime + "\"\n";
             }
 
             return new CsvFileData(_session.ContextId + "-temperature-measurements.csv",
