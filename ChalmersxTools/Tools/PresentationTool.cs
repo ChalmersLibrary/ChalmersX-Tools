@@ -49,7 +49,7 @@ namespace ChalmersxTools.Tools
                 {
                     UserId = _session.UserId,
                     ContextId = _session.ContextId,
-                    Name = request.Form["name"].ToString(),
+                    Name = System.Web.HttpUtility.HtmlEncode(request.Form["name"].ToString()),
                     LocationName = System.Web.HttpUtility.HtmlEncode(request.Form["location"].ToString()),
                     LocationLat = Double.Parse(request.Form["latitude"].ToString(), CultureInfo.InvariantCulture),
                     LocationLong = Double.Parse(request.Form["longitude"].ToString(), CultureInfo.InvariantCulture),
@@ -85,7 +85,7 @@ namespace ChalmersxTools.Tools
                      sp.ContextId == _session.ContextId
                      select sp).SingleOrDefault();
 
-                existingStudentPresentation.Name = request.Form["name"].ToString();
+                existingStudentPresentation.Name = System.Web.HttpUtility.HtmlEncode(request.Form["name"].ToString());
                 existingStudentPresentation.LocationName = request.Form["location"].ToString();
                 existingStudentPresentation.LocationLat = Double.Parse(request.Form["latitude"].ToString(), CultureInfo.InvariantCulture);
                 existingStudentPresentation.LocationLong = Double.Parse(request.Form["longitude"].ToString(), CultureInfo.InvariantCulture);

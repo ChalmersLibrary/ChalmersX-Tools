@@ -17,7 +17,7 @@
         <form id="student-presentation" method="post">
             <div>
                 <label class="default-label" for="sp-name">Name</label>
-                <input type="text" id="sp-name" name="name" value="@(Model.CurrentStudentPresentation == null ? "" : Model.CurrentStudentPresentation.Name)">
+                <input type="text" id="sp-name" name="name" value="@(Model.CurrentStudentPresentation == null ? "" : HttpUtility.HtmlDecode(Model.CurrentStudentPresentation.Name))">
             </div>
             <div>
                 <label class="default-label" for="sp-location">Location</label>
