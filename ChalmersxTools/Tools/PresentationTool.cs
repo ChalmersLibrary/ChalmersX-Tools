@@ -89,7 +89,7 @@ namespace ChalmersxTools.Tools
                 existingStudentPresentation.LocationName = request.Form["location"].ToString();
                 existingStudentPresentation.LocationLat = Double.Parse(request.Form["latitude"].ToString(), CultureInfo.InvariantCulture);
                 existingStudentPresentation.LocationLong = Double.Parse(request.Form["longitude"].ToString(), CultureInfo.InvariantCulture);
-                existingStudentPresentation.Presentation = request.Form["presentation"].ToString();
+                existingStudentPresentation.Presentation = System.Web.HttpUtility.HtmlEncode(request.Form["presentation"].ToString());
 
                 _sessionManager.DbContext.SaveChanges();
             }
