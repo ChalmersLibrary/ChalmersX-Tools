@@ -219,6 +219,8 @@
                 $("#message-box").html("<span style='color: red;'>You have to enter a value for the total mass of earth.</span>");
             } else if ($("#location").val() == "") {
                 $("#message-box").html("<span style='color: red;'>You have to enter a valid location.</span>");
+            } else if ($("#earthMass").val() >= 3e24 && $("#earthMass").val() <= 9e24) {
+                $("#message-box").html("<span style='color: red;'>Your value for the mass of planet earth seems to be incorrect.</span>");
             } else {
                 geocoder.geocode({ "address": $("#location").val() }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {

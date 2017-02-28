@@ -58,6 +58,9 @@ namespace ChalmersxTools.Tools
                 {
                     res = "<span style='color: red;'>Failed to parse location.</span>";
                 }
+                else if (earthMass >= 3e24 && earthMass <= 9e24) {
+                    res = "Your value for the mass of planet earth seems to be incorrect.</span>";
+                }
                 else
                 {
                     var newSubmission = _sessionManager.DbContext.EarthMassV2Submissions.Add(new EarthMassV2Submission()
