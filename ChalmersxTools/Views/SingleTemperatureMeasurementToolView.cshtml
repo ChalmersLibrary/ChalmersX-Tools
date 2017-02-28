@@ -27,23 +27,22 @@
                 <label for="measurement">Temperature (in Celsius)</label>
                 <input type="text" id="measurement" name="measurement" value="@(Model.Submission == null ? "" : Model.Submission.Measurement.ToString())" />
                 <label for="measurement2">Time of measurement (24h clock)</label>
-                <input type="text" id="time" name="time" placeholder="hh:mm" value="@(Model.Submission == null ? "" : Model.Submission.Time.ToString())" />
+                <input type="text" id="time" name="time" placeholder="hh:mm" value="@(Model.Submission == null ? "" : Model.Submission.Time.ToString("HH:mm"))" />
             </fieldset>
-            @if (Model.Submission != null)
-            {
-            <div>
-                The difference between your measurement (@Model.Submission.Measurement) and a weather station in the Dark Sky network 
-                (@Model.Submission.StationMeasurement) is @(Model.Submission.Measurement - Model.Submission.StationMeasurement) degrees. 
-                The time difference between the two measurements is @(Model.Submission.Time - Model.Submission.StationTime).ToString("HH:mm").
-                <br />
-                <a href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
-                <br />
-            </div>
-            }
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
             <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
             <input type="button" value="Save" onclick="validateAndSubmit()" />
         </form>
+        @if (Model.Submission != null)
+        {
+            <div>
+                The difference between your measurement (@Model.Submission.Measurement) and a weather station in the Dark Sky network
+                (@Model.Submission.StationMeasurement) is @(Model.Submission.Measurement - Model.Submission.StationMeasurement) degrees.
+                The time difference between the two measurements is @{(Model.Submission.Time - Model.Submission.StationTime).ToString("HH:mm")}.
+                <br />
+                <a href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
+            </div>
+        }
         @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
         {
             <br>
