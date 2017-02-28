@@ -38,12 +38,12 @@
             var timeDiff = Model.Submission.Time - Model.Submission.StationTime;
             <br />
             <div>
-                The difference between your measurement (@Model.Submission.Measurement) and a weather station near the same location
+                The difference between your measurement (@Model.Submission.Measurement) and a weather station near your location
                 (@Model.Submission.StationMeasurement) is @(Model.Submission.Measurement - Model.Submission.StationMeasurement) degrees.
                 The time difference between the two measurements is @Math.Abs(timeDiff.Hours) hours and @Math.Abs(timeDiff.Minutes) minutes.
                 <br />
                 <br />
-                <a href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
+                <a href="https://darksky.net/poweredby/" target="_blank">Powered by Dark Sky</a>
             </div>
         }
         @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
