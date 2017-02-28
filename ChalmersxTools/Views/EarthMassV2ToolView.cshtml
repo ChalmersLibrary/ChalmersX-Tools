@@ -15,6 +15,8 @@
 <body>
     <div>
         <div id="message-box">@Html.Raw(Model.ResponseMessage)</div>
+        @if (Model.Submission == null)
+        {
         <form id="earth-mass" method="post">
             <div>
                 <label for="meanGravityAcceleration">Measured Mean Gravity Acceleration</label>
@@ -36,9 +38,13 @@
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
             <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
         </form>
-        <div id="visualizationContainer" style="display: none;">
+        }
+        else
+        {
+        <div>
             <canvas id="visualization" width="640" height="480"></canvas>
         </div>
+        }
         @if (Model.Roles == "Administrator" || Model.Roles == "Instructor")
         {
             <br>
@@ -202,8 +208,6 @@
                         }
                     }
                 });
-
-                $("#visualizationContainer").show();
             }
         }
 
@@ -219,8 +223,6 @@
                 $("#message-box").html("<span style='color: red;'>You have to enter a value for the total mass of earth.</span>");
             } else if ($("#location").val() == "") {
                 $("#message-box").html("<span style='color: red;'>You have to enter a valid location.</span>");
-            } else if ($("#earthMass").val() >= 3e24 && $("#earthMass").val() <= 9e24) {
-                $("#message-box").html("<span style='color: red;'>Your value for the mass of planet earth seems to be incorrect.</span>");
             } else {
                 geocoder.geocode({ "address": $("#location").val() }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
