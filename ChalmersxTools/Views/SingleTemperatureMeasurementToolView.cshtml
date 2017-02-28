@@ -32,7 +32,10 @@
             @if (Model.Submission != null)
             {
             <div>
-                @Model.Submission.StationMeasurement @@ @Model.Submission.StationTime
+                The difference between your measurement (@Model.Submission.Measurement) and a weather station in the Dark Sky network 
+                (@Model.Submission.StationMeasurement) is @(Model.Submission.Measurement - Model.Submission.StationMeasurement) degrees. 
+                The time difference between the two measurements is @((Model.Submission.Time - Model.Submission.StationTime).ToString("HH:mm")).
+                <br />
             </div>
             }
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
