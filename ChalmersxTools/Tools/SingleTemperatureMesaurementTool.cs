@@ -8,6 +8,7 @@ using LtiLibrary.Core.Outcomes.v1;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -355,27 +356,32 @@ namespace ChalmersxTools.Tools
         {
             TempTimeAndPos res = null;
 
-            var weatherResponse = _webApiClient.GetJson("http://api.openweathermap.org/data/2.5/weather?lat=" +
-                lat + "&lon=" + lng + "&apikey=" +
-                _openWeatherMapApiKey + "&units=metric");
+            var weatherResponse = _webApiClient.GetJson("https://api.darksky.net/forecast/" +
+                _openWeatherMapApiKey + "/" + 
+                lat.ToString("0.000000", CultureInfo.InvariantCulture) + "," + 
+                lng.ToString("0.000000", CultureInfo.InvariantCulture) + 
+                "?units=si&exclude=minutely,hourly,daily,alerts");
 
             long timestamp = 0;
-            if (weatherResponse != null && weatherResponse.cod == "200")
+            if (weatherResponse != null && weatherResponse.flags["darksky-unavailable"] == null && 
+                weatherResponse.latitude != null && weatherResponse.longitude != null &&
+                weatherResponse.currently != null && weatherResponse.currently.temperature != null &&
+                weatherResponse.currently.time != null)
             {
                 res = new TempTimeAndPos
                 {
                     Position = new Coordinate
                     {
-                        Latitude = weatherResponse.coord.lat,
-                        Longitude = weatherResponse.coord.lon
+                        Latitude = weatherResponse.latitude,
+                        Longitude = weatherResponse.longitude
                     },
-                    Temp = weatherResponse.main.temp
+                    Temp = weatherResponse.currently.temperature
                 };
-                timestamp = weatherResponse.dt;
+                timestamp = weatherResponse.currently.time;
             }
             else
             {
-                throw new Exception("Failed to fetch temperature from Open Weather Map.");
+                throw new Exception("Failed to fetch temperature from Dark Sky.");
             }
 
             var timezoneResponse = _webApiClient.GetJson("https://maps.googleapis.com/maps/api/timezone/json?location=" +
@@ -383,7 +389,7 @@ namespace ChalmersxTools.Tools
                 lng.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) +
                 "&timestamp=" + timestamp +
                 "&key=" + _config.GoogleMapsApiKey);
-
+            
             if (timezoneResponse != null && timezoneResponse.status == "OK")
             {
                 var daylightSavingsTimeOffset = timezoneResponse.dstOffset.ToObject<int>();
@@ -394,30 +400,6 @@ namespace ChalmersxTools.Tools
             else
             {
                 throw new Exception("Failed to convert time to UTC.");
-            }
-
-            return res;
-        }
-
-        private DateTime ConvertToUtc(double lat, double lng, DateTime time)
-        {
-            var res = time;
-
-            var response = _webApiClient.GetJson("https://maps.googleapis.com/maps/api/timezone/json?location=" +
-                lat.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," + 
-                lng.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + 
-                "&timestamp=" + DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).Ticks/10/1000/1000);
-
-            if (response.status == "OK")
-            {
-                var daylightSavingsTimeOffset = response.dstOffset.ToObject<double>();
-                var rawOffset = response.rawOffset.ToObject<double>();
-                res = res.AddSeconds(-1 * daylightSavingsTimeOffset);
-                res = res.AddSeconds(-1 * rawOffset);
-            }
-            else
-            {
-                throw new Exception("Failed to convert to GMT.");
             }
 
             return res;

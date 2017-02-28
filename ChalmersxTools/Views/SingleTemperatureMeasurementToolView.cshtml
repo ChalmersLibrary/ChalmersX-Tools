@@ -29,6 +29,12 @@
                 <label for="measurement2">Time of measurement (24h clock)</label>
                 <input type="text" id="time" name="time" placeholder="hh:mm" value="@(Model.Submission == null ? "" : Model.Submission.Time.ToString())" />
             </fieldset>
+            @if (Model.Submission != null)
+            {
+            <div>
+                @Model.Submission.StationMeasurement @@ @Model.Submission.StationTime
+            </div>
+            }
             <input type="hidden" name="action" value="@(Model.Submission == null ? "create" : "edit")">
             <input type="hidden" name="ltiSessionId" value="@Model.LtiSessionId">
             <input type="button" value="Save" onclick="validateAndSubmit()" />

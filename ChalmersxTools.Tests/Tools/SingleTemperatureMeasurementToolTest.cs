@@ -66,8 +66,8 @@ namespace ChalmersxTools.Tests.Tools
                 {
                     { "action", "create" },
                     { "measurement", "5,6" },
-                    { "lat", "21,300833" },
-                    { "long", "-157,835468" },
+                    { "lat", "57,71" },
+                    { "long", "11,97" },
                     { "time", "14:00" }
                 });
 
