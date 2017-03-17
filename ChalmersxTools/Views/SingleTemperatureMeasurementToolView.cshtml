@@ -38,8 +38,8 @@
             var timeDiff = Model.Submission.Time - Model.Submission.StationTime;
             <br />
             <div>
-                The difference between your measurement (@Model.Submission.Measurement &deg;C) and a weather station near your location
-                (@Model.Submission.StationMeasurement &deg;C) is @(Model.Submission.StationMeasurement - Model.Submission.Measurement &deg;C) degrees.
+                The difference between your measurement (@Model.Submission.Measurement)&deg;C and a weather station near your location
+                (@Model.Submission.StationMeasurement)&deg;C is @(Model.Submission.StationMeasurement - Model.Submission.Measurement)&deg;C.
                 The time difference between the two measurements is @Math.Abs(timeDiff.Hours) hours and @Math.Abs(timeDiff.Minutes) minutes.
                 <br />
                 Is it in accordance to what you expected from weather prediction? In case you see larger differences,
