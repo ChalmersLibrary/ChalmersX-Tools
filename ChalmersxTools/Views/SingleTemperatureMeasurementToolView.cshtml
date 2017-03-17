@@ -38,9 +38,27 @@
             var timeDiff = Model.Submission.Time - Model.Submission.StationTime;
             <br />
             <div>
-                The difference between your measurement (@Model.Submission.Measurement) and a weather station near your location
-                (@Model.Submission.StationMeasurement) is @(Model.Submission.StationMeasurement - Model.Submission.Measurement) degrees.
+                The difference between your measurement (@Model.Submission.Measurement °C) and a weather station near your location
+                (@Model.Submission.StationMeasurement °C) is @(Model.Submission.StationMeasurement - Model.Submission.Measurement °C) degrees.
                 The time difference between the two measurements is @Math.Abs(timeDiff.Hours) hours and @Math.Abs(timeDiff.Minutes) minutes.
+                <br />
+                Is it in accordance to what you expected from weather prediction? In case you see larger differences,
+                please keep in mind that weather models can not resolve very fine structures like the local situation
+                around you. For example, think of a large city for which the weather agencies predict one temperature value.
+                Imagine now that you walk through the city and collect temperature readings. You will find very different
+                temperature values. Those differences could come from very local effects like buildings storing heat,
+                trees providing shadow, hill blocking wind, etc.. Just try it out and you will see that your temperature
+                readings change very easily by just collecting data a slightly different locations. And by the way, weather
+                models are not perfect. They come with a model uncertainty. This uncertainty is related to two main factors.
+                First, it depends on the quality of the data that goes into the model. If data are not representative for a
+                certain area it is obvious that the model predictions (e.g. temperature) will not agree with what you would
+                measure in reality. The second impact on uncertainty is due to imperfect mathematical and physical models.
+                It is impossible to model very fine structures when you want to do weather predictions for larger areas.
+                So what happens is that things get simplified. For example a city is represented by a single area in which
+                temperature is assumed to be constant. That might not be good enough for local people there, but when seen on
+                a larger, e.g. national, scale one can still say that city X is slightly warmer/colder than city Y and the
+                average (or mean) temperature inside those cities will be pretty close to what the weather services have
+                predicted.
                 <br />
                 <br />
                 <a href="https://darksky.net/poweredby/" target="_blank">Powered by Dark Sky</a>
