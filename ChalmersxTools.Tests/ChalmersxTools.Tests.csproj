@@ -50,6 +50,9 @@
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="LtiLibrary.AspNet, Version=1.5.5621.20668, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LtiLibrary.AspNet.1.5.4\lib\net45\LtiLibrary.AspNet.dll</HintPath>
       <Private>True</Private>
