@@ -366,6 +366,8 @@ namespace ChalmersxTools.Tools
                 lng.ToString("0.000000", CultureInfo.InvariantCulture) + 
                 "?units=si&exclude=minutely,hourly,daily,alerts");
 
+            _log.Info("weaterResponse: " + weatherResponse);
+
             long timestamp = 0;
             if (weatherResponse != null && weatherResponse.flags["darksky-unavailable"] == null && 
                 weatherResponse.latitude != null && weatherResponse.longitude != null &&
