@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 
+
 namespace ChalmersxTools.Web
 {
     public class SystemNetHttpClient : IWebApiClient
@@ -15,6 +16,7 @@ namespace ChalmersxTools.Web
 
         public SystemNetHttpClient()
         {
+            System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
             _client = new HttpClient();
         }
 
