@@ -360,6 +360,8 @@ namespace ChalmersxTools.Tools
         {
             TempTimeAndPos res = null;
 
+            _log.Info("Time to fetch weather data");
+
             var weatherResponse = _webApiClient.GetJson("https://api.darksky.net/forecast/" +
                 _openWeatherMapApiKey + "/" + 
                 lat.ToString("0.000000", CultureInfo.InvariantCulture) + "," + 
