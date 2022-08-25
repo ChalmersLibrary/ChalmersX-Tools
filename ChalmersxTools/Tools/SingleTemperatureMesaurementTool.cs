@@ -360,7 +360,7 @@ namespace ChalmersxTools.Tools
         {
             TempTimeAndPos res = null;
 
-            _log.Debug("Time to fetch weather data");
+            _log.Error("Time to fetch weather data");
 
             var weatherResponse = _webApiClient.GetJson("https://api.darksky.net/forecast/" +
                 _openWeatherMapApiKey + "/" + 
@@ -368,7 +368,7 @@ namespace ChalmersxTools.Tools
                 lng.ToString("0.000000", CultureInfo.InvariantCulture) + 
                 "?units=si&exclude=minutely,hourly,daily,alerts");
 
-            _log.Debug("weaterResponse: " + weatherResponse);
+            _log.Error("weaterResponse: " + weatherResponse);
 
             long timestamp = 0;
             if (weatherResponse != null && weatherResponse.flags["darksky-unavailable"] == null && 
