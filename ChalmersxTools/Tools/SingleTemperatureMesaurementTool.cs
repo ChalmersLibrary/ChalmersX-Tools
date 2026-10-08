@@ -137,7 +137,7 @@ namespace ChalmersxTools.Tools
                     }
                     catch (Exception e)
                     {
-                        _log.Error("Failed when fetching temperature from Open Weather Map.", e);
+                        _log.Error("Failed when fetching temperature from Open-Meteo.", e);
                         res = "<span style='color: red;'>Failed to fetch temperature.</span>";
                         goodToGo = false;
                     }
@@ -226,7 +226,7 @@ namespace ChalmersxTools.Tools
                     }
                     catch (Exception e)
                     {
-                        _log.Error("Failed when fetching temperature from Open Weather Map.", e);
+                        _log.Error("Failed when fetching temperature from Open-Meteo.", e);
                         res = "<span style='color: red;'>Failed to fetch temperature.</span>";
                         goodToGo = false;
                     }
@@ -360,18 +360,21 @@ namespace ChalmersxTools.Tools
         {
             TempTimeAndPos res = null;
 
-            var weatherResponse = _webApiClient.GetJson("https://api.darksky.net/forecast/" +
-                _openWeatherMapApiKey + "/" + 
-                lat.ToString("0.000000", CultureInfo.InvariantCulture) + "," + 
-                lng.ToString("0.000000", CultureInfo.InvariantCulture) + 
-                "?units=si&exclude=minutely,hourly,daily,alerts");
+            // Open-Meteo (https://open-meteo.com) replaces Dark Sky, which was shut down 2023-03-31.
+            // timezone=auto makes the response include utc_offset_seconds, so no separate timezone lookup is needed.
+            var weatherResponse = _webApiClient.GetJson("https://api.open-meteo.com/v1/forecast?latitude=" +
+                lat.ToString("0.000000", CultureInfo.InvariantCulture) + "&longitude=" +
+                lng.ToString("0.000000", CultureInfo.InvariantCulture) +
+                "&current=temperature_2m&timezone=auto&timeformat=unixtime");
 
-            long timestamp = 0;
-            if (weatherResponse != null && weatherResponse.flags["darksky-unavailable"] == null && 
+            if (weatherResponse != null &&
                 weatherResponse.latitude != null && weatherResponse.longitude != null &&
-                weatherResponse.currently != null && weatherResponse.currently.temperature != null &&
-                weatherResponse.currently.time != null)
+                weatherResponse.utc_offset_seconds != null &&
+                weatherResponse.current != null && weatherResponse.current.temperature_2m != null &&
+                weatherResponse.current.time != null)
             {
+                long timestamp = weatherResponse.current.time.ToObject<long>() +
+                    weatherResponse.utc_offset_seconds.ToObject<long>();
                 res = new TempTimeAndPos
                 {
                     Position = new Coordinate
@@ -379,31 +382,13 @@ namespace ChalmersxTools.Tools
                         Latitude = weatherResponse.latitude,
                         Longitude = weatherResponse.longitude
                     },
-                    Temp = weatherResponse.currently.temperature
+                    Temp = weatherResponse.current.temperature_2m,
+                    Time = new DateTime(new DateTime(1970, 1, 1).Ticks + timestamp * 10 * 1000 * 1000)
                 };
-                timestamp = weatherResponse.currently.time;
             }
             else
             {
-                throw new Exception("Failed to fetch temperature from Dark Sky.");
-            }
-
-            var timezoneResponse = _webApiClient.GetJson("https://maps.googleapis.com/maps/api/timezone/json?location=" +
-                lat.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) + "," +
-                lng.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture) +
-                "&timestamp=" + timestamp +
-                "&key=" + _config.GoogleMapsApiKey);
-            
-            if (timezoneResponse != null && timezoneResponse.status == "OK")
-            {
-                var daylightSavingsTimeOffset = timezoneResponse.dstOffset.ToObject<int>();
-                var rawOffset = timezoneResponse.rawOffset.ToObject<int>();
-                timestamp = timestamp + daylightSavingsTimeOffset + rawOffset;
-                res.Time = new DateTime(new DateTime(1970, 1, 1).Ticks + timestamp * 10 * 1000 * 1000);
-            }
-            else
-            {
-                throw new Exception("Failed to convert time to UTC.");
+                throw new Exception("Failed to fetch temperature from Open-Meteo.");
             }
 
             return res;
